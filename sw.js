@@ -1,5 +1,5 @@
 // Pocket Pet Focus service worker: offline app shell + cached fonts
-const CACHE = 'pocketpet-v4';
+const CACHE = 'pocketpet-v5';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './privacy.html'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -17,6 +17,12 @@ self.addEventListener('fetch', e => {
       const net = fetch(e.request).then(r => { if (r && (r.ok || r.type === 'opaque')) c.put(e.request, r.clone()); return r; }).catch(() => hit);
       return hit || net;
     }));
+    return;
+  }
+  // pages: try the network first so updates show up, fall back to the saved copy offline
+  if (url.origin === self.location.origin && (e.request.mode === 'navigate' || url.pathname.endsWith('.html'))) {
+    e.respondWith(fetch(e.request).then(r => { const copy = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); return r; })
+      .catch(() => caches.match(e.request).then(hit => hit || caches.match('./index.html'))));
     return;
   }
   if (url.origin === self.location.origin) {
