@@ -1,0 +1,18 @@
+{
+  "name": "Pocket Pet Focus",
+  "short_name": "Pocket Pet",
+  "description": "A focus timer for kids where finishing quests grows a virtual pet.",
+  "id": "/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E6F2FF",
+  "theme_color": "#FF7A2F",
+  "categories": ["education", "kids", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
