@@ -631,7 +631,13 @@ html.coachLock .app{padding-bottom:100vh}
           <button class="btn ghost" id="newRec" type="button">Make a new recovery code</button>
           <p id="recWarn" class="muted" style="margin:0;font-size:13px;font-weight:700" hidden>No recovery code yet. Make one so you can reset the grown-up code if you forget it.</p>
         </div>
-
+        <h2>Parent tools</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:10px">
+          <p class="muted" style="margin:0;font-size:13px;font-weight:700">Quick ways to help or to see how the game works. These change the game right away.</p>
+          <button class="btn ghost" id="tCoins" type="button">Give 200 coins</button>
+          <button class="btn ghost" id="tLow" type="button">Lower Happy and Care to 30% (see the sad pet)</button>
+          <button class="btn ghost" id="tReset" type="button" style="color:#C9302C;border-color:#C9302C">Reset game (erases everything)</button>
+        </div>
       </div>
     </section>
 
@@ -2611,6 +2617,14 @@ function renderChat(){
   requestAnimationFrame(()=>window.scrollTo(0,document.body.scrollHeight));
 }
 function startChatIfEmpty(){
+  // an unanswered "How was your day?" (greeting + chips still waiting) is dropped before a new one is asked,
+  // so a new day or a renamed kid never leaves two greetings stacked up
+  const isGreet=m=>m && m.r==='pip' && /^Hey .*! How was your day\?$/.test(m.t||'');
+  while(S.chat.length>=2 && S.chat[S.chat.length-1].r==='chips' && isGreet(S.chat[S.chat.length-2])){
+    const g=S.chat[S.chat.length-2];
+    if(g.d===todayKey() && g.t===`Hey ${S.kid}! How was your day?`) break; // still current: keep it
+    S.chat.splice(-2,2);
+  }
   const last=S.chat[S.chat.length-1];
   const lastDay = last && last.d;
   if(!S.chat.length || lastDay!==todayKey()){
