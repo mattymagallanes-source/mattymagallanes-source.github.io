@@ -72,8 +72,18 @@ h2 small{font-family:var(--body);font-size:13px;font-weight:800;color:var(--mute
 /* Pet */
 .petCard{display:flex;flex-direction:column;gap:12px}
 .petHead{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.petHead b{font-family:var(--display);font-size:24px;font-weight:600;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto;min-width:0}
+.petHead b{font-family:var(--display);font-size:20px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto;line-height:1.1}
 .petHead .nextPhase{flex:none}
+.lvlMid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:900}
+.lvlMid .track{width:100%;flex:none;height:12px}
+.lvlMid .blbl{font-size:12px;font-weight:900;white-space:nowrap;flex:none}
+.lvlTop{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.lvlMid .xpRow{display:flex;justify-content:space-between;align-items:center}
+.lvlMid #xpTxt{font-size:10px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.curPhase{flex:none;width:46px;height:46px;display:flex;align-items:center;justify-content:center}
+.curPhase svg{width:46px;height:46px;overflow:visible}
+.petHead .nextPhase{flex-direction:column;gap:0;height:auto}
+.petHead .nextPhase span{font-size:9px}
 .mpill{display:inline-flex;align-items:center;gap:4px;background:var(--soft);border-radius:999px;padding:5px 9px;font-weight:900;font-size:13px;font-variant-numeric:tabular-nums}
 body[data-view=pet] header.top .wallet .pill{display:none}
 .stage{background:var(--mint);color:var(--greenInk);font-weight:900;font-size:12px;padding:5px 10px;border-radius:999px;letter-spacing:.05em}
@@ -85,7 +95,7 @@ body[data-view=pet] header.top .wallet .pill{display:none}
 .preview .cap,.stageWrap .cap{position:absolute;left:12px;top:12px;background:var(--card);border-radius:12px;padding:6px 10px;font-weight:900;font-size:12px;z-index:3;display:inline-flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums}
 .stageWrap .cap.roomWallet{left:auto;right:12px;top:auto;bottom:12px}
 .nextPhase{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:12px;letter-spacing:.05em;color:var(--muted);height:44px}
-.nextPhase svg{width:52px;height:44px;margin:-4px 0;overflow:visible}
+.nextPhase svg{width:46px;height:46px;margin:-4px 0;overflow:visible}
 .nextPhase.max{color:var(--greenInk)}
 .notice{background:var(--peach);border-radius:16px;padding:12px 14px;font-weight:800;font-size:14px;line-height:1.4;margin-top:12px}
 .pitem select{min-height:36px;border:0;border-radius:10px;background:var(--card);font-family:var(--body);font-weight:800;font-size:14px;color:var(--ink);padding:0 6px}
@@ -97,6 +107,7 @@ body[data-view=pet] header.top .wallet .pill{display:none}
 .bar span:first-child{width:62px}
 .bar span.blbl{width:auto;min-width:64px;flex:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .bar .track{flex:1;min-width:0}
+.bar.barHelp{margin-top:-2px}
 .infoBtn{position:relative;width:18px;height:18px;border-radius:50%;border:1.8px solid var(--muted);background:transparent;color:var(--muted);font:900 11px/1 var(--display);font-style:italic;display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer;flex:none}
 .infoBtn::after{content:"";position:absolute;inset:-9px}
 .infoBtn:active{background:var(--soft)}
@@ -404,6 +415,30 @@ main > section > h2:first-child{margin-top:14px}
 .petNight{left:auto;right:10px;align-items:flex-end}
 .cRow{display:inline-flex;align-items:center;gap:4px}
 .hintKey{color:#FF1F4B;font-weight:900}
+.seg{display:flex;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:3px}
+.seg button{flex:1;border:0;background:none;font:900 13px var(--body);color:var(--ink);padding:7px 4px;border-radius:999px;min-height:34px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.ptiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ptile{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:10px 12px;box-shadow:-4px 5px 0 rgba(27,42,74,.16);position:relative;overflow:hidden}
+.ptile b{display:block;font-family:var(--display);font-weight:600;font-size:26px;line-height:1.05}
+.ptile b small{font-size:13px;color:var(--muted);font-weight:700}
+.ptile span{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:900}
+.ptile .d{position:absolute;top:9px;right:9px;font-size:11px;font-weight:900;padding:2px 7px;border-radius:999px;background:#E6F7EE;color:#1E7A4A}
+.ptile .d.down{background:#FDEAEA;color:#B3261E}.ptile .d.flat{background:var(--soft);color:var(--muted)}
+.ptile i{position:absolute;left:0;bottom:0;height:5px;border-radius:0 4px 0 0}
+.pbox{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px;box-shadow:-4px 5px 0 rgba(27,42,74,.16);margin-top:12px}
+.pbox h3{font-family:var(--display);font-weight:600;font-size:16px;margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.pbox h3 small{font-size:11px;color:var(--muted);font-weight:700}
+.plegend{display:flex;gap:12px;font-size:11px;color:var(--muted);margin-top:6px;font-weight:800;flex-wrap:wrap}
+.plegend i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.ptip{background:#FFF6DB;border:2px dashed var(--yellow);border-radius:12px;padding:8px 10px;font-size:13px;margin-top:10px;font-weight:700}
+.patt{display:flex;flex-direction:column;gap:8px}
+.patt div{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:12px;padding:8px 10px;font-size:12px}
+.patt .ic{width:10px;height:34px;border-radius:5px;flex:none}
+.patt b{display:block;font-size:14px}.patt small{color:var(--muted);font-weight:700}
+.pfoot{display:flex;gap:8px;margin-top:12px}.pfoot div{flex:1;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:8px 4px;text-align:center;box-shadow:-4px 5px 0 rgba(27,42,74,.16)}
+.pfoot b{font-family:var(--display);font-weight:600;font-size:20px;display:block}.pfoot span{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.pempty{color:var(--muted);font-weight:700;font-size:13px;text-align:center;padding:14px 6px}
 .hintPulse{animation:hintPulse 1.4s ease-in-out infinite;position:relative;z-index:5}
 @keyframes hintPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,122,47,.85)}50%{box-shadow:0 0 0 8px rgba(255,122,47,0)}}
 nav.tabsbar button.hintPulse{border-radius:14px}
@@ -558,7 +593,7 @@ html.coachLock .app{padding-bottom:100vh}
     <!-- PET -->
     <section class="view" id="v-pet" aria-label="Your pet">
       <div class="card petCard">
-        <div class="petHead"><b id="petName">Pip</b><span class="nextPhase" id="nextPhase"></span><span class="row" style="gap:6px;align-items:center;flex-wrap:nowrap" hidden><span class="mpill" title="Coins"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#F2B807" stroke="#B88A00" stroke-width="1.5"/></svg><span id="pCoins">0</span></span><span class="mpill" title="Chest keys"><svg width="16" height="14" viewBox="0 0 18 16" aria-hidden="true"><circle cx="5" cy="8" r="3.5" fill="none" stroke="#FF7A2F" stroke-width="2"/><path d="M8.5 8h7M13 8v3M15.5 8v2" stroke="#FF7A2F" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span id="pKeys">0</span></span><span class="stage" id="stageTag">LVL 1</span></span></div>
+        <div class="petHead"><span class="curPhase" id="curPhase"></span><div class="lvlMid"><div class="lvlTop"><b id="petName">Pip</b></div><div class="track" style="position:relative"><div class="fill" id="bXp" style="background:var(--green)"></div></div><span class="xpRow"><span class="blbl" id="lvlLbl">LVL 1</span><span class="muted" id="xpTxt">0/100</span></span></div><span class="nextPhase" id="nextPhase"></span><span class="row" style="gap:6px;align-items:center;flex-wrap:nowrap" hidden><span class="mpill" title="Coins"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#F2B807" stroke="#B88A00" stroke-width="1.5"/></svg><span id="pCoins">0</span></span><span class="mpill" title="Chest keys"><svg width="16" height="14" viewBox="0 0 18 16" aria-hidden="true"><circle cx="5" cy="8" r="3.5" fill="none" stroke="#FF7A2F" stroke-width="2"/><path d="M8.5 8h7M13 8v3M15.5 8v2" stroke="#FF7A2F" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span id="pKeys">0</span></span><span class="stage" id="stageTag">LVL 1</span></span></div>
         <div class="stageWrap" id="room">
           <span class="cap roomLvl" id="roomLvl" hidden>LVL 1</span>
           <span class="cap roomWallet" id="roomWallet"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#F2B807" stroke="#B88A00" stroke-width="1.5"/></svg><span id="rCoins">0</span><svg width="16" height="14" viewBox="0 0 18 16" aria-hidden="true" style="margin-left:6px"><circle cx="5" cy="8" r="3.5" fill="none" stroke="#FF7A2F" stroke-width="2"/><path d="M8.5 8h7M13 8v3M15.5 8v2" stroke="#FF7A2F" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span id="rKeys">0</span></span>
@@ -572,7 +607,7 @@ html.coachLock .app{padding-bottom:100vh}
         <div class="bars" style="position:relative">
           <div class="bar"><span class="blbl">HAPPY</span><div class="track"><div class="fill" id="bHappy" style="background:var(--orange)"></div></div></div>
           <div class="bar"><span class="blbl">CARE</span><div class="track"><div class="fill" id="bEnergy" style="background:var(--c-rare)"></div></div></div>
-          <div class="bar xpbar"><span class="blbl" id="lvlLbl">LVL 1</span><div class="track" style="position:relative"><div class="fill" id="bXp" style="background:var(--green)"></div></div><span class="xpRow"><button type="button" class="helpBtn" data-info="all" aria-label="What do these meters mean?">?</button><span class="muted" id="xpTxt">0/100</span></span></div>
+          <div class="bar barHelp"><button type="button" class="helpBtn" data-info="all" aria-label="What do these meters mean?">?</button></div>
         </div>
         <div class="path icons" id="pathRow" role="list" aria-label="Growth stages" hidden></div>
       </div>
@@ -619,6 +654,14 @@ html.coachLock .app{padding-bottom:100vh}
             <div class="row wide"><button class="btn" type="submit" id="sSubmit" style="flex:1">Add Quest</button></div>
           </form>
           </details>
+        </div>
+        <h2>Progress <small id="progStamp"></small></h2>
+        <div class="card" id="progCard" style="display:flex;flex-direction:column;gap:12px">
+          <div class="row" style="justify-content:space-between;align-items:center;gap:10px">
+            <div class="seg" id="progSeg" style="flex:1"><button type="button" data-range="7">Week</button><button type="button" data-range="14" aria-pressed="true">2 weeks</button><button type="button" data-range="30">Month</button></div>
+            <button class="btn ghost" id="progRefresh" type="button" style="min-height:40px;padding:0 12px;font-size:13px;display:inline-flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10a6 6 0 1 1-1.8-4.3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M16 2v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Refresh</button>
+          </div>
+          <div id="progBody"></div>
         </div>
         <h2>Names &amp; code</h2>
         <div class="card" style="display:flex;flex-direction:column;gap:10px">
@@ -819,6 +862,15 @@ function checkNameField(input){
   return false;
 }
 
+/* ---------- Progress log (per day, for the grown-up report) ---------- */
+function dayLog(k){ S.log=S.log||{}; return S.log[k]=S.log[k]||{planned:0,done:[],missed:[]}; }
+function logQuest(t, mins, late, bonus){
+  const L=dayLog(todayKey());
+  L.done.push({id:t.id, title:t.title, mins, late:!!late, bonus:!!bonus, hour:new Date().getHours(), at:t.at||''});
+  if(!bonus) L.planned=Math.max(L.planned||0, todayTasks().length);
+  const keys=Object.keys(S.log); if(keys.length>120) keys.sort().slice(0,keys.length-120).forEach(k=>delete S.log[k]);
+}
+
 /* ---------- State ---------- */
 const DEFAULT = () => ({
   v:1, updatedAt:0, kid:'Child', pet:'Pip',
@@ -871,7 +923,9 @@ function applyMissed(dayKey){
   if(!S.started || !dayKey) return;
   if(dayKey <= todayKey(new Date(S.trackSince))) return; // never count the first day
   const wd=new Date(dayKey+'T12:00').getDay();
-  const missed=S.tasks.filter(t=>t.days.includes(wd) && t.skip!==dayKey && !(S.done||{})[t.id] && !(t.addedAt && todayKey(new Date(t.addedAt))===dayKey && new Date(dayKey+'T'+(t.at||'00:00')).getTime() < t.addedAt));
+  const planned=S.tasks.filter(t=>t.days.includes(wd) && t.skip!==dayKey && !(t.addedAt && todayKey(new Date(t.addedAt))===dayKey && new Date(dayKey+'T'+(t.at||'00:00')).getTime() < t.addedAt));
+  const missed=planned.filter(t=>!(S.done||{})[t.id]);
+  { const L=dayLog(dayKey); L.planned=planned.length; L.missed=missed.map(t=>({id:t.id,title:t.title})); L.closed=1; }
   if(!missed.length) return;
   hit(Math.min(MISS_HIT*missed.length, 40));
   S.notice={day:dayKey, missed:missed.map(t=>t.title)};
@@ -1925,9 +1979,13 @@ function renderPet(){
   const pk=JSON.stringify([st,S.look]);
   { const nx=STAGES[st+1], npEl=$('nextPhase'); if(npEl){ const nk=JSON.stringify([st,S.look]); if(npEl.dataset.k!==nk){ npEl.dataset.k=nk;
       npEl.className='nextPhase'+(nx?'':' max');
-      npEl.innerHTML = nx ? `<span>NEXT LVL</span>${petSVG({stage:st+1,eq:{},name:S.pet,cls:''}).replace(/viewBox="0 0 200 200"/,'viewBox="10 30 180 170"').replace(/role="img" aria-label="[^"]*"/,'aria-hidden="true"')}` : '<span>MAX LVL</span>';
+      npEl.innerHTML = nx ? `${petSVG({stage:st+1,eq:{},name:S.pet,cls:''}).replace(/viewBox="0 0 200 200"/,'viewBox="10 30 180 170"').replace(/role="img" aria-label="[^"]*"/,'aria-hidden="true"')}` : '<span>MAX LVL</span>';
       npEl.title = nx ? `LVL ${nx.min}: ${nx.n.charAt(0)+nx.n.slice(1).toLowerCase()}` : 'Legend is the max LVL';
       const isv=npEl.querySelector('svg'); if(isv){ try{ const g=isv.getBBox(); if(g.width&&g.height){ const pad=4; isv.setAttribute('viewBox', `${g.x-pad} ${g.y-pad} ${g.width+pad*2} ${g.height+pad*2}`); isv.setAttribute('preserveAspectRatio','xMidYMid meet'); } }catch(e){} } } } }
+  { const cp=$('curPhase'); if(cp){ const ck=JSON.stringify([st,S.look,S.eq]); if(cp.dataset.k!==ck){ cp.dataset.k=ck;
+      cp.innerHTML = petSVG({stage:st,name:S.pet,cls:''}).replace(/role="img" aria-label="[^"]*"/,'aria-hidden="true"');
+      cp.title=`LVL ${S.level}: ${STAGES[st].n.charAt(0)+STAGES[st].n.slice(1).toLowerCase()}`;
+      const isv=cp.querySelector('svg'); if(isv){ try{ const g=isv.getBBox(); if(g.width&&g.height){ const pad=4; isv.setAttribute('viewBox', `${g.x-pad} ${g.y-pad} ${g.width+pad*2} ${g.height+pad*2}`); isv.setAttribute('preserveAspectRatio','xMidYMid meet'); } }catch(e){} } } } }
   if($('roomLvl')) $('roomLvl').textContent=`LVL ${S.level}${S.stars?' ★'+S.stars:''}`;
   if($('lvlLbl')) $('lvlLbl').textContent=`LVL ${S.level}`;
   if($('rCoins')){ $('rCoins').textContent=S.coins; $('rKeys').textContent=S.keys; }
@@ -2220,6 +2278,7 @@ function finishTask(){
   const ranMins=Math.round(a.total/60000);
   const gain=Math.round(10+ranMins*4), coins=5+ranMins;
   if(isBonusId(a.id)){ bonusDoneMap()[a.id]=1; } else S.done[a.id]=true;
+  logQuest(t, ranMins, !isBonusId(a.id) && !!(S.late&&S.late[a.id]), isBonusId(a.id));
   S.totalDone++; const coins0=S.coins, keys0=S.keys; S.coins+=coins;
   const keyNotes=[]; let keysWon=0;
   const prevKeyMin=S.keyMin||0;
@@ -2411,10 +2470,97 @@ function editorHTML(t){
     <label class="field wide">Tiny steps (separate with commas)<input id="eSteps" maxlength="120" value="${esc((t.steps||[]).join(', '))}"></label>
     <div class="row wide"><button class="btn" type="button" data-esave="${t.id}" style="flex:1">Save</button><button class="btn ghost" type="button" data-ecancel style="flex:1">Cancel</button></div></div>`;
 }
+/* ---------- Progress report ---------- */
+let progRange=14;
+function progDays(n){ const out=[]; for(let i=n-1;i>=0;i--) out.push(dayOffset(todayKey(),-i)); return out; }
+function progDay(k){
+  const L=(S.log||{})[k]||{planned:0,done:[],missed:[]}; const today=k===todayKey();
+  const done=L.done||[], q=done.filter(d=>!d.bonus);
+  const onTime=q.filter(d=>!d.late).length, late=q.filter(d=>d.late).length;
+  const planned=today?Math.max(todayTasks().length, q.length):Math.max(L.planned||0, q.length);
+  const missed=today?0:(L.closed?(L.missed||[]).length:Math.max(0,planned-q.length));
+  return {k, done, q, onTime, late, missed, planned, mins:done.reduce((a,d)=>a+d.mins,0), bonus:done.filter(d=>d.bonus).length, hasData:!!(S.log||{})[k]||today};
+}
+function renderProgress(){
+  const body=$('progBody'); if(!body) return;
+  const days=progDays(progRange).map(progDay), prev=progDays(progRange*2).slice(0,progRange).map(progDay);
+  const sum=(arr,f)=>arr.reduce((a,d)=>a+f(d),0);
+  const mins=sum(days,d=>d.mins), minsP=sum(prev,d=>d.mins);
+  const doneN=sum(days,d=>d.q.length), plannedN=sum(days,d=>d.planned), doneP=sum(prev,d=>d.q.length);
+  const onT=sum(days,d=>d.onTime), lateN=sum(days,d=>d.late), missN=sum(days,d=>d.missed);
+  const rate=(onT+lateN+missN)?Math.round(onT/(onT+lateN+missN)*100):null;
+  const onTP=sum(prev,d=>d.onTime), lateP=sum(prev,d=>d.late), missP=sum(prev,d=>d.missed);
+  const rateP=(onTP+lateP+missP)?Math.round(onTP/(onTP+lateP+missP)*100):null;
+  const anyData=days.some(d=>d.done.length||d.missed||d.planned);
+  if(!anyData){ body.innerHTML=`<div class="pempty">No Quests yet in this range. Charts fill in as ${esc(S.kid)} finishes Quests.</div>`; return; }
+  const delta=(a,b,pct)=>{ if(b==null||a==null||!b) return '<em class="d flat">new</em>'; const diff=pct?a-b:Math.round((a-b)/b*100); if(diff===0) return '<em class="d flat">same</em>'; return `<em class="d ${diff<0?'down':''}">${diff>0?'▲':'▼'} ${Math.abs(diff)}${pct?' pts':'%'}</em>`; };
+  // best streak from history
+  let best=0, run=0; Object.keys(S.history||{}).sort().forEach((k,i,arr)=>{ run = (i>0 && dayOffset(arr[i-1],1)===k) ? run+1 : 1; best=Math.max(best,run); }); best=Math.max(best,S.streak||0);
+  const tiles=`<div class="ptiles">
+    <div class="ptile"><span>Focus minutes</span><b>${mins}</b>${delta(mins,minsP)}<i style="width:${Math.min(100,Math.round(mins/Math.max(1,progRange*40)*100))}%;background:#2F62D0"></i></div>
+    <div class="ptile"><span>Quests done</span><b>${doneN}<small>/${plannedN}</small></b>${delta(doneN,doneP)}<i style="width:${plannedN?Math.round(doneN/plannedN*100):0}%;background:var(--green)"></i></div>
+    <div class="ptile"><span>On time</span><b>${rate==null?'–':rate+'%'}</b>${delta(rate,rateP,true)}<i style="width:${rate||0}%;background:var(--orange)"></i></div>
+    <div class="ptile"><span>Streak</span><b>${S.streak||0} <small>days</small></b><em class="d flat">best ${best}</em><i style="width:${best?Math.round((S.streak||0)/best*100):0}%;background:#7B5CD6"></i></div>
+  </div>`;
+  // --- Quests per day (stacked) ---
+  const W=330, H=150, left=16, top=8, bottom=128, n=days.length, slot=(W-left-4)/n, bw=Math.max(4,Math.min(16,slot-4));
+  const maxQ=Math.max(1,...days.map(d=>Math.max(d.planned,d.q.length)));
+  const yOf=v=>bottom-(v/maxQ)*(bottom-top);
+  let grid='', labels='';
+  for(let v=1; v<=maxQ; v++){ if(maxQ>6 && v%2) continue; grid+=`<line x1="${left}" y1="${yOf(v)}" x2="${W}" y2="${yOf(v)}" stroke="#E3E9F3"/><text x="0" y="${yOf(v)+4}" font-size="10" fill="#4A5878" font-weight="700">${v}</text>`; }
+  let bars='';
+  days.forEach((d,i)=>{ const x=left+4+i*slot+(slot-bw)/2; let y=bottom;
+    const seg=(v,c,dash)=>{ if(!v) return; const h=(v/maxQ)*(bottom-top); y-=h; bars+=dash?`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="none" stroke="${c}" stroke-dasharray="3 2"/>`:`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${c}"/>`; };
+    seg(d.onTime,'#3BB273'); seg(d.late,'#FF7A2F'); seg(d.missed,'#D5DCE8'); if(d.k===todayKey()) seg(Math.max(0,d.planned-d.q.length),'#3BB273',true);
+    const wd=new Date(d.k+'T12:00').getDay(); const lbl=n>14?(i%4===0?'MTWTFSS'[(wd+6)%7]:''):'SMTWTFS'[wd];
+    labels+=`<text x="${x+bw/2}" y="${H-6}" font-size="9" text-anchor="middle" font-weight="800" fill="${wd===0||wd===6?'#B3261E':'#4A5878'}">${lbl}</text>`; });
+  const weekendMiss=days.filter(d=>{const wd=new Date(d.k+'T12:00').getDay(); return wd===0||wd===6;}).reduce((a,d)=>a+d.missed,0);
+  const bestDayQ=days.slice().sort((a,b)=>b.q.length-a.q.length)[0];
+  let tip1='';
+  if(missN>=3 && weekendMiss/missN>=.6) tip1=`Weekends are where the routine slips: ${weekendMiss} of the ${missN} missed Quests were on Saturday or Sunday.`;
+  else if(lateN>=3 && lateN>missN) tip1=`Most slips are late starts, not skips. A reminder a few minutes before start time may be all it takes.`;
+  else if(rate!=null && rate>=85) tip1=`${esc(S.kid)} is on time ${rate}% of the time. The routine is sticking!`;
+  else if(missN===0 && doneN>0) tip1=`No missed Quests in this range. Nice.`;
+  const chart1=`<div class="pbox"><h3>Quests per day <small>last ${progRange} days</small></h3><svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">${grid}${bars}${labels}</svg>
+    <div class="plegend"><span><i style="background:#3BB273"></i>On time</span><span><i style="background:#FF7A2F"></i>Late</span><span><i style="background:#D5DCE8"></i>Missed</span></div>${tip1?`<div class="ptip">💡 ${tip1}</div>`:''}</div>`;
+  // --- Focus minutes line ---
+  const maxM=Math.max(10,...days.map(d=>d.mins)); const LH=90, LB=80, LT=14;
+  const px=i=>8+i*((W-16)/Math.max(1,n-1)), py=v=>LB-(v/maxM)*(LB-LT);
+  const pts=days.map((d,i)=>`${px(i).toFixed(1)} ${py(d.mins).toFixed(1)}`);
+  const avg=Math.round(mins/n), bestM=days.slice().sort((a,b)=>b.mins-a.mins)[0];
+  const chart2=`<div class="pbox"><h3>Focus minutes <small>per day</small></h3><svg viewBox="0 0 ${W} ${LH}" width="100%" style="display:block"><defs><linearGradient id="pgl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F62D0" stop-opacity=".35"/><stop offset="1" stop-color="#2F62D0" stop-opacity="0"/></linearGradient></defs>
+    <line x1="0" y1="${LB}" x2="${W}" y2="${LB}" stroke="#E3E9F3"/><line x1="0" y1="${(LB+LT)/2}" x2="${W}" y2="${(LB+LT)/2}" stroke="#E3E9F3"/>
+    <path d="M${pts[0]} L${pts.join(' L')} L${px(n-1)} ${LB} L8 ${LB}z" fill="url(#pgl)"/><path d="M${pts.join(' L')}" fill="none" stroke="#2F62D0" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    ${n<=14?days.map((d,i)=>`<circle cx="${px(i)}" cy="${py(d.mins)}" r="3.5" fill="#fff" stroke="#2F62D0" stroke-width="2.5"/>`).join(''):''}
+    <text x="0" y="11" font-size="10" font-weight="700" fill="#4A5878">${maxM} min</text></svg>
+    <div class="plegend" style="justify-content:space-between"><span>Avg <b style="color:var(--ink)">${avg} min/day</b></span><span>Best day <b style="color:var(--ink)">${bestM&&bestM.mins?new Date(bestM.k+'T12:00').toLocaleDateString(undefined,{weekday:'short'})+', '+bestM.mins+' min':'–'}</b></span></div></div>`;
+  // --- Needs attention ---
+  const per={}; days.forEach(d=>{ d.q.forEach(q=>{ const p=per[q.id]=per[q.id]||{title:q.title,on:0,late:0,miss:0,missWk:0}; if(q.late) p.late++; else p.on++; }); const wd=new Date(d.k+'T12:00').getDay(); ((S.log||{})[d.k]||{}).missed?.forEach(m=>{ const p=per[m.id]=per[m.id]||{title:m.title,on:0,late:0,miss:0,missWk:0}; p.miss++; if(wd===0||wd===6) p.missWk++; }); });
+  const list=Object.values(per).map(p=>({...p,total:p.on+p.late+p.miss,bad:p.late+p.miss})).filter(p=>p.total>0).sort((a,b)=>b.bad-a.bad||b.total-a.total);
+  const worst=list.filter(p=>p.bad>0).slice(0,2), solid=list.filter(p=>p.bad===0).sort((a,b)=>b.total-a.total)[0];
+  const rowOf=p=>{ const c=p.miss>=p.late?'#D5DCE8':'#FF7A2F'; const bits=[]; if(p.late) bits.push(`Late ${p.late} of ${p.total}`); if(p.miss) bits.push(`Skipped ${p.miss} time${p.miss>1?'s':''}${p.missWk===p.miss&&p.miss>1?', all on weekends':''}`); return `<div><span class="ic" style="background:${c}"></span><div><b>${esc(p.title)}</b><small>${bits.join(' · ')}</small></div></div>`; };
+  let tip2=''; if(worst[0]){ const w=worst[0]; tip2 = w.late>=w.miss ? `Try moving ${esc(w.title)} a little later, or splitting it into two shorter Quests.` : (w.missWk===w.miss&&w.miss>1 ? `Weekends are the problem for ${esc(w.title)}. A later start on Sat/Sun, or fewer weekend Quests, may help.` : `${esc(w.title)} gets skipped. A shorter timer or a different time of day may help.`); }
+  const chart3=(worst.length||solid)?`<div class="pbox"><h3>Needs attention</h3><div class="patt">${worst.map(rowOf).join('')}${solid?`<div><span class="ic" style="background:#3BB273"></span><div><b>${esc(solid.title)}</b><small>On time ${solid.on} of ${solid.total} · rock solid</small></div></div>`:''}</div>${tip2?`<div class="ptip">${tip2}</div>`:''}</div>`:'';
+  // --- Best focus time (on-time rate by planned hour) ---
+  const byH={}; days.forEach(d=>d.q.forEach(q=>{ const h=q.at?parseInt(q.at.slice(0,2),10):q.hour; const o=byH[h]=byH[h]||{on:0,n:0}; o.n++; if(!q.late) o.on++; }));
+  const hours=Object.keys(byH).map(Number).sort((a,b)=>a-b).filter(h=>byH[h].n>=1).slice(0,7);
+  let chart4='';
+  if(hours.length>=2){
+    const bwH=Math.min(36,(W-12)/hours.length-10); let hb='';
+    hours.forEach((h,i)=>{ const r=Math.round(byH[h].on/byH[h].n*100), x=6+i*((W-12)/hours.length)+(((W-12)/hours.length)-bwH)/2, hh=12+r*0.44, c=r>=85?'#3BB273':r>=65?'#7FD1A4':r>=50?'#FFD9BF':'#FFC9A8'; hb+=`<rect x="${x}" y="${70-hh}" width="${bwH}" height="${hh}" rx="4" fill="${c}"/><text x="${x+bwH/2}" y="${66-hh}" font-size="10" text-anchor="middle" font-weight="900" fill="${r>=85?'#1E7A4A':'#4A5878'}">${r}%</text><text x="${x+bwH/2}" y="80" font-size="9" text-anchor="middle" font-weight="800" fill="#4A5878">${h%12||12}${h<12?'am':'pm'}</text>`; });
+    const bestH=hours.slice().sort((a,b)=>byH[b].on/byH[b].n-byH[a].on/byH[a].n)[0];
+    chart4=`<div class="pbox"><h3>Best focus time <small>on-time rate by hour</small></h3><svg viewBox="0 0 ${W} 84" width="100%" style="display:block">${hb}</svg><div class="ptip">${esc(S.kid)} does best around ${bestH%12||12}${bestH<12?'am':'pm'}. Planning the harder Quests there may help.</div></div>`;
+  }
+  const foot=`<div class="pfoot"><div><b>${sum(days,d=>d.bonus)}</b><span>Bonus Quests</span></div><div><b>LVL ${S.level}</b><span>${STAGES[stageOf(S.level)].n.charAt(0)+STAGES[stageOf(S.level)].n.slice(1).toLowerCase()}</span></div><div><b>${S.chests||0}</b><span>Chests opened</span></div></div>`;
+  const noHist=days.filter(d=>!d.hasData).length;
+  body.innerHTML = tiles+chart1+chart2+chart3+chart4+foot+(noHist>=3?`<p class="muted" style="margin:10px 0 0;font-size:12px;font-weight:700">Days before the report was added show as empty.</p>`:'');
+}
+function stampProgress(){ S.progressAt=Date.now(); const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
 function renderSettings(){
   $('gateCard').hidden=unlocked; $('setBody').hidden=!unlocked; $('lockBtn').hidden=!unlocked;
   if($('chatOn')) $('chatOn').checked=!S.chatOff;
   if(!unlocked){ if(!$('gatePad').firstChild || $('gatePad').dataset.mode!==(S.pin?'u':'s')){ $('gatePad').dataset.mode=S.pin?'u':'s'; requireGrownUp($('gatePad'), ()=>{ $('gatePad').innerHTML=''; renderSettings(); }); } return; }
+  if(unlocked){ renderProgress(); if(!S.progressAt || Date.now()-S.progressAt>60000) stampProgress(); else { const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); } }
   // running Quest
   const rb=$('runBox');
   if(S.active){ rb.hidden=false; rb.innerHTML=runControls(); } else rb.hidden=true;
@@ -2489,6 +2635,8 @@ $('planForm').addEventListener('submit', e=>{
   const nt=Object.assign({id:uid()},data); const sk=skipIfPassed(nt); S.tasks.push(nt); toast(sk?"Quest added for today. Its time already passed, so it won't count as late.":'Quest added');
   resetForm(); $('addPanel').open=false; $('listPanel').open=true; save(); renderSettings();
 });
+$('progRefresh').addEventListener('click', ()=>{ renderProgress(); stampProgress(); save(); toast('Progress updated'); });
+$('progSeg').addEventListener('click', e=>{ const b=e.target.closest('[data-range]'); if(!b) return; progRange=+b.dataset.range; $('progSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); renderProgress(); });
 $('chatOn').addEventListener('change', ()=>{ S.chatOff=!$('chatOn').checked; save(); if(S.chatOff && view==='chat') go('pet'); renderNav(); toast(S.chatOff?'Chat turned off':'Chat turned on'); });
 $('saveNames').addEventListener('click', ()=>{ if(!checkNameField($('kidNameIn'))||!checkNameField($('petNameIn'))) return; S.pet=$('petNameIn').value.trim()||'Pip'; S.kid=$('kidNameIn').value.trim()||'Child'; save(); renderAll(); toast('Names saved'); });
 
