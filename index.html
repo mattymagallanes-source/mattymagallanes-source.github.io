@@ -419,11 +419,11 @@ main > section > h2:first-child{margin-top:14px}
 .seg button{flex:1;border:0;background:none;font:900 13px var(--body);color:var(--ink);padding:7px 4px;border-radius:999px;min-height:34px}
 .seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .ptiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ptile{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:10px 12px;box-shadow:-4px 5px 0 rgba(27,42,74,.16);position:relative;overflow:hidden}
+.ptile{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:10px 12px 14px;box-shadow:-4px 5px 0 rgba(27,42,74,.16);position:relative;overflow:hidden}
 .ptile b{display:block;font-family:var(--display);font-weight:600;font-size:26px;line-height:1.05}
 .ptile b small{font-size:13px;color:var(--muted);font-weight:700}
-.ptile span{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:900}
-.ptile .d{position:absolute;top:9px;right:9px;font-size:11px;font-weight:900;padding:2px 7px;border-radius:999px;background:#E6F7EE;color:#1E7A4A}
+.ptile span{display:block;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:900}
+.ptile .d{display:inline-block;margin-top:5px;font-size:11px;font-weight:900;font-style:normal;padding:2px 7px;border-radius:999px;background:#E6F7EE;color:#1E7A4A;white-space:nowrap}
 .ptile .d.down{background:#FDEAEA;color:#B3261E}.ptile .d.flat{background:var(--soft);color:var(--muted)}
 .ptile i{position:absolute;left:0;bottom:0;height:5px;border-radius:0 4px 0 0}
 .pbox{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px;box-shadow:-4px 5px 0 rgba(27,42,74,.16);margin-top:12px}
@@ -630,10 +630,6 @@ html.coachLock .app{padding-bottom:100vh}
       <div class="card" id="gateCard"><div id="gatePad"></div></div>
       <div id="setBody" hidden>
         <div class="card" id="runBox" hidden></div>
-        <h2>Pet chat (AI)</h2>
-        <div class="card">
-          <label for="chatOn" class="row" style="justify-content:space-between;gap:10px;font-weight:800;min-height:44px"><span>Let your child chat with the pet<br><small class="muted" style="font-weight:700">When off, the Chat tab is hidden from your child.</small></span><input id="chatOn" class="chk" type="checkbox" checked></label>
-        </div>
         <h2>Planner <small id="planSum"></small></h2>
         <div class="card" style="display:flex;flex-direction:column;gap:12px">
           <details id="listPanel" class="addPanel listPanel">
@@ -1560,7 +1556,7 @@ $('modal').addEventListener('click', e=>{ if($('modal').dataset.lock) return; if
 const VIEWS = [['pet','PET','M5.5 9.5L4.2 3l4.6 2.6q2.2-.5 4.4 0L17.8 3l-1.3 6.5q2 3.2.4 6.6Q11 21.2 5.1 16.1q-1.6-3.4.4-6.6zM8.4 12.6h.1M13.5 12.6h.1'],['quests','QUESTS','M5 5h12M5 10h12M5 15h8'],['chat','CHAT','M4 5h14v9H9l-4 4z'],['items','SHOP','M4 8l7-4 7 4v8l-7 4-7-4z'],['chest','CHEST','M3 9h16v9H3zM3 9l2-4h12l2 4M11 12v2']];
 let view='pet';
 function renderNav(){
-  const tabs=VIEWS.filter(([k])=>!(k==='chat' && S.chatOff));
+  const tabs=VIEWS.slice();
   $('navBtns').parentElement.style.setProperty('--tabs', tabs.length+1);
   $('navBtns').innerHTML = tabs.map(([k,l,d])=>{
     const badge = k==='chest' && S.keys>0 ? `<span class="dot">${S.keys}</span>` : '';
@@ -1573,8 +1569,7 @@ function go(v){
   S.hints=S.hints||{}; if(v==='chest') S.hints.chest=1; if(v==='items') S.hints.dress=1;
   view=v; VIEWS.forEach(([k])=>$('v-'+k).hidden = k!==v); $('v-settings').hidden = v!=='settings';
   if(v!=='settings'){ unlocked=false; }
-  if(v==='chat' && S.chatOff) v='pet';
-  $('composer').hidden = v!=='chat';
+  $('composer').hidden = true; // tap-only chat: no typing
   renderAll(); window.scrollTo(0,0);
   if(v==='chat') startChatIfEmpty();
 }
@@ -2535,11 +2530,18 @@ function renderProgress(){
     <text x="0" y="11" font-size="10" font-weight="700" fill="#4A5878">${maxM} min</text></svg>
     <div class="plegend" style="justify-content:space-between"><span>Avg <b style="color:var(--ink)">${avg} min/day</b></span><span>Best day <b style="color:var(--ink)">${bestM&&bestM.mins?new Date(bestM.k+'T12:00').toLocaleDateString(undefined,{weekday:'short'})+', '+bestM.mins+' min':'–'}</b></span></div></div>`;
   // --- Needs attention ---
-  const per={}; days.forEach(d=>{ d.q.forEach(q=>{ const p=per[q.id]=per[q.id]||{title:q.title,on:0,late:0,miss:0,missWk:0}; if(q.late) p.late++; else p.on++; }); const wd=new Date(d.k+'T12:00').getDay(); ((S.log||{})[d.k]||{}).missed?.forEach(m=>{ const p=per[m.id]=per[m.id]||{title:m.title,on:0,late:0,miss:0,missWk:0}; p.miss++; if(wd===0||wd===6) p.missWk++; }); });
+  const per={}; days.forEach(d=>{ d.q.forEach(q=>{ const p=per[q.id]=per[q.id]||{title:q.title,on:0,late:0,miss:0,missWk:0,mins:0,at:''}; if(q.late) p.late++; else p.on++; p.mins=Math.max(p.mins,q.mins||0); if(q.at) p.at=q.at; }); const wd=new Date(d.k+'T12:00').getDay(); ((S.log||{})[d.k]||{}).missed?.forEach(m=>{ const p=per[m.id]=per[m.id]||{title:m.title,on:0,late:0,miss:0,missWk:0,mins:0,at:''}; p.miss++; const tk=S.tasks.find(t=>t.id===m.id); if(tk){ p.mins=Math.max(p.mins,tk.mins||0); if(tk.at) p.at=tk.at; } if(wd===0||wd===6) p.missWk++; }); });
   const list=Object.values(per).map(p=>({...p,total:p.on+p.late+p.miss,bad:p.late+p.miss})).filter(p=>p.total>0).sort((a,b)=>b.bad-a.bad||b.total-a.total);
-  const worst=list.filter(p=>p.bad>0).slice(0,2), solid=list.filter(p=>p.bad===0).sort((a,b)=>b.total-a.total)[0];
+  const worst=list.filter(p=>p.bad>=2 || (p.total>=3 && p.bad/p.total>=0.5)).slice(0,2), solid=list.filter(p=>p.bad===0).sort((a,b)=>b.total-a.total)[0];
   const rowOf=p=>{ const c=p.miss>=p.late?'#D5DCE8':'#FF7A2F'; const bits=[]; if(p.late) bits.push(`Late ${p.late} of ${p.total}`); if(p.miss) bits.push(`Skipped ${p.miss} time${p.miss>1?'s':''}${p.missWk===p.miss&&p.miss>1?', all on weekends':''}`); return `<div><span class="ic" style="background:${c}"></span><div><b>${esc(p.title)}</b><small>${bits.join(' · ')}</small></div></div>`; };
-  let tip2=''; if(worst[0]){ const w=worst[0]; tip2 = w.late>=w.miss ? `Try moving ${esc(w.title)} a little later, or splitting it into two shorter Quests.` : (w.missWk===w.miss&&w.miss>1 ? `Weekends are the problem for ${esc(w.title)}. A later start on Sat/Sun, or fewer weekend Quests, may help.` : `${esc(w.title)} gets skipped. A shorter timer or a different time of day may help.`); }
+  let tip2=''; if(worst[0]){ const w=worst[0], T=esc(w.title), long=w.mins>=10, timed=!!w.at;
+    if(w.late>=w.miss){
+      if(long) tip2=`${T} often starts late. Try splitting it into two shorter Quests, or starting it right after something ${esc(S.kid)} already does every day.`;
+      else if(timed) tip2=`${T} often starts late. Try setting its time a little later, or right after something ${esc(S.kid)} already does every day, like a meal.`;
+      else tip2=`${T} often starts late. Giving it a set time, or pairing it with a daily routine like a meal, can help.`;
+    } else if(w.missWk===w.miss&&w.miss>1) tip2=`Weekends are the problem for ${T}. A later start on Sat/Sun, or fewer weekend Quests, may help.`;
+    else tip2= long ? `${T} gets skipped. A shorter timer or a different time of day may help.` : `${T} gets skipped. A reminder at a set time, or doing it together for a few days, may help.`;
+  }
   const chart3=(worst.length||solid)?`<div class="pbox"><h3>Needs attention</h3><div class="patt">${worst.map(rowOf).join('')}${solid?`<div><span class="ic" style="background:#3BB273"></span><div><b>${esc(solid.title)}</b><small>On time ${solid.on} of ${solid.total} · rock solid</small></div></div>`:''}</div>${tip2?`<div class="ptip">${tip2}</div>`:''}</div>`:'';
   // --- Best focus time (on-time rate by planned hour) ---
   const byH={}; days.forEach(d=>d.q.forEach(q=>{ const h=q.at?parseInt(q.at.slice(0,2),10):q.hour; const o=byH[h]=byH[h]||{on:0,n:0}; o.n++; if(!q.late) o.on++; }));
@@ -2558,7 +2560,6 @@ function renderProgress(){
 function stampProgress(){ S.progressAt=Date.now(); const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
 function renderSettings(){
   $('gateCard').hidden=unlocked; $('setBody').hidden=!unlocked; $('lockBtn').hidden=!unlocked;
-  if($('chatOn')) $('chatOn').checked=!S.chatOff;
   if(!unlocked){ if(!$('gatePad').firstChild || $('gatePad').dataset.mode!==(S.pin?'u':'s')){ $('gatePad').dataset.mode=S.pin?'u':'s'; requireGrownUp($('gatePad'), ()=>{ $('gatePad').innerHTML=''; renderSettings(); }); } return; }
   if(unlocked){ renderProgress(); if(!S.progressAt || Date.now()-S.progressAt>60000) stampProgress(); else { const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); } }
   // running Quest
@@ -2637,7 +2638,6 @@ $('planForm').addEventListener('submit', e=>{
 });
 $('progRefresh').addEventListener('click', ()=>{ renderProgress(); stampProgress(); save(); toast('Progress updated'); });
 $('progSeg').addEventListener('click', e=>{ const b=e.target.closest('[data-range]'); if(!b) return; progRange=+b.dataset.range; $('progSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); renderProgress(); });
-$('chatOn').addEventListener('change', ()=>{ S.chatOff=!$('chatOn').checked; save(); if(S.chatOff && view==='chat') go('pet'); renderNav(); toast(S.chatOff?'Chat turned off':'Chat turned on'); });
 $('saveNames').addEventListener('click', ()=>{ if(!checkNameField($('kidNameIn'))||!checkNameField($('petNameIn'))) return; S.pet=$('petNameIn').value.trim()||'Pip'; S.kid=$('kidNameIn').value.trim()||'Child'; save(); renderAll(); toast('Names saved'); });
 
 /* ---------- Edit pet (kid) ---------- */
@@ -2759,7 +2759,7 @@ function renderChat(){
   const box=$('chat');
   box.innerHTML = S.chat.slice(-40).map(m=>{
     if(m.r==='idea') return `<div class="idea"><small>${esc(S.pet).toUpperCase()}'S IDEA</small><b>${esc(m.title)} · ${m.mins} min</b>${m.added?`<span class="muted" style="font-weight:800">Added to your Quests</span>`:`<button class="btn dark" type="button" data-idea="${m.id}">Add to my Quests</button>`}</div>`;
-    if(m.r==='chips') return `<div class="chips">${['Great','Okay','Kinda rough'].map(c=>`<button class="chip" type="button" data-chip="${c}">${c}</button>`).join('')}</div>`;
+    if(m.r==='chips') return `<div class="chips">${(m.c||[['Great','great'],['Okay','okay'],['Kinda rough','rough']]).map(c=>Array.isArray(c)?c:[c,'day']).map(([l,nd])=>`<button class="chip" type="button" data-chip="${esc(l)}" data-node="${nd}">${esc(l)}</button>`).join('')}</div>`;
     return `<div class="msg ${m.r==='me'?'me':'pip'}">${esc(m.t)}</div>`;
   }).join('') + (chatBusy?`<div class="msg pip typing">${esc(S.pet)} is thinking...</div>`:'');
   requestAnimationFrame(()=>window.scrollTo(0,document.body.scrollHeight));
@@ -2773,7 +2773,8 @@ function startChatIfEmpty(){
     if(g.d===todayKey() && g.t===`Hey ${S.kid}! How was your day?`) break; // still current: keep it
     S.chat.splice(-2,2);
   }
-  const last=S.chat[S.chat.length-1];
+  let last=S.chat[S.chat.length-1];
+  if(last && last.r!=='chips' && last.d===todayKey()){ S.chat.push({r:'chips',c:MENU,d:todayKey()}); last=S.chat[S.chat.length-1]; }
   const lastDay = last && last.d;
   if(!S.chat.length || lastDay!==todayKey()){
     S.chat.push({r:'pip',t:`Hey ${S.kid}! How was your day?`,d:todayKey()},{r:'chips',d:todayKey()});
@@ -2782,46 +2783,88 @@ function startChatIfEmpty(){
   }
 }
 $('chat').addEventListener('click', e=>{
-  const c=e.target.closest('[data-chip]'); if(c){ S.chat=S.chat.filter(m=>m.r!=='chips'); send(c.dataset.chip); return; }
+  const c=e.target.closest('[data-chip]'); if(c){ S.chat=S.chat.filter(m=>m.r!=='chips'); send(c.dataset.chip, c.dataset.node); return; }
   const i=e.target.closest('[data-idea]'); if(i){ const m=S.chat.find(x=>x.id===i.dataset.idea); if(m&&!m.added){ S.tasks.push({id:uid(),title:m.title,mins:m.mins,at:'',days:ALLDAYS.slice(),steps:[]}); m.added=true; save(); renderChat(); toast('Quest added'); } }
 });
 $('chatForm').addEventListener('submit', e=>{ e.preventDefault(); const v=$('chatIn').value.trim(); if(!v) return; $('chatIn').value=''; S.chat=S.chat.filter(m=>m.r!=='chips'); send(v); });
 const WORRY = /(hurt(ing)? myself|kill|suicide|want to die|wanna die|cut myself|hit me|hits me|touch(ed)? me|abuse|scared of my|run away)/i;
-function localReply(text){
-  const t=text.toLowerCase(), n=nextTask();
-  if(WORRY.test(text)) return {reply:`That sounds really big and important. Please tell a grown-up you trust right now, like a parent, teacher or school counselor. You deserve help and you're not in trouble for saying it.`, quest:null};
-  if(/great|good|awesome|fun|happy/.test(t)) return {reply:`Yay! I love hearing that. What was the best part?${n?` When you're ready, "${n.title}" is next.`:''}`, quest:null};
-  if(/rough|bad|sad|mad|angry|tired|forgot|trouble/.test(t)) return {reply:`That sounds hard. Thanks for telling me. Tomorrow can be a fresh start. Want to try a small plan to make it easier?`, quest:{title:'Pack backpack for tomorrow',mins:5}};
-  if(/okay|ok|fine|meh/.test(t)) return {reply:`Okay days count too. What's one thing that could make tomorrow a little better?`, quest:null};
-  if(/bored/.test(t)) return {reply:`Bored brains love a challenge! A quick Quest could earn a key for the chest.`, quest:{title:'Quick tidy-up race',mins:3}};
-  return {reply:`I'm listening! Tell me more.${n?` Our next Quest is "${n.title}".`:''}`, quest:null};
+/* Tap-only pet chat. No typing: every pet message ends with answer buttons.
+   NODES[id] = {r:[reply variants], q:questKey (may offer a tiny Quest), c:[[label,nextNode],...]} */
+const CHAT_Q=[
+  {k:'rough', t:'Pack backpack for tomorrow', m:5},{k:'rough', t:'Put on comfy clothes', m:3},{k:'rough', t:'Drink a glass of water', m:2},
+  {k:'tired', t:'Lie down and breathe 10 times', m:3},{k:'tired', t:'Drink a glass of water', m:2},
+  {k:'mad', t:'Take 5 slow dragon breaths', m:2},{k:'mad', t:'Squeeze a pillow 10 times', m:2},{k:'mad', t:'Walk to the window and back', m:2},
+  {k:'bored', t:'Quick tidy-up race', m:3},{k:'bored', t:'Draw your pet', m:5},{k:'bored', t:'Build a pillow fort', m:5},{k:'bored', t:'Dance to one song', m:4},
+  {k:'school', t:'Put homework in backpack', m:2},{k:'school', t:'Sharpen 2 pencils', m:2},{k:'school', t:'Pick tomorrow\'s outfit', m:3},{k:'school', t:'Write 1 question for teacher', m:3},
+  {k:'worried', t:'Tell a grown-up one worry', m:3},{k:'worried', t:'Write the worry on paper', m:3},
+  {k:'friends', t:'Think of 1 kind thing to say', m:2},{k:'friends', t:'Draw a card for a friend', m:5},
+  {k:'sleep', t:'Brush teeth', m:2},{k:'sleep', t:'Lay out pajamas', m:2},{k:'sleep', t:'Dim the lights', m:1},
+  {k:'okay', t:'Put 5 things away', m:3},{k:'okay', t:'Stretch like a cat', m:2},
+];
+const CHAT_JOKES=['Why did the cat sit on the computer? To keep an eye on the mouse!','What do you call a sleeping dinosaur? A dino-snore!','Why did the banana go to the doctor? It wasn\'t peeling well!','What has ears but can\'t hear? Corn!','Why can\'t a bike stand up by itself? It\'s two tired!','What do you call cheese that isn\'t yours? Nacho cheese!','Why did the cookie go to the doctor? It felt crummy!','What do clouds wear under their clothes? Thunderwear!','How do you make a tissue dance? Put a little boogie in it!','What\'s a pet\'s favorite subject? Hiss-tory!','Why was six afraid of seven? Because seven eight nine!','What do you call a bear with no teeth? A gummy bear!'];
+const CHAT_FACTS=['A group of kittens is called a kindle.','Octopuses have three hearts.','Honey never goes bad, even after 1000 years.','Your brain is about 75% water.','Sloths can hold their breath longer than dolphins.','Butterflies taste with their feet.','A day on Venus is longer than its year.','Sea otters hold hands while they sleep.','Cows have best friends.','Your heart beats about 100,000 times a day.'];
+const MENU=[['Tell me a joke','joke'],['Tell me a fact','fact'],['What\'s next?','next'],['I\'m bored','bored'],['Bye','bye']];
+const BACK=[['Tell me a joke','joke'],['What\'s next?','next'],['Something else','day'],['Bye','bye']];
+const NODES={
+  day:{r:['Hey {kid}! How was your day?','Hi {kid}! How did today go?','{kid}! Tell me about your day.'], c:[['Great','great'],['Okay','okay'],['Kinda rough','rough']]},
+  great:{r:['Yay! I love hearing that. What was the best part?','Woohoo! What made it great?'], c:[['School','gSchool'],['Friends','gFriends'],['Playing','gPlay'],['Family','gFamily']]},
+  gSchool:{r:['A good school day is the best. Tell your grown-up one thing you learned!','Nice! Learning days make brains grow.'], c:BACK},
+  gFriends:{r:['Good friends make everything better!','Friend days are the best days.'], c:BACK},
+  gPlay:{r:['Playing is the best! Finish a Quest and you can play even more.','Fun! Playing is good for busy brains.'], c:BACK},
+  gFamily:{r:['Family time is special. Tell them about your Quests!','Aww, that makes me happy too.'], c:BACK},
+  okay:{r:['Okay days count too. What would make tomorrow a little better?','Fine is fine! What could make tomorrow better?'], c:[['More sleep','oSleep'],['Less homework stress','oHomework'],['More play time','oPlay'],['Not sure','oNotSure']]},
+  oSleep:{r:['Sleep is a superpower. A bedtime routine helps a lot.'], q:'sleep', c:BACK},
+  oHomework:{r:['Homework trick: set a timer for 5 minutes and just start. Starting is the hard part.'], q:'school', c:BACK},
+  oPlay:{r:['Play is important! Finish your Quests fast and the rest of the day is yours.'], c:BACK},
+  oNotSure:{r:['That\'s okay. One tiny thing can make a day better.'], q:'okay', c:BACK},
+  rough:{r:['That sounds hard. Thanks for telling me. What was the hard part?','Rough days happen to everyone. What made it rough?','I\'m sorry it was rough. Want to tell me what happened?'], c:[['School','rSchool'],['Friends','rFriends'],['Home','rHome'],['I\'m tired','tired']]},
+  rSchool:{r:['School can be a lot. Which part was hard?'], c:[['Too hard','rHard'],['I forgot stuff','rForgot'],['Got in trouble','trouble'],['Boring','rBoring']]},
+  rHard:{r:['Hard stuff is where brains grow. Ask your teacher one question tomorrow. Teachers love questions!','When it\'s too hard, break it into tiny pieces. One piece at a time.'], q:'school', c:BACK},
+  rForgot:{r:['Forgetting happens to everyone. A backpack check tonight makes tomorrow easier.','No big deal. Let\'s make a tiny plan so you remember.'], q:'school', c:BACK},
+  rBoring:{r:['Boring class trick: doodle the main idea while you listen. It helps busy brains focus.'], c:BACK},
+  rFriends:{r:['Friends matter. What happened?'], c:[['Someone was mean','mean'],['I felt left out','leftOut'],['We had a fight','fight']]},
+  mean:{r:['If someone is being mean, tell a grown-up. That\'s brave, not tattling.','Being treated badly is not your fault. Tell a grown-up you trust.'], q:'worried', c:BACK},
+  leftOut:{r:['Feeling left out really hurts. Tomorrow, try asking one person to play. It\'s brave.'], q:'friends', c:BACK},
+  fight:{r:['Fights happen even with good friends. Saying "I\'m sorry" or "let\'s try again" fixes a lot.'], q:'friends', c:BACK},
+  rHome:{r:['Home stuff can be tricky. What happened?'], c:[['Chores','chores'],['Brother or sister','siblings'],['Got in trouble','trouble'],['Nothing to do','bored']]},
+  chores:{r:['Chores are easier as a race. Set a timer for 3 minutes and go!','Tiny steps: pick up 5 things, then 5 more.'], q:'bored', c:BACK},
+  siblings:{r:['Brothers and sisters can be a lot! Want a cool-down trick?','Sibling fights are normal. Let\'s cool off first.'], q:'mad', c:BACK},
+  trouble:{r:['Everyone gets in trouble sometimes. It doesn\'t make you bad.','That feels yucky. Saying sorry and trying again is brave.'], q:'rough', c:BACK},
+  tired:{r:['Tired days are tough. Water and a stretch help me.','Rest is a superpower. Even a tiny break counts.'], q:'tired', c:[['I\'m sleepy','oSleep'],['Something else','day'],['Bye','bye']]},
+  mad:{r:['Being mad is okay. Let\'s cool off: 5 slow dragon breaths with me.'], q:'mad', c:BACK},
+  bored:{r:['Bored brains love a challenge! A quick Quest could earn a key for the chest.','Let\'s fix that. Pick one: draw, build, or dance?','Boring is the best time for a tiny adventure.'], q:'bored', c:BACK},
+  joke:{r:['JOKE'], c:[['Another one!','joke'],['Tell me a fact','fact'],['Something else','day'],['Bye','bye']]},
+  fact:{r:['FACT'], c:[['Another one!','fact'],['Tell me a joke','joke'],['Something else','day'],['Bye','bye']]},
+  next:{r:['NEXT'], c:[['Okay!','ok'],['I\'m bored','bored'],['Tell me a joke','joke'],['Bye','bye']]},
+  ok:{r:['Awesome. Let\'s go!','You got this, {kid}!'], c:MENU},
+  bye:{r:['Bye {kid}! Come back soon.','See you later! I\'ll be right here.','Bye bye! You did great today.'], c:[['Hi again!','day']]},
+};
+function chatPick(list, key){
+  S.chatSeen=S.chatSeen||{}; const used=S.chatSeen[key]||[];
+  let cands=list.map((_,i)=>i).filter(i=>!used.includes(i)); if(!cands.length){ cands=list.map((_,i)=>i); S.chatSeen[key]=[]; }
+  const i=cands[Math.floor(Math.random()*cands.length)]; S.chatSeen[key]=(S.chatSeen[key]||[]).concat(i).slice(-Math.max(1,list.length-1)); return list[i];
 }
-async function send(text){
+function chatFill(s){ return s.replace(/\{kid\}/g,S.kid).replace(/\{pet\}/g,S.pet); }
+function nodeReply(id){
+  const nd=NODES[id]||NODES.day, n=nextTask();
+  let reply;
+  if(nd.r[0]==='JOKE') reply=chatPick(CHAT_JOKES,'joke');
+  else if(nd.r[0]==='FACT') reply='Did you know? '+chatPick(CHAT_FACTS,'fact');
+  else if(nd.r[0]==='NEXT') reply = n ? `Next up: "${n.title}". Tap Quests and hit Start!` : `All Quests are done today! Check the chest or try a Bonus Quest.`;
+  else reply=chatFill(chatPick(nd.r,id));
+  let quest=null;
+  if(nd.q && Math.random()<0.7){ const qs=CHAT_Q.filter(q=>q.k===nd.q && !S.tasks.some(t=>t.title===q.t)); if(qs.length){ const q=chatPick(qs,'q_'+nd.q); quest={title:q.t,mins:q.m}; } }
+  return {reply, quest, chips:nd.c};
+}
+async function send(label, node){
   if(chatBusy) return;
-  S.chat.push({r:'me',t:text,d:todayKey()}); chatBusy=true; renderChat();
-  let out=null;
-  if(WORRY.test(text)) out=localReply(text);
-  else if(sample){
-    const hist = S.chat.filter(m=>m.r==='me'||m.r==='pip').slice(-10).map(m=>`${m.r==='me'?S.kid:S.pet}: ${m.t}`).join('\n');
-    const doneList = S.tasks.filter(t=>S.done[t.id]).map(t=>t.title).join(', ')||'none yet';
-    const n=nextTask();
-    const prompt = `You are ${S.pet}, a cute, kind virtual pet in a focus app for a child (about 6-12 years old) who has ADHD. You are talking with ${S.kid}.
-Rules: Reply in 1-3 short, simple sentences a young kid can read. Be warm, playful and encouraging, never shaming. Ask how their day went and help them think of ONE small, concrete thing they could do to improve tomorrow or right now. Celebrate effort. Never ask for personal information (address, school name, phone, photos). Never give medical advice. If the child mentions being hurt, unsafe, very sad, or someone hurting them, gently tell them to talk to a trusted grown-up right away (parent, teacher, school counselor). Don't mention being an AI unless asked; you're their pet friend.
-Context: Quests done today: ${doneList}. Next Quest: ${n?n.title:'all done'}. Pet happiness ${Math.round(S.happy)}/100. Streak ${S.streak} days.
-Conversation so far:
-${hist}
-Respond with JSON only: {"reply": string, "quest": null or {"title": string (max 40 chars, a small helpful task), "minutes": integer 1-20}}. Only include a Quest when it fits naturally.`;
-    try{
-      const j = await sample.json(prompt, {modelTier:'quick', cache:false});
-      if(j && typeof j.reply==='string') out={reply:j.reply.slice(0,500), quest: (j.quest&&j.quest.title)?{title:String(j.quest.title).slice(0,40), mins:clamp(parseInt(j.quest.minutes)||5,1,20)}:null};
-    }catch(err){
-      if(err && err.code==='not_granted') sample=null;
-    }
-  }
-  if(!out) out=localReply(text);
+  S.chat.push({r:'me',t:label,d:todayKey()}); chatBusy=true; renderChat();
+  const out=nodeReply(node||'day');
+  await new Promise(r=>setTimeout(r, 450+Math.random()*500));
   chatBusy=false;
   S.chat.push({r:'pip',t:out.reply,d:todayKey()});
   if(out.quest) S.chat.push({r:'idea',id:uid(),title:out.quest.title,mins:out.quest.mins,d:todayKey()});
+  S.chat.push({r:'chips',c:out.chips,d:todayKey()});
   if(S.chat.length>60) S.chat=S.chat.slice(-60);
   save(); renderChat();
 }
