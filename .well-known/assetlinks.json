@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.mattymagallanes_source.twa",
+        "sha256_cert_fingerprints": ["9F:FD:B8:21:6E:07:60:2F:DE:BE:A2:A3:E0:A8:0D:05:D8:74:A6:C4:66:B4:8E:4E:FC:46:95:79:8B:09:5D:BC"]
+      }
+    }]
