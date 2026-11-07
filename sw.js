@@ -1,5 +1,5 @@
 // Pocket Pet Focus service worker: offline app shell + cached fonts
-const CACHE = 'pocketpet-v9';
+const CACHE = 'pocketpet-v10';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './privacy.html'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

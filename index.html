@@ -410,7 +410,7 @@ main > section > h2:first-child{margin-top:14px}
 .pindots i.on{animation:dotPop .22s ease-out}
 @keyframes dotPop{0%{transform:scale(.4)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
 
-.petCtrls{position:absolute;left:10px;top:10px;bottom:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;z-index:4}
+.petCtrls{position:absolute;left:10px;bottom:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px;z-index:4}
 .petCtrls>.cbtn,.petCtrls .cRow>.cbtn{height:38px;min-width:38px}
 .petNight{left:auto;right:10px;align-items:flex-end}
 .cRow{display:inline-flex;align-items:center;gap:4px}
@@ -439,11 +439,11 @@ main > section > h2:first-child{margin-top:14px}
 .pfoot{display:flex;gap:8px;margin-top:12px}.pfoot div{flex:1;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:8px 4px;text-align:center;box-shadow:-4px 5px 0 rgba(27,42,74,.16)}
 .pfoot b{font-family:var(--display);font-weight:600;font-size:20px;display:block}.pfoot span{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.04em;text-transform:uppercase}
 .pempty{color:var(--muted);font-weight:700;font-size:13px;text-align:center;padding:14px 6px}
-.hintPulse{animation:hintPulse 1.4s ease-in-out infinite;position:relative;z-index:5}
-@keyframes hintPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,122,47,.85)}50%{box-shadow:0 0 0 8px rgba(255,122,47,0)}}
+.hintPulse{animation:hintPulse 1.1s ease-in-out infinite;position:relative;z-index:5}
+@keyframes hintPulse{0%{box-shadow:0 0 0 0 rgba(255,122,47,1),0 0 0 0 rgba(255,210,60,.9),0 0 10px 2px rgba(255,160,40,.9)}60%{box-shadow:0 0 0 14px rgba(255,122,47,0),0 0 0 26px rgba(255,210,60,0),0 0 24px 8px rgba(255,160,40,.5)}100%{box-shadow:0 0 0 0 rgba(255,122,47,0),0 0 0 0 rgba(255,210,60,0),0 0 10px 2px rgba(255,160,40,.9)}}
 nav.tabsbar button.hintPulse{border-radius:14px}
 .cPrice{background:none;border:0;padding:0;font:900 16px var(--body);color:#FF1F4B;white-space:nowrap}
-.trickMenu{position:absolute;left:58px;right:4px;top:11px;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px;z-index:4;transition:left .25s}
+.trickMenu{position:absolute;left:58px;right:4px;bottom:149px;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px;z-index:4;transition:left .25s}
 .cbtn{height:42px;min-width:42px;border-radius:999px;border:2px solid var(--ink);background:#fff;box-shadow:-3px 4px 0 rgba(27,42,74,.18);display:inline-flex;align-items:center;justify-content:center;gap:0;padding:0 9px;font:900 13px var(--body);color:var(--ink);cursor:pointer;transition:padding .2s,background .2s,gap .2s}
 .cbtn svg{flex:none}
 .cbtn .lbl{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .25s}
@@ -667,8 +667,8 @@ html.coachLock .app{padding-bottom:100vh}
           </div>
           <button class="btn ghost" id="saveNames" type="button">Save names</button>
           <button class="btn ghost" id="changePin" type="button">Change grown-up code</button>
-          <button class="btn ghost" id="newRec" type="button">Make a new recovery code</button>
-          <p id="recWarn" class="muted" style="margin:0;font-size:13px;font-weight:700" hidden>No recovery code yet. Make one so you can reset the grown-up code if you forget it.</p>
+          <button class="btn ghost" id="newRec" type="button">Change security questions</button>
+          <p id="recWarn" class="muted" style="margin:0;font-size:13px;font-weight:700" hidden>No security questions yet. Set them so you can reset the grown-up code if you forget it.</p>
         </div>
         <h2>Parent tools</h2>
         <div class="card" style="display:flex;flex-direction:column;gap:10px">
@@ -677,6 +677,7 @@ html.coachLock .app{padding-bottom:100vh}
           <button class="btn ghost" id="tLow" type="button">Lower Happy and Care to 30% (see the sad pet)</button>
           <button class="btn ghost" id="tReset" type="button" style="color:#C9302C;border-color:#C9302C">Reset game (erases everything)</button>
         </div>
+        <p class="fine" style="text-align:center;margin:14px 0 4px"><a href="https://mattymagallanes-source.github.io/privacy.html" target="_blank" rel="noopener" style="color:var(--muted);font-weight:800">Privacy policy</a> · No data leaves this device.</p>
       </div>
     </section>
 
@@ -702,7 +703,7 @@ html.coachLock .app{padding-bottom:100vh}
       <div class="chestView" style="margin-top:6px">
         <div class="row" style="justify-content:space-between"><span style="font-family:var(--display);font-size:26px;font-weight:600">Quest Chest</span><span class="pill" style="background:var(--night3);color:var(--nightTxt)"><span id="keys2">0</span><svg width="18" height="16" viewBox="0 0 18 16" aria-hidden="true" style="margin-left:6px;vertical-align:-2px"><circle cx="5" cy="8" r="3.5" fill="none" stroke="#FF7A2F" stroke-width="2"/><path d="M8.5 8h7M13 8v3M15.5 8v2" stroke="#FF7A2F" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span></div>
         <div class="chestStage" id="chestStage"></div>
-        <div class="odds" style="text-align:center;font-weight:900;font-size:15px;line-height:1.35">Unlock 1 Key for every 30 minutes of total Quest time!</div>
+        <div class="odds" id="keyMeterBox"><div class="row" style="justify-content:space-between;align-items:center;font-size:14px;font-weight:900"><span style="display:inline-flex;align-items:center" aria-label="Key meter"><svg width="22" height="18" viewBox="0 0 18 16" aria-hidden="true"><circle cx="5" cy="8" r="3.5" fill="none" stroke="#FF7A2F" stroke-width="2"/><path d="M8.5 8h7M13 8v3M15.5 8v2" stroke="#FF7A2F" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><span id="kmTxt" style="font-variant-numeric:tabular-nums">0/30 min</span></div><div class="track" style="background:#9AA6BD55;margin-top:2px;height:14px;flex:none"><div class="fill" id="kmBar" style="background:#FF7A2F"></div></div><div style="text-align:center;font-weight:600;font-size:14px;line-height:1.35;color:var(--nightMuted);margin-top:4px">Unlock 1 Key for every 30 minutes of total Quest time!</div></div>
         <div class="odds" id="odds"></div>
         <div class="odds" hidden>
           <div class="row" style="justify-content:space-between;font-size:13px;font-weight:900"><span>Key meter (30 focus minutes = 1 key)</span><span id="pieceMeter" style="display:flex;gap:6px"></span></div>
@@ -2097,6 +2098,7 @@ function renderChest(){
   $('odds').innerHTML = `<h3>WHAT'S INSIDE · DROP CHANCES</h3>` + RAR.map(r=>`<div class="orow"><span>${r.name}</span><div class="track"><div class="fill" style="width:${r.w*2}%;background:${r.glow}"></div></div><span>${r.w}%</span></div>`).join('');
   const left = 10 - S.pity;
   $('pieceMeter').innerHTML = keyMeter(S.keyMin||0);
+  { const km=Math.max(0,Math.min(KEY_MIN,Math.round(S.keyMin||0))); $('kmBar').style.width=(km/KEY_MIN*100)+'%'; $('kmTxt').textContent=`${km}/${KEY_MIN} min`; }
   const boughtPiece=(S.piecesBought||{})[todayKey()];
   $('shopBox').innerHTML = `<h3>COIN SHOP</h3>
     <div class="row" style="gap:10px"><div style="flex:1;min-width:0"><b>+10 key minutes</b><div class="fine" style="text-align:left">One per day. Fills a third of the key meter.</div></div><button class="btn" type="button" data-buy="piece" ${(boughtPiece||S.coins<PIECE_COST)?'disabled':''}>${boughtPiece?'Bought today':PIECE_COST+' coins'}</button></div>
@@ -2401,35 +2403,55 @@ function keypad(host, mode, done){
       if(mode==='unlock'){
         if(hashPin(entry)===S.pin){ unlocked=true; setTimeout(()=>done(true),120); } else setTimeout(()=>bad('Wrong code. Try again.'),150);
       } else if(first===null){ first=entry; entry=''; msg.textContent=''; setTimeout(paint,150); }
-      else if(entry===first){ S.pin=hashPin(entry); if(!S.coached) S.setupAt=Date.now(); save(); unlocked=true; toast('Grown-up code saved'); setTimeout(()=>showRecovery(host, ()=>done(true)),120); }
+      else if(entry===first){ S.pin=hashPin(entry); if(!S.coached) S.setupAt=Date.now(); save(); unlocked=true; toast('Grown-up code saved'); setTimeout(()=>{ if(S.secQ&&S.secQ.length===2) done(true); else showRecovery(host, ()=>done(true)); },120); }
       else { first=null; setTimeout(()=>bad("Those didn't match. Let's start over: choose your code."),150); }
     }
   };
   paint();
 }
-const REC_CHARS='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-const normRec = v => String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-function newRecoveryCode(){ const a=new Uint32Array(8); (window.crypto||{getRandomValues:x=>x.map(()=>Math.random()*4e9)}).getRandomValues(a); const c=[...a].map(n=>REC_CHARS[n%REC_CHARS.length]).join(''); return c.slice(0,4)+'-'+c.slice(4); }
-function showRecovery(host, next, reuse){
-  const code=reuse||newRecoveryCode(); S.recHash=hashPin('rec:'+normRec(code)); save();
-  host.innerHTML = `<div class="keypad"><b style="font-family:var(--display);font-size:20px;font-weight:600;text-align:center">Your recovery code</b>
-    <p class="muted" style="margin:0;font-weight:700;text-align:center">Grown-ups: write this down and keep it away from kids. It's the only way to reset the code if you forget it.</p>
-    <div style="font-family:ui-monospace,Menlo,monospace;font-size:30px;font-weight:800;letter-spacing:.12em;background:#FFF1C2;border:2px solid var(--ink);border-radius:14px;padding:12px 18px;user-select:all" id="recCode">${code}</div>
-    <p class="muted" style="margin:0;font-size:12px;font-weight:700;text-align:center">It won't be shown again. You can make a new one in Settings.</p>
-    <button class="btn" type="button" id="recDone" style="width:100%">I wrote it down</button></div>`;
-  host.querySelector('#recDone').onclick=()=>next();
+const SEC_QS=['What was the name of your first boss?','What was the first concert you went to?','What was the name of your first roommate?','What was the name of your first crush?','What was your high school mascot?','What was the last name of your childhood best friend?','What was your first email address?','What city was your first job in?','What was the make of your first car?'];
+const normAns = v => String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+function sqField(n, cur){
+  const defI=cur?SEC_QS.indexOf(cur.q):(n-1); const opts=SEC_QS.map((q,i)=>`<option value="${i}" ${i===defI?'selected':''}>${esc(q)}</option>`).join('')+`<option value="own" ${cur&&!SEC_QS.includes(cur.q)?'selected':''}>Write my own question…</option>`;
+  return `<label class="field">Question ${n}<select id="sqQ${n}">${opts}</select></label>
+    <label class="field" id="sqOwnWrap${n}" ${cur&&!SEC_QS.includes(cur.q)?'':'hidden'}>Your question<input id="sqOwn${n}" maxlength="80" value="${cur&&!SEC_QS.includes(cur.q)?esc(cur.q):''}" placeholder="Type a question only you can answer"></label>
+    <label class="field">Answer ${n}<input id="sqA${n}" maxlength="40" autocomplete="off" autocapitalize="none" placeholder="Your answer"></label>`;
+}
+function readSq(host, n){
+  const sel=host.querySelector('#sqQ'+n).value, q=sel==='own'?host.querySelector('#sqOwn'+n).value.trim():SEC_QS[+sel], a=normAns(host.querySelector('#sqA'+n).value);
+  return {q, a};
+}
+function showRecovery(host, next){
+  const cur=S.secQ||[];
+  host.innerHTML = `<div class="keypad" style="align-items:stretch;gap:10px"><b class="ktitle" style="font-family:var(--display);font-size:20px;font-weight:600;text-align:center">Security questions</b>
+    <p class="muted" style="margin:0;font-weight:700;text-align:center">If you forget the grown-up code, answering these two questions lets you set a new one. <strong style="color:#D7263D">Choose answers your child couldn't know</strong> — things from your life before they were around.</p>
+    ${sqField(1,cur[0])}${sqField(2,cur[1])}
+    <p class="muted" style="margin:0;font-size:12px;font-weight:700;text-align:center">Answers aren't case-sensitive. Spaces and punctuation don't matter.</p>
+    <button class="btn" type="button" id="recDone" style="width:100%">Save questions</button></div>`;
+  [1,2].forEach(n=>{ host.querySelector('#sqQ'+n).onchange=e=>{ host.querySelector('#sqOwnWrap'+n).hidden = e.target.value!=='own'; }; });
+  host.querySelector('#recDone').onclick=()=>{
+    const q1=readSq(host,1), q2=readSq(host,2);
+    if(!q1.q||!q2.q){ toast('Please pick or write both questions.'); return; }
+    if(q1.q===q2.q){ toast('Please choose two different questions.'); return; }
+    if(q1.a.length<2||q2.a.length<2){ toast('Please answer both questions.'); return; }
+    S.secQ=[{q:q1.q,h:hashPin('sq:'+q1.a)},{q:q2.q,h:hashPin('sq:'+q2.a)}]; delete S.recHash; save(); toast('Security questions saved'); next();
+  };
 }
 function forgotPin(host, done){
-  const has=!!S.recHash;
-  host.innerHTML = `<div class="keypad"><b style="font-family:var(--display);font-size:20px;font-weight:600">Reset the code</b>
-    ${has?`<p class="muted" style="margin:0;font-weight:700;text-align:center">Grown-ups: enter the recovery code you wrote down when you set the code.</p>
-    <label class="sr" for="fpA">Recovery code</label><input id="fpA" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX" style="width:100%;min-height:48px;border:2px solid var(--line);border-radius:12px;padding:0 12px;font-size:20px;font-weight:800;letter-spacing:.1em;text-align:center;font-family:ui-monospace,Menlo,monospace">
+  const has=!!(S.secQ&&S.secQ.length===2);
+  host.innerHTML = `<div class="keypad" style="align-items:stretch;gap:10px"><b class="ktitle" style="font-family:var(--display);font-size:20px;font-weight:600;text-align:center">Reset the code</b>
+    ${has?`<p class="muted" style="margin:0;font-weight:700;text-align:center">Grown-ups: answer your two security questions.</p>
+    <label class="field">${esc(S.secQ[0].q)}<input id="fpA1" autocomplete="off" autocapitalize="none" placeholder="Answer"></label>
+    <label class="field">${esc(S.secQ[1].q)}<input id="fpA2" autocomplete="off" autocapitalize="none" placeholder="Answer"></label>
     <button class="btn dark" type="button" id="fpGo" style="width:100%">Reset code</button>`
-    :`<p class="muted" style="margin:0;font-weight:700;text-align:center">No recovery code was set up on this device. To reset the grown-up code, clear this app's storage in the phone's settings (or reinstall it). That also erases the pet's progress.</p>`}
+    :`<p class="muted" style="margin:0;font-weight:700;text-align:center">No security questions were set up on this device. To reset the grown-up code, clear this app's storage in the phone's settings (or reinstall it). That also erases the pet's progress.</p>`}
     <button class="btn ghost" type="button" id="fpBack" style="width:100%">Back to keypad</button></div>`;
   let tries=0;
   const go=host.querySelector('#fpGo');
-  if(go) go.onclick=()=>{ if(hashPin('rec:'+normRec(host.querySelector('#fpA').value))===S.recHash){ keypad(host,'set',done); } else { tries++; toast(tries>=3?'That code doesn\'t match. Check what you wrote down.':'That recovery code doesn\'t match.'); } };
+  if(go) go.onclick=()=>{
+    const ok = hashPin('sq:'+normAns(host.querySelector('#fpA1').value))===S.secQ[0].h && hashPin('sq:'+normAns(host.querySelector('#fpA2').value))===S.secQ[1].h;
+    if(ok){ keypad(host,'set',done); } else { tries++; toast(tries>=3?'Those answers don\'t match what was saved.':'One or both answers don\'t match.'); }
+  };
   host.querySelector('#fpBack').onclick=()=>keypad(host,'unlock',done);
 }
 function requireGrownUp(host, done){ keypad(host, S.pin?'unlock':'set', done); }
@@ -2577,7 +2599,7 @@ function renderSettings(){
   $('sDays').innerHTML = DAYN.map((d,i)=>`<button type="button" data-fday="${i}" aria-pressed="${formDays.has(i)}" aria-label="${DAYL[i]}">${d.slice(0,2)}</button>`).join('');
   refreshAddTimes();
   $('kidNameIn').value=S.kid; $('petNameIn').value=S.pet;
-  $('recWarn').hidden=!!S.recHash;
+  $('recWarn').hidden=!!(S.secQ&&S.secQ.length===2);
 }
 function runControls(){
   const a=S.active; if(!a) return '';
@@ -2889,9 +2911,9 @@ function coachSteps(){
       done:()=>view==='settings'},
     {id:'pin', k:`${S1} · step 2 of 3`, t:'Create a 4-digit passcode', b:'Avoid passcodes that your child might guess, e.g. birthdays or 1234. <strong class="cmWarn">Do not share the passcode with your child.</strong>', sel:'#gatePad', pad:10, dots:[1,3], hint:'',
       skip:()=>!!S.pin, done:()=>!!document.getElementById('recDone')},
-    {id:'rec', k:`${S1} · step 3 of 3`, t:'Save your recovery code', b:()=>`<span class="cmCode">${esc(($('recCode')||{}).textContent||'')}</span>If you ever forget your passcode, this <b>recovery code</b> will restore your passcode settings. Save it in a safe place, hidden from your child.`, sel:'#recDone', pad:10, dots:[2,3],
-      hint:'Tap the highlighted <b>All set!</b> button once your recovery code has been secured.',
-      skip:()=>!document.getElementById('recDone'), before:()=>{ const b=$('recDone'); if(b) b.textContent='All set!'; },
+    {id:'rec', k:`${S1} · step 3 of 3`, t:'Set two security questions', b:'If you ever forget your passcode, answering these lets you set a new one. <strong class="cmWarn">Choose answers your child doesn\'t know.</strong>', sel:'#gatePad', pad:10, dots:[2,3],
+      hint:'Fill in both questions, then tap <b>Save questions</b>.',
+      skip:()=>!document.getElementById('recDone'),
       done:()=>!document.getElementById('recDone')},
     {id:'unlock', k:'Finish setup', t:'Enter your grown-up passcode', b:'Type your <b>grown-up passcode</b> to finish setting up <b>Quests</b>.', sel:'#gatePad', pad:10, dots:[0,4], hint:'',
       skip:()=>unlocked || !$('setBody').hidden, before:()=>{ if(view!=='settings') go('settings'); }, done:()=>!$('setBody').hidden},
@@ -2944,9 +2966,9 @@ function coachGo(id){ const C=coachState; if(!C) return; const j=C.steps.findInd
 function coachBack(st){
   const C=coachState; if(!C) return;
   if(st.id==='pin'){ go('pet'); window.scrollTo(0,0); coachGo('gear'); }
-  else if(st.id==='rec'){ S.pin=null; S.recHash=null; save(); unlocked=false; $('gatePad').innerHTML=''; delete $('gatePad').dataset.mode; renderSettings(); coachGo('pin'); }
-  else if(st.id==='open'){ if(!C.recCode) return; unlocked=false; $('gateCard').hidden=false; $('setBody').hidden=true; $('lockBtn').hidden=true; $('gatePad').dataset.mode='u';
-    showRecovery($('gatePad'), ()=>{ $('gatePad').innerHTML=''; unlocked=true; renderSettings(); }, C.recCode); coachGo('rec'); }
+  else if(st.id==='rec'){ S.pin=null; S.secQ=null; save(); unlocked=false; $('gatePad').innerHTML=''; delete $('gatePad').dataset.mode; renderSettings(); coachGo('pin'); }
+  else if(st.id==='open'){ if(!C.sqSet) return; unlocked=false; $('gateCard').hidden=false; $('setBody').hidden=true; $('lockBtn').hidden=true; $('gatePad').dataset.mode='u';
+    showRecovery($('gatePad'), ()=>{ $('gatePad').innerHTML=''; unlocked=true; renderSettings(); }); coachGo('rec'); }
   else if(st.id==='name'){ $('addPanel').open=false; coachGo('open'); }
   else if(st.id==='days'){ coachGo('name'); }
   else if(st.id==='add'){ coachGo('days'); }
@@ -2963,12 +2985,12 @@ function coachBack(st){
 function coachShow(){
   const C=coachState; if(!C) return;
   const st=C.steps[C.i]; if(st.before) st.before(st);
-  if(st.id==='rec'){ const rc=$('recCode'); if(rc) C.recCode=rc.textContent; }
+  if(st.id==='rec'){ C.sqSet=true; }
   C.forceCompact=false; C.pushedTop=false; C.recentered=false; C.lastH=undefined; C.frozen=false;
   if(st.sel==='#gatePad' && $('gatePad')) $('gatePad').classList.add('kpTight'); C.wasKb=false; C.kbFix=false; C.els.tip.classList.remove('compact');
   const ae=document.activeElement; if(ae && ae.blur && ae.matches && ae.matches('input,textarea')) ae.blur(); if(st.sel!=='#gatePad' && $('gatePad')) $('gatePad').classList.remove('kpTight');
   if(st.id!=='gear'){ const hd=document.querySelector('header.top'); if(hd) hd.classList.add('hideTop'); }
-  const canBack = st.id!=='gear' && st.id!=='unlock' && !(st.id==='open' && !C.recCode);
+  const canBack = st.id!=='gear' && st.id!=='unlock' && !(st.id==='open' && !C.sqSet);
   C.scrolled=false; C.lastKey='';
   const T=C.els.tip, dots=Array.from({length:st.dots[1]},(_,j)=>`<i class="${j===st.dots[0]?'on':''}"></i>`).join('');
   T.innerHTML=`<div class="k">${st.k}</div><h4>${st.t}</h4>${st.b?`<p>${typeof st.b==='function'?st.b():st.b}</p>`:''}<div class="row2">${canBack?`<button type="button" class="cmBack">Back</button>`:''}<div class="cmDots" aria-hidden="true">${dots}</div>${st.btn?`<button type="button" class="cmBtn">${st.btn}</button>`:(st.hint?`<div class="hint">${st.hint}</div>`:'')}</div>`;
@@ -2986,7 +3008,6 @@ function coachCenterOnly(){
 function coachTick(){
   const C=coachState; if(!C) return; const st=C.steps[C.i]; if(!st) return;
   if(st.done && st.done(st)){ coachNext(); return; }
-  if(st.before && st.id==='rec'){ const rb=$('recDone'); if(rb && rb.textContent!=='All set!') rb.textContent='All set!'; }
   const btn=C.els.tip.querySelector('.cmBtn');
   if(btn && st.btnOk){ const ok=st.btnOk(); btn.disabled=!ok; }
   const selStr = typeof st.sel==='function' ? st.sel(st) : st.sel;
