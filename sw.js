@@ -1,5 +1,5 @@
 // Pocket Pet Focus service worker: offline app shell + cached fonts
-const CACHE = 'pocketpet-v11';
+const CACHE = 'pocketpet-v12';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './privacy.html'];
 // art and fonts are cached on first use (fetch handler) so the first install stays small
 // art and fonts are cached on first use (fetch handler) so the first install stays small
