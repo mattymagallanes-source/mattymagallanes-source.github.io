@@ -1064,6 +1064,15 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
           <button class="btn ghost" id="newRec" type="button">Change security questions</button>
           <p id="recWarn" class="muted" style="margin:0;font-size:13px;font-weight:700" hidden>No security questions yet. Set them so you can reset the grown-up code if you forget it.</p>
         </div>
+        <h2>Keep your pet safe</h2>
+        <div class="card" style="display:flex;flex-direction:column;gap:10px">
+          <p class="muted" style="margin:0;font-size:13px;font-weight:700">Progress lives only on this device. A backup file lets you bring the pet back after a new phone, a reset, or an accidental uninstall. It holds quests, progress, items and the grown-up code.</p>
+          <button class="btn ghost" id="bkSave" type="button">Save a backup file</button>
+          <button class="btn ghost" id="bkShare" type="button" hidden>Send backup (email, Drive, Files...)</button>
+          <button class="btn ghost" id="bkLoad" type="button">Load a backup file</button>
+          <input type="file" id="bkFile" accept=".json,application/json" hidden>
+          <p id="bkInfo" class="muted" style="margin:0;font-size:13px;font-weight:700"></p>
+        </div>
         <h2>Parent tools</h2>
         <div class="card" style="display:flex;flex-direction:column;gap:10px">
           <p class="muted" style="margin:0;font-size:13px;font-weight:700">Quick ways to help or to see how the game works. These change the game right away.</p>
@@ -1885,10 +1894,66 @@ document.addEventListener('click', e=>{
   if(e.target.closest('#tLow')){ S.happy=30; S.energy=30; save(); renderAll(); go('pet'); toast('Meters lowered to 30%. Try Snack or Walk.'); }
   else if(e.target.closest('[data-tpal]')){ const k=e.target.closest('[data-tpal]').dataset.tpal; S.look=Object.assign({}, S.look, SPECIES[k].look); save(); renderAll(); go('pet'); toast(`${S.pet} is now a ${SPECIES[k].n}.`); }
   else if(e.target.closest('#tReset')){
-    modal(`<h3>Reset the whole game?</h3><p style="margin:0;font-weight:700">This erases everything, including the grown-up passcode, and starts over with the first-time setup. It can't be undone.</p><div class="row" style="width:100%"><button class="btn ghost" type="button" data-close style="flex:1">Cancel</button><button class="btn" type="button" id="tResetYes" style="flex:1;background:#C9302C;color:#fff">Reset</button></div>`);
+    modal(`<h3>Reset the whole game?</h3><p style="margin:0;font-weight:700">This erases everything, including the grown-up passcode, and starts over with the first-time setup. It can't be undone.</p><button class="btn ghost" type="button" id="tResetBk" style="width:100%">Save a backup file first</button><div class="row" style="width:100%"><button class="btn ghost" type="button" data-close style="flex:1">Cancel</button><button class="btn" type="button" id="tResetYes" style="flex:1;background:#C9302C;color:#fff">Reset</button></div>`);
+    $('tResetBk').onclick=()=>{ backupDownload(); };
     $('tResetYes').onclick=()=>{ S=DEFAULT(); migrate(); save(); unlocked=false; closeModal(); go('pet'); window.scrollTo(0,0); startCoach(); };
   }
   else if(e.target.closest('#tCoins')){ S.coins+=200; save(); renderAll(); toast('+200 coins added.'); }
+});
+/* ---------- Backup and restore (the save lives only in localStorage, so give parents a way out of data loss) ---------- */
+const BK_APP='pocketPetFocus';
+function backupName(){ return 'pocket-pet-'+(S.pet||'pet').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+todayKey()+'.json'; }
+function backupBlob(){ S.backupAt=Date.now(); save(); return new Blob([JSON.stringify({app:BK_APP, v:1, savedAt:S.backupAt, pet:S.pet, data:S}, null, 1)], {type:'application/json'}); }
+function backupDownload(){
+  try{
+    const url=URL.createObjectURL(backupBlob()), a=document.createElement('a');
+    a.href=url; a.download=backupName(); document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    toast('Backup saved to your downloads.'); if(view==='settings') renderBackupInfo();
+  }catch(e){ toast('Could not save the backup on this device.'); }
+}
+function backupCanShare(){ try{ return !!(navigator.share && navigator.canShare && navigator.canShare({files:[new File(['x'], 'x.json', {type:'application/json'})]})); }catch(e){ return false; } }
+async function backupShare(){
+  try{
+    const f=new File([backupBlob()], backupName(), {type:'application/json'});
+    await navigator.share({files:[f], title:'Pocket Pet backup'});
+    toast('Backup sent.'); if(view==='settings') renderBackupInfo();
+  }catch(e){ if(e && e.name!=='AbortError') backupDownload(); }
+}
+function parseBackup(text){
+  let o; try{ o=JSON.parse(text); }catch(e){ return null; }
+  if(o && o.app===BK_APP && o.data) o=o.data;
+  if(!o || o.v!==1 || !Array.isArray(o.tasks) || typeof o.pet!=='string') return null;
+  return o;
+}
+function restoreBackup(o){
+  S=Object.assign(DEFAULT(), o); migrate(); S.restoredAt=Date.now(); save();
+  editingId=null; closeModal(); renderAll(); go('pet'); window.scrollTo(0,0);
+  toast(`${S.pet} is back! The grown-up code from the backup now applies.`);
+}
+function renderBackupInfo(){
+  const el=$('bkInfo'); if(!el) return;
+  $('bkShare').hidden=!backupCanShare();
+  if(S.backupAt){ const d=new Date(S.backupAt), days=Math.floor((Date.now()-S.backupAt)/86400000);
+    el.textContent='Last backup: '+d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})+(days>=30?' · That was a while ago. Save a fresh one.':''); el.style.color=days>=30?'#8A3A0C':''; }
+  else { el.textContent=S.started?'No backup yet. Save one so the pet can never be lost.':'No backup yet.'; el.style.color=S.started?'#8A3A0C':''; }
+}
+$('bkSave').addEventListener('click', backupDownload);
+$('bkShare').addEventListener('click', backupShare);
+$('bkLoad').addEventListener('click', ()=>{ $('bkFile').value=''; $('bkFile').click(); });
+$('bkFile').addEventListener('change', ()=>{
+  const f=$('bkFile').files && $('bkFile').files[0]; if(!f) return;
+  if(f.size>5*1024*1024){ toast('That file is too big to be a Pocket Pet backup.'); return; }
+  const r=new FileReader();
+  r.onload=()=>{
+    const o=parseBackup(String(r.result||''));
+    if(!o){ toast("That file isn't a Pocket Pet backup."); return; }
+    const when=o.updatedAt?new Date(o.updatedAt).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'an unknown date';
+    modal(`<h3>Load this backup?</h3><p style="margin:0;font-weight:700">${esc(o.pet)} (level ${Number(o.level)||1}, ${Number(o.coins)||0} coins), last played ${esc(when)}.</p><p style="margin:0;font-weight:700" class="muted">This replaces ${esc(S.pet)} and everything on this device, including the grown-up code. It can't be undone.</p><div class="row" style="width:100%"><button class="btn ghost" type="button" data-close style="flex:1">Cancel</button><button class="btn" type="button" id="bkYes" style="flex:1">Load backup</button></div>`);
+    $('bkYes').onclick=()=>restoreBackup(o);
+  };
+  r.onerror=()=>toast('Could not read that file.');
+  r.readAsText(f);
 });
 const METER_INFO={
   happy:{t:'Food',c:'var(--orange)',p:'Give your pet an apple Snack to fill it. Quests with an apple fill it when you finish them, and take a bite out of it if they are late or skipped.'},
@@ -2971,6 +3036,7 @@ function renderSettings(){
   refreshAddTimes();
   $('kidNameIn').value=S.kid; $('petNameIn').value=S.pet;
   $('recWarn').hidden=!!(S.secQ&&S.secQ.length===2);
+  renderBackupInfo();
 }
 function runControls(){
   const a=S.active; if(!a) return '';
@@ -3453,6 +3519,8 @@ function renderFamily(){
 }
 function boot(){
   upkeep();
+  // ask the browser to keep this origin's storage when space runs low; a 'no' is fine, the backup file covers that case
+  try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(()=>{}); }catch(e){}
   if(S.active){ if(Date.now()>=S.active.end) finishTask(); else showFocus(); }
   go('pet');
   if(!S.started && !S.active){ if(!S.coached && !window.__NOCOACH){ if(S.pin && S.setupAt && Date.now()-S.setupAt < 2*60*60*1000) unlocked=true; startCoach(); } else pickEgg(); }
