@@ -1088,6 +1088,45 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
 .chestScene .chestWrap .chestImgWrap{width:320px;height:240px;margin-left:-160px}
 .chestScene .chestImg,.chestImgWrap .chestImg{width:320px!important;max-width:none}
 .chestStage{overflow:visible!important}
+.calBtn{margin-left:10px;margin-right:0;width:40px;height:40px;border-radius:14px;border:0;background:#E4EFE2;color:#47643B;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;box-shadow:0 3px 0 rgba(71,100,59,.18)}
+.calBtn:active{transform:translateY(2px);box-shadow:none}
+details>summary:has(.calBtn){display:flex;align-items:center}
+details>summary:has(.calBtn) .chev{margin-left:auto}
+.calOv{position:fixed;inset:0;z-index:60;background:rgba(27,42,74,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.calOv[hidden]{display:none}
+.calBox{width:100%;max-width:380px;max-height:92vh;overflow:auto;background:#FFFDF8;border-radius:24px;padding:16px 14px 14px;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.calHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.calHead h3{margin:0;font:700 19px var(--display,inherit);color:var(--ink)}
+.calNav{width:38px;height:38px;border-radius:12px;border:0;background:#F3E9D6;color:var(--ink);font:800 24px/1 var(--body,inherit);cursor:pointer}
+.calDow,.calGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calDow span{text-align:center;font:800 12px var(--body,inherit);color:#8A7A63;padding:2px 0 4px}
+.calC{position:relative;aspect-ratio:1;border:0;border-radius:12px;background:#FAF0DC;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0;cursor:pointer;font-family:var(--body,inherit)}
+.calC.empty{background:transparent;cursor:default}
+.calC b{font:800 14px var(--body,inherit)}
+.calC.past{opacity:.72}
+.calC.today{background:#F28C3B;color:#fff;opacity:1}
+.calC i{font:800 10px/1 var(--body,inherit);font-style:normal;border-radius:999px;padding:1px 5px}
+.calOk{background:#DCE8D0;color:#2E6B3A}.calPl{background:#FDEBD6;color:#B0623A}.calMs{color:#B0623A}
+.calC.today i{background:#fff}
+.calKey{display:flex;gap:14px;justify-content:center;margin:10px 0 8px;font:700 12px var(--body,inherit);color:#6B5A44}
+.calKey i{font-style:normal;font-weight:800;border-radius:999px;padding:1px 6px;margin-right:4px}
+.calClose{width:100%}
+.days{display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:4px!important;flex-wrap:nowrap!important}
+.days button{width:auto!important;min-width:0!important;height:auto!important;aspect-ratio:1/1.1;padding:0!important;font-size:15px!important;border-radius:12px!important}
+.calC.sel:not(.today){outline:2.5px solid #F28C3B;outline-offset:-2px}
+.calC.today.sel{box-shadow:0 0 0 3px rgba(242,140,59,.35)}
+.calDot{width:7px;height:7px;border-radius:50%;display:block}
+.calDot.ok{background:#3BB273}.calDot.pl{background:#F28C3B}.calC.today .calDot{background:#fff}
+.calList{margin:12px 0 10px}
+.calList h4{margin:0 0 6px;font:800 15px var(--body,inherit);color:var(--ink)}
+.calRow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:#FAF0DC;margin-bottom:6px}
+.calRow.ok{background:#E3F0D7}
+.calIc{width:34px;height:34px;flex:none;display:flex}.calIc svg{width:100%;height:100%}
+.calTx{display:flex;flex-direction:column;flex:1;min-width:0}.calTx b{font:800 14px var(--body,inherit);color:var(--ink)}.calTx small{font:700 12px var(--body,inherit);color:#8A7A63}
+.calTick{font:800 18px var(--body,inherit);color:#2E6B3A}
+.calNone{padding:12px;text-align:center;font:700 13px var(--body,inherit);color:#8A7A63;background:#FAF0DC;border-radius:14px}
+
+
 .badgeSec{margin-top:14px;padding-top:12px;border-top:1.5px solid rgba(120,90,50,.16)}
 .badgeHead{margin:0 0 8px;font:700 17px var(--display,inherit);color:var(--ink);display:flex;align-items:baseline;gap:8px}
 .badgeHead small{font:700 12px var(--body,inherit);color:#8A7A63}
@@ -1134,9 +1173,25 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
 .item.r-legendary:not(.locked){box-shadow:0 0 12px color-mix(in srgb,var(--rc) 55%,transparent)!important}
 @keyframes shineSweep{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
 @media (prefers-reduced-motion:reduce){.spk,.item::after{animation:none!important;display:none}}
-#v-chest:has(.chestWrap.rev) .coinRow{display:none!important}
+#v-chest .coinRow{display:none!important}
 .chestWrap.rev{margin-top:30px!important}
 .chestWrap.rev .cAnim{bottom:0!important}
+/* items: badge-style 4-up layout */
+#itemGrid .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#itemGrid .item{padding:8px 2px 6px!important;gap:2px!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;align-items:center;text-align:center}
+#itemGrid .item.worn{background:transparent!important;outline:0}
+#itemGrid .item.worn .ipill.on{color:#F28A30!important}
+#itemGrid .item.locked{opacity:1}
+#itemGrid .item::after{display:none!important}
+#itemGrid .item .rarTop{display:none!important}
+#itemGrid .item .art{background:transparent!important;aspect-ratio:1;height:auto;width:100%;padding:2px}
+#itemGrid .item .art::before,#itemGrid .item .art::after{display:none!important}
+#itemGrid .item .art svg,#itemGrid .item .art img{width:100%;height:100%}
+#itemGrid .item .nm{font:800 10.5px/1.15 var(--body,inherit)!important;color:var(--ink)}
+#itemGrid .item.locked{opacity:.85}
+#itemGrid .item .ipill{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font:800 9.5px var(--body,inherit)!important;color:#B0623A;min-height:0}
+#itemGrid .item .ipill.own,#itemGrid .item .ipill.on{color:#3B8A4F!important}
+#itemGrid .item .wearing{font-size:8px;padding:1px 5px}
 </style>
 
 
@@ -1208,7 +1263,7 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
         <h2>Planner <small id="planSum"></small></h2>
         <div class="card" style="display:flex;flex-direction:column;gap:12px">
           <details id="listPanel" class="addPanel listPanel">
-          <summary><span id="listSumTxt">Quests</span><svg class="chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <summary><span id="listSumTxt">Quests</span><button type="button" class="calBtn" id="calOpen" aria-label="Open calendar"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.500" y="5" width="17" height="15.500" rx="3"/><path d="M3.500 10H20.500M8 3V7M16 3V7"/><circle cx="8.500" cy="14.500" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="14.500" r="1" fill="currentColor" stroke="none"/><circle cx="15.500" cy="14.500" r="1" fill="currentColor" stroke="none"/></svg></button><svg class="chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <div class="tabs" id="dayTabs" style="margin-top:12px"></div>
           <div class="plist" id="planList" style="margin-top:10px"></div>
           </details>
@@ -1216,8 +1271,9 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
           <summary>Add Quest<svg class="chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
           <form class="form" id="planForm" style="padding-top:12px">
             <label class="field">Quest name<input id="sTitle" maxlength="40" required placeholder="e.g. Spelling practice"></label>
+            <label class="field">Quest type<select id="sType"><option value="">Auto</option><option value="morning">Morning</option><option value="school">School</option><option value="home">Home</option><option value="evening">Evening</option></select></label>
             <label class="field">Start time<select id="sAt"></select><span id="sAtNote" class="muted" style="font-size:12px;font-weight:700" hidden>This time already passed today. It will still be added today, with no late penalty.</span></label>
-            <label class="field wide">Duration<select id="sMins"><option value="1">1 min</option><option value="2">2 min</option><option value="3">3 min</option><option value="5">5 min</option><option value="10" selected>10 min</option><option value="15">15 min</option><option value="20">20 min</option><option value="25">25 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option></select></label>
+            <label class="field">Duration<select id="sMins"><option value="1">1 min</option><option value="2">2 min</option><option value="3">3 min</option><option value="5">5 min</option><option value="10" selected>10 min</option><option value="15">15 min</option><option value="20">20 min</option><option value="25">25 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option></select></label>
             <div class="field wide"><span>Repeat on</span><div class="days" id="sDays"></div></div>
             <label for="sGrow" class="row wide" style="font-weight:800;gap:10px"><input id="sGrow" class="chk" type="checkbox" checked>+2 min to the Quest for every LVL up</label>
 <span class="muted wide" style="font-size:13px;font-weight:700;margin-top:-4px">When checked, this Quest gets 2 more minutes every time the pet levels up, until the maximum level (10). That&#39;s up to +18 min.</span>
@@ -1281,7 +1337,7 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
         <h1 class="greet">Rewards</h1>
         <div class="coinRow"><span class="pill" id="keysPill"><span id="keys2">0</span><img class="icKey" src="icons/currency-key.png" alt="" width="20" height="20" style="margin-left:6px;vertical-align:-2px"></span></div>
         <div class="chestStage" id="chestStage"></div>
-        <div class="odds" id="keyMeterBox"><div class="row" style="align-items:center;gap:8px;font-size:17px;font-family:var(--display);font-weight:600"><img class="icKey" src="icons/currency-key.png" alt="" width="24" height="24">Next key</div><div class="row" style="align-items:center;gap:10px;margin-top:6px"><div class="track" style="background:#F1E6D4;height:14px;flex:1"><div class="fill" id="kmBar" style="background:linear-gradient(90deg,#F7A45B,#F28C3B)"></div></div><span id="kmTxt" style="font-variant-numeric:tabular-nums;font-weight:900;font-size:13px;white-space:nowrap">0 / 30 min</span></div><div style="text-align:center;font-weight:800;font-size:13px;color:var(--muted);margin-top:6px">Quest time adds up. 30 minutes = 1 key.</div></div>
+        <div class="odds" id="keyMeterBox"><div class="row" style="align-items:center;gap:8px;font-size:17px;font-family:var(--display);font-weight:600"><img class="icKey" src="icons/currency-key.png" alt="" width="24" height="24"><span><span id="keys3">0</span> <span id="keys3w">keys</span></span></div><div class="row" style="align-items:center;gap:10px;margin-top:6px"><div class="track" style="background:#F1E6D4;height:14px;flex:1"><div class="fill" id="kmBar" style="background:linear-gradient(90deg,#F7A45B,#F28C3B)"></div></div><span id="kmTxt" style="font-variant-numeric:tabular-nums;font-weight:900;font-size:13px;white-space:nowrap">0 / 30 min</span></div><div style="text-align:center;font-weight:800;font-size:13px;color:var(--muted);margin-top:6px">Quest time adds up. 30 minutes = 1 key.</div></div>
         <div class="odds" id="odds"></div>
         <div class="odds" hidden>
           <div class="row" style="justify-content:space-between;font-size:13px;font-weight:900"><span>Key meter (30 focus minutes = 1 key)</span><span id="pieceMeter" style="display:flex;gap:6px"></span></div>
@@ -2174,7 +2230,7 @@ $('navBtns').addEventListener('click', e=>{ if(e.target.closest('[data-gear]')){
 function go(v){
   S.hints=S.hints||{}; if(v==='chest') S.hints.chest=1; if(v==='items') S.hints.dress=1;
   view=v; VIEWS.forEach(([k])=>$('v-'+k).hidden = k!==v); $('v-settings').hidden = v!=='settings';
-  if(v!=='settings'){ unlocked=false; }
+  if(v!=='settings'){ unlocked=false; } else { const lp=$('listPanel'); if(lp) lp.open=false; }
   $('composer').hidden = true; // tap-only chat: no typing
   renderAll(); window.scrollTo(0,0);
   if(v==='chat') startChatIfEmpty();
@@ -2245,7 +2301,7 @@ function renderHeader(){
   if($('dayLine')) $('dayLine').textContent = greet() + (S.streak?` · ${S.streak}-day streak`:'');
   if($('helloName')) $('helloName').textContent = 'Hi, '+S.kid;
   document.body.dataset.view=view; if($('pCoins')){ $('pCoins').textContent=S.coins; $('pKeys').textContent=S.keys; }
-  $('coins').textContent = S.coins; $('keys').textContent = S.keys; $('keys2').textContent=S.keys; if($('keysPill')) $('keysPill').classList.toggle('one', S.keys===1);
+  $('coins').textContent = S.coins; $('keys').textContent = S.keys; $('keys2').textContent=S.keys; if($('keys3')){ $('keys3').textContent=S.keys; $('keys3w').textContent=S.keys===1?'key':'keys'; } if($('keysPill')) $('keysPill').classList.toggle('one', S.keys===1);
   const km=Math.round(S.keyMin||0); $('keyBar').firstElementChild.style.width=(km/KEY_MIN*100)+'%'; $('keyBar').title=`Key meter: ${km}/${KEY_MIN} focus minutes`; $('keyBar').setAttribute('aria-label', `Key meter ${km} of ${KEY_MIN} minutes`);
 }
 function timeGreeting(){
@@ -2727,7 +2783,7 @@ function renderCta(n){
   if(n){
     const late=S.late&&S.late[n.id], diff=n.at?startOf(n)-Date.now():-1, m=minsFor(n);
     const tag = late ? 'Running late! Start now' : diff>0 ? `Planned for ${fmtAt(n.at)}` : n.at ? `Time to start! (${fmtAt(n.at)})` : 'Next Quest';
-    c.innerHTML=`<button class="cta ${late?'late':''}" type="button" data-start="${n.id}"><span class="qIcon qCare next ctaIc"><img src="icons/care-${qKind(n)==='walk'?'walk':'snack'}.png" alt="" decoding="async"></span><span class="ctaTxt"><b>${esc(n.title)}</b><small>${tag} · ${m} min</small></span><span class="ctaGo">Start</span></button>`;
+    c.innerHTML=`<button class="cta ${late?'late':''}" type="button" data-start="${n.id}"><span class="qIcon next ctaIc">${questIcon(n.title,n.at,n.type)}</span><span class="ctaTxt"><b>${esc(n.title)}</b><small>${tag} · ${m} min</small></span><span class="ctaGo">Start</span></button>`;
   } else {
     const left=BONUS_PER_DAY-bonusToday();
     c.innerHTML = left>0 ? `<button class="cta bonus" type="button" data-start="${nextBonusId()}"><svg width="30" height="30" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2l3.2 6.6 7.3 1-5.3 5.1 1.3 7.2L13 18.5 6.5 21.9l1.3-7.2L2.5 9.6l7.3-1z" fill="#fff"/></svg><span class="ctaTxt"><b>Bonus: ${esc(getTask(nextBonusId()).title)}</b><small>${todayTasks().length?'Planned Quests done':'No Quests planned today'} · ${getTask(nextBonusId()).mins} min · ${left} Bonus left</small></span></button>`
@@ -2745,7 +2801,7 @@ function questRow(t, isNext){
   const done=!!S.done[t.id];
   const m = minsFor(t);
   const reward = `${m} min · +${xpFor(t)} XP · +${m} key min`;
-  const _kd=qKind(t); const icon = `<span class="qIcon qCare ${done?'done':isNext?'next':'later'}"><img src="icons/care-${_kd==='walk'?'walk':'snack'}.png" alt="" title="${_kd==='walk'?'Fills Walk':'Fills Food'}" decoding="async"></span>`;
+  const icon = `<span class="qIcon ${done?'done':isNext?'next':'later'}">${questIcon(t.title,t.at,t.type)}</span>`;
   const when = t.at ? fmtAt(t.at)+' · ' : '';
   const lateTag = (!done && S.late && S.late[t.id]) ? 'Running late · ' : '';
   const sub = done ? `${when}done` : isNext ? lateTag+when+reward : `${lateTag}${when}${t.at?'Opens at its start time, or after the Quest above':'Unlocks after the Quest above'} · ${m} min`;
@@ -2756,22 +2812,56 @@ function questRow(t, isNext){
 }
 // small painted-style icons chosen by quest title keywords
 const QICONS={
-  bed:'<path d="M4 26V14h8v6h20v6" fill="none" stroke="#2B2F4A" stroke-width="2.4" stroke-linejoin="round"/><rect x="6" y="18" width="24" height="7" rx="2" fill="#8FBF7A"/><circle cx="11" cy="16" r="2.5" fill="#FDEBD6"/><rect x="4" y="22" width="28" height="4" rx="2" fill="#C98B5A"/>',
-  teeth:'<rect x="15" y="4" width="6" height="18" rx="3" fill="#F7F7F7" stroke="#2B2F4A" stroke-width="2"/><rect x="15" y="4" width="6" height="6" rx="3" fill="#F28C3B"/><path d="M8 22h20l-2 8H10z" fill="#DDF0EB" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round"/><path d="M18 20c2-3 5-3 7-1" stroke="#8FBF7A" stroke-width="2.4" fill="none" stroke-linecap="round"/>',
-  book:'<path d="M4 8c6-2 10-1 14 2 4-3 8-4 14-2v18c-6-2-10-1-14 2-4-3-8-4-14-2z" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round"/><path d="M18 10v18" stroke="#2B2F4A" stroke-width="2"/><path d="M8 13c3-1 5-1 8 1M8 18c3-1 5-1 8 1M20 14c3-2 5-2 8-1M20 19c3-2 5-2 8-1" stroke="#C98B5A" stroke-width="1.8" stroke-linecap="round"/>',
-  math:'<rect x="6" y="4" width="24" height="28" rx="3" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.2"/><path d="M11 11h14M11 17h14M11 23h8" stroke="#2B2F4A" stroke-width="2" stroke-linecap="round" opacity=".55"/><circle cx="25" cy="24" r="5" fill="#F28C3B"/><path d="M22.5 24h5M25 21.5v5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>',
-  tidy:'<path d="M20 4l-7 16" stroke="#C98B5A" stroke-width="3" stroke-linecap="round"/><path d="M8 20l6-2 4 4-2 8H6z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round"/><path d="M9 24h8M8 27h9" stroke="#2B2F4A" stroke-width="1.6" opacity=".4"/><circle cx="27" cy="26" r="4" fill="#8FBF7A"/>',
-  bag:'<path d="M9 13a9 9 0 0 1 18 0v15a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3z" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2.2"/><rect x="12" y="19" width="12" height="8" rx="2" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="1.8"/><path d="M14 8a4 4 0 0 1 8 0" fill="none" stroke="#2B2F4A" stroke-width="2.2"/>',
-  food:'<circle cx="18" cy="20" r="11" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2.2"/><circle cx="18" cy="20" r="7" fill="#F28C3B"/><path d="M8 6v8M12 6v8M10 6v16" stroke="#2B2F4A" stroke-width="2" stroke-linecap="round"/>',
-  shower:'<path d="M10 14c0-5 4-8 8-8s8 3 8 8" fill="none" stroke="#2B2F4A" stroke-width="2.4" stroke-linecap="round"/><rect x="8" y="13" width="20" height="4" rx="2" fill="#DDF0EB" stroke="#2B2F4A" stroke-width="2"/><path d="M12 21v4M16 21v6M20 21v4M24 21v6" stroke="#5B8BF0" stroke-width="2.4" stroke-linecap="round"/>',
-  move:'<circle cx="18" cy="8" r="4" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2"/><path d="M12 32l5-10 5 10M10 20l8-6 8 4" fill="none" stroke="#2B2F4A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
-  clothes:'<path d="M12 6l6 3 6-3 7 5-3 5-3-1v15H11V15l-3 1-3-5z" fill="#C9A6E0" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round"/>',
-  star:'<path d="M18 4l4.2 8.6 9.5 1.4-6.9 6.7 1.6 9.4L18 25.6l-8.4 4.5 1.6-9.4L4.3 14l9.5-1.4z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round"/>',
-  check:'<circle cx="18" cy="18" r="13" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.2"/><path d="M11 18l5 5 9-10" fill="none" stroke="#4E7A3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
+  bed:'<rect x="4" y="18" width="28" height="10" rx="3" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="6" y="11" width="10" height="8" rx="3.500" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M4 28v3M32 28v3M16 22h14" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+  moon:'<path d="M23 4a14 14 0 1 0 9 22A11.500 11.500 0 0 1 23 4z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M28 7l1.200 3 3 1.200-3 1.200L28 15.500l-1.200-3.100-3-1.200 3-1.200z" fill="#fff" stroke="#2B2F4A" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>',
+  teeth:'<g transform="rotate(-38 18 18)"><rect x="14" y="3" width="8" height="30" rx="4" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="14" y="3" width="8" height="11" rx="3.500" fill="#6CC5E8" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16.500 6.500h3M16.500 10h3" stroke="#2B2F4A" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></g><path d="M27 6l1 2.500 2.500 1-2.500 1-1 2.500-1-2.500-2.500-1 2.500-1z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>',
+  clothes:'<path d="M12 5l6 3 6-3 8 6-3.500 5-3-1.500V31H10.500V14.500L7.500 16 4 11z" fill="#C9A6E0" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 5q6 5 12 0" fill="none" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>',
+  laundry:'<path d="M4 15h28l-3.500 16H7.500z" fill="#F2C9A0" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M11 15c0-9 14-9 14 0" fill="#C9A6E0" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 22h18M10 27h16" fill="none" stroke="#2B2F4A" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>',
+  bag:'<path d="M9 14a9 9 0 0 1 18 0v14a3.500 3.500 0 0 1-3.500 3.500h-11A3.500 3.500 0 0 1 9 28z" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="12.500" y="19" width="11" height="8" rx="2" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M14 8a4 4 0 0 1 8 0" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+  food:'<circle cx="18" cy="20" r="12" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="18" cy="20" r="7" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 5v7a2 2 0 0 0 4 0V5M8 12v10M29 5c-3 2-3 8 0 10v7" fill="none" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>',
+  pet:'<path d="M5 17h26l-3 13H8z" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="18" cy="17" rx="13" ry="3.600" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="14" cy="13" r="2" fill="#8A5A34"/><circle cx="19" cy="11" r="2" fill="#8A5A34"/><circle cx="23" cy="14" r="2" fill="#8A5A34"/>',
+  table:'<circle cx="18" cy="18" r="10" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="18" cy="18" r="6" fill="#DDF0EB" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M3 6v7a2 2 0 0 0 4 0V6M5 13v18M32 6c-3 2-3 9 0 11v14" fill="none" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>',
+  plant:'<path d="M7 15h17v11a3.500 3.500 0 0 1-3.500 3.500h-10A3.500 3.500 0 0 1 7 26z" fill="#6CC5E8" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M24 18h4l4-7" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M11 15c0-5 9-5 9 0" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M29 17l-1 3M32 19l-2 2" stroke="#2B2F4A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="31" cy="26" r="1.600" fill="#6CC5E8"/><circle cx="27" cy="29" r="1.600" fill="#6CC5E8"/>',
+  glass:'<path d="M8 4h20l-2.200 27a3.500 3.500 0 0 1-3.500 3H13.700a3.500 3.500 0 0 1-3.500-3z" fill="#EAF6FB" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9.700 14h16.600l-1.500 17a2 2 0 0 1-2 2h-9.600a2 2 0 0 1-2-2z" fill="#6CC5E8"/><path d="M14 18v6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',
+  book:'<path d="M3 8c6-2.500 11-1.500 15 2 4-3.500 9-4.500 15-2v19c-6-2.500-11-1.500-15 2-4-3.500-9-4.500-15-2z" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 10v19" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 13c3-.8 6-.5 8 .8M7 18c3-.8 6-.5 8 .8M21 14c2-1.300 5-1.600 8-.8M21 19c2-1.300 5-1.600 8-.8" fill="none" stroke="#C98B5A" stroke-width="1.600" stroke-linecap="round"/>',
+  abc:'<rect x="4" y="6" width="28" height="24" rx="4" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><text x="18" y="25" text-anchor="middle" font-size="16" font-weight="800" font-family="Nunito,Arial,sans-serif" fill="#E05A9C">Aa</text>',
+  math:'<rect x="5" y="3" width="26" height="30" rx="3.500" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 12h12M18 6v12" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M13 22l10 6M23 22l-10 6" stroke="#E05A9C" stroke-width="2" stroke-linecap="round"/>',
+  pencil:'<g transform="rotate(40 18 18)"><rect x="13.500" y="2" width="9" height="25" rx="1" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="13.500" y="2" width="9" height="6" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M13.500 27h9l-4.500 8z" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M16.500 31.500h3L18 34.500z" fill="#2B2F4A"/></g>',
+  music:'<path d="M12 27V8l16-4v19" fill="none" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 13l16-4" stroke="#2B2F4A" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="9" cy="27" rx="4.500" ry="3.700" fill="#C9A6E0" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="25" cy="23" rx="4.500" ry="3.700" fill="#C9A6E0" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+  tidy:'<path d="M22 3L14 20" stroke="#2B2F4A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 21l7-2.500 5 4.500-2.500 9H5z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M8.500 26h9M7.500 29.500h9" stroke="#2B2F4A" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>',
+  shower:'<path d="M8 14c0-6 4.500-9 10-9s10 3 10 9" fill="#DDF0EB" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="6" y="13" width="24" height="4.500" rx="2.200" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M11 22v3M16 21v6M21 22v4M26 21v3M13.500 29v3M19 30v3" stroke="#6CC5E8" stroke-width="2.200" stroke-linecap="round"/>',
+  shoe:'<path d="M4 25l1-11 6 2.500 3.500-4.500 10 7c3 2 5 3.500 5 6.500v1H4z" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M4 28.500h28" stroke="#2B2F4A" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M13 14l3 4M17 12l3 4" stroke="#2B2F4A" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>',
+  dance:'<circle cx="18" cy="7" r="4.200" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 11.500V23M6 5l12 9 12-9M18 23l-6 10M18 23l6 10" fill="none" stroke="#2B2F4A" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>',
+  calm:'<path d="M9 21a6 6 0 0 1 1-11.500A8 8 0 0 1 25 8.500a6.500 6.500 0 0 1 2 12.500z" fill="#DDF0EB" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 27h14M14 31.500h13M20 24h8" fill="none" stroke="#6CC5E8" stroke-width="2.400" stroke-linecap="round"/>',
+  palette:'<path d="M18 3C9 3 3 9.500 3 17c0 6 4.500 7 8 7 2.500 0 3.500 1 3.500 3 0 3 2 6 6 6 9 0 15-6.500 15-15 0-9-7-15-17.500-15z" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="10" cy="14" r="2.600" fill="#E05A9C"/><circle cx="17" cy="9.500" r="2.600" fill="#F2C94C"/><circle cx="25" cy="12" r="2.600" fill="#6CC5E8"/><circle cx="27" cy="20" r="2.600" fill="#8FBF7A"/>',
+  heart:'<path d="M18 31C4 22 3 12.500 8.500 8.500c4-3 8-1 9.500 3 1.500-4 5.500-6 9.500-3 5.500 4 4.500 13.500-9.500 22.500z" fill="#E05A9C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M10 12c1-1.500 3-2 4.500-1" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>',
+  star:'<path d="M18 4l4.200 8.600 9.500 1.400-6.900 6.700 1.600 9.400L18 25.600l-8.400 4.500 1.600-9.400L4.300 14l9.500-1.400z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round"/>',
+  check:'<circle cx="18" cy="18" r="13" fill="#FFF3DF" stroke="#2B2F4A" stroke-width="2.200"/><path d="M11 18l5 5 9-10" fill="none" stroke="#4E7A3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
 };
-function questIcon(title){
+const QTYPE={
+  morning:'<path d="M3 26h30" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 26a9 9 0 0 1 18 0z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M18 8v4.500M6.500 13l3 3M29.500 13l-3 3M3 21h3.500M29.500 21H33" fill="none" stroke="#F28C3B" stroke-width="2.400" stroke-linecap="round"/><path d="M9 31h18" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+  school:'<rect x="4" y="22" width="24" height="7" rx="2" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="6" y="15" width="22" height="7" rx="2" fill="#6CC5E8" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="3" y="8" width="20" height="7" rx="2" fill="#F28C3B" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><g transform="rotate(35 28 12)"><rect x="25.500" y="2" width="5" height="17" rx="1" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M25.500 19h5l-2.500 4.500z" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g>',
+  home:'<path d="M4 17L18 5l14 12" fill="none" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 15v16h22V15L18 6z" fill="#FDEBD6" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M3.500 17L18 4.500 32.500 17" fill="none" stroke="#C98B5A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="21" width="8" height="10" rx="1.500" fill="#8FBF7A" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><rect x="9" y="19" width="4" height="4" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>',
+  evening:'<path d="M22 4a13.500 13.500 0 1 0 10 21A11 11 0 0 1 22 4z" fill="#F2C94C" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><path d="M27 5l1 2.500 2.500 1-2.500 1-1 2.500-1-2.500-2.500-1 2.500-1z" fill="#fff" stroke="#2B2F4A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="30" cy="17" r="1.200" fill="#fff"/><circle cx="8" cy="6" r="1.200" fill="#F2C94C"/>'
+};
+function questType(title,at){
+  const t=String(title||'').toLowerCase(), h=at?Number(String(at).split(':')[0]):null;
+  if(/shower|bath|sleep|bedtime|pajama|pyjama|night|quiet time|calm|breath|relax|tomorrow/.test(t)) return 'evening';
+  if(/teeth|tooth|brush|floss/.test(t)) return (h!=null&&h>=16)?'evening':'morning';
+  if(/make (your |my |the )?bed|dress|clothes|shoes|outfit|socks|breakfast|get up|wake|hair/.test(t)) return 'morning';
+  if(/homework|worksheet|study|practice|piano|guitar|violin|instrument|music/.test(t)) return 'home';
+  if(/read|book|story|chapter|math|number|count|school|spell|abc|letters|vocab|writ|music|instrument|piano|guitar|violin|practice|backpack|pack/.test(t)) return 'school';
+  if(/tidy|clean|room|toys|laundry|hamper|dishes|table|pet|dog|cat|fish|feed|plant|garden|walk|run|outside|play|draw|art|paint|build|kind|help|snack|lunch|dinner|eat|drink|water/.test(t)) return 'home';
+  if(h!=null) return h<11?'morning':h>=18?'evening':'home';
+  return 'home';
+}
+function questIcon(title,at,type){
+  return `<svg viewBox="0 0 36 36" aria-hidden="true">${QTYPE[QTYPE[type]?type:questType(title,at)]}</svg>`;
+}
+function questIconSpecific(title){
   const t=String(title||'').toLowerCase();
-  const k = /bed|sleep|pajama|pyjama|night/.test(t)?'bed' : /teeth|tooth|brush|floss/.test(t)?'teeth' : /read|book|story|chapter/.test(t)?'book' : /math|homework|worksheet|spell|write|study/.test(t)?'math' : /tidy|clean|room|toys|floor|dishes|laundry|put away/.test(t)?'tidy' : /pack|backpack|bag|school/.test(t)?'bag' : /eat|breakfast|lunch|dinner|snack|water|drink/.test(t)?'food' : /shower|bath|wash|hair|hands/.test(t)?'shower' : /walk|run|dance|stretch|jump|exercise|bike|play outside|move/.test(t)?'move' : /dress|clothes|shoes|outfit|socks/.test(t)?'clothes' : 'check';
+  const R=[['teeth',/teeth|tooth|brush|floss/],['laundry',/laundry|hamper/],['pet',/\bpet\b|\bdog\b|\bcat\b|fish|feed (the|your|my)/],['table',/\btable\b/],['plant',/plant|garden|flower/],['bed',/make (your |my |the )?bed|\bbed$/],['moon',/sleep|bedtime|pajama|pyjama|night|quiet time|\brest\b/],['clothes',/dress|clothes|shoes|outfit|socks/],['bag',/pack|backpack|\bbag\b|school bag/],['food',/\beat\b|breakfast|lunch|dinner|snack|meal|food|fruit/],['glass',/drink|water/],['book',/read|book|story|chapter/],['abc',/spell|abc|letters|vocab|writing|\bwrite\b/],['math',/math|number|count/],['pencil',/homework|worksheet|study|school ?work/],['music',/music|instrument|piano|guitar|violin|drum|sing|practice/],['tidy',/tidy|clean|\broom\b|toys|floor|dishes|put away/],['shower',/shower|bath|wash|hair|hands/],['shoe',/walk|\brun\b|bike|outside|scooter|play outside/],['dance',/stretch|dance|jump|exercise|yoga|\bmove\b/],['calm',/breath|calm|relax|mindful|meditat/],['palette',/draw|\bart\b|paint|build|lego|craft|colou?r/],['heart',/kind|nice|thank|hug|compliment|\bhelp\b/]];
+  const hit=R.find(([k,re])=>re.test(t)); const k=hit?hit[0]:'star';
   return `<svg viewBox="0 0 36 36" aria-hidden="true">${QICONS[k]}</svg>`;
 }
 function renderQuests(){
@@ -2808,7 +2898,7 @@ function renderItems(){
   const tile = i=>{
     const has=!!S.inv[i.id], r=R[i.rar], worn=(i.slot==='room'?isPlaced(i.id):(S.eq[i.slot]===i.id && !egg)), price=PRICE[i.rar];
     const foot = worn ? `<span class="ipill on">${i.slot==='room'?'In room':'Wearing'}</span>` : has ? `<span class="ipill own">Owned</span>` : price ? `<span class="ipill">${coin}${price}</span>` : `<span class="ipill key">Chest only</span>`;
-    return `<button class="item r-${r.k} ${has?'':'locked'} ${worn?'worn':''}" style="--rc:${r.color}" type="button" data-item="${i.id}" ${(has||price)?'':'aria-disabled="true"'}><span class="rarTop">${r.name}</span>${S.goal===i.id?'<span class="wearing" style="background:#F2B807;color:#1B2A4A">GOAL</span>':''}<div class="art">${has?itemArt(i,true):mystArt(i)}</div><span class="nm">${esc(mystName(i))}</span>${foot}<span class="rarDot" title="${r.name}" style="background:${r.color}"></span></button>`;
+    return `<button class="item r-${r.k} ${has?'':'locked'} ${worn?'worn':''}" style="--rc:${r.color}" type="button" data-item="${i.id}" ${(has||price)?'':'aria-disabled="true"'}><span class="rarTop">${r.name}</span>${S.goal===i.id?'<span class="wearing" style="background:#F2B807;color:#1B2A4A">GOAL</span>':''}<div class="art">${has?itemArt(i,true):`<img class="ghost" src="${ITEM_BASE}ghost/${i.id}.png" alt="" style="width:100%;height:100%;object-fit:contain;display:block">`}</div><span class="nm">${esc(mystName(i))}</span>${foot}<span class="rarDot" title="${r.name}" style="background:${r.color}"></span></button>`;
   };
   if(slot==='room'){
     $('itemGrid').innerHTML = RTYPES.map(([tk,tn])=>{
@@ -3211,7 +3301,8 @@ function timeOptions(sel){
 function minOptions(sel){ const l=MINLIST.includes(sel)?MINLIST:[...MINLIST,sel].sort((a,b)=>a-b); return l.map(v=>`<option value="${v}" ${v===sel?'selected':''}>${v} min</option>`).join(''); }
 function editorHTML(t){
   return `<div class="pedit" data-editor="${t.id}">
-    <label class="field wide">Quest name<input id="eTitle" maxlength="40" value="${esc(t.title)}"></label>
+    <label class="field">Quest name<input id="eTitle" maxlength="40" value="${esc(t.title)}"></label>
+    <label class="field">Quest type<select id="eType">${[["","Auto"],["morning","Morning"],["school","School"],["home","Home"],["evening","Evening"]].map(([v,l])=>`<option value="${v}" ${(t.type||"")===v?"selected":""}>${l}</option>`).join("")}</select></label>
     <label class="field">Start time<select id="eAt">${timeOptions(t.at)}</select></label>
     <label class="field">Duration<select id="eMins">${minOptions(t.mins)}</select></label>
     <div class="field wide"><span>Repeat on</span><div class="days" id="eDays">${DAYN.map((d,i)=>`<button type="button" data-eday="${i}" aria-pressed="${editDays.has(i)}" aria-label="${DAYL[i]}">${d.slice(0,2)}</button>`).join('')}</div></div>
@@ -3314,6 +3405,7 @@ function renderProgress(){
 }
 function stampProgress(){ S.progressAt=Date.now(); const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
 function renderSettings(){
+  if(unlocked && !window._wasUnl){ const lp=$('listPanel'); if(lp) lp.open=false; } window._wasUnl=unlocked;
   $('gateCard').hidden=unlocked; $('setBody').hidden=!unlocked; $('lockBtn').hidden=!unlocked;
   if(!unlocked){ if(!$('gatePad').firstChild || $('gatePad').dataset.mode!==(S.pin?'u':'s')){ $('gatePad').dataset.mode=S.pin?'u':'s'; requireGrownUp($('gatePad'), ()=>{ $('gatePad').innerHTML=''; renderSettings(); }); } return; }
   if(unlocked){ renderProgress(); if(!S.progressAt || Date.now()-S.progressAt>60000) stampProgress(); else { const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); } }
@@ -3325,10 +3417,10 @@ function renderSettings(){
   const list=S.tasks.filter(t=>t.days.includes(pday)).sort(byTime);
   const total=list.reduce((n,t)=>n+minsFor(t),0);
   $('planSum').textContent = `${DAYL[pday]} · ${list.length} Quest${list.length===1?'':'s'} · ${total} min`;
-  if($('listSumTxt')) $('listSumTxt').textContent = `Active Quests (${list.length} on ${DAYL[pday]})`;
+  if($('listSumTxt')) $('listSumTxt').textContent = 'Active Quests';
   const todayEmpty=!S.tasks.some(t=>t.days.includes(new Date().getDay()));
   if(todayEmpty) $('planSum').textContent += ' · Nothing planned today';
-  $('planList').innerHTML = list.length ? list.map(t=> t.id===editingId ? editorHTML(t) : `<div class="pitem" data-tid="${t.id}"><span class="qIcon plan">${questIcon(t.title)}</span><span><b class="pTitle">${esc(t.title)}</b><br><small class="muted">${t.at?`<b class="pWhen">${fmtAt(t.at)}</b> · `:''}${(t.skip===todayKey() && pday===new Date().getDay())?'<b style="color:#8A3A0C">Starts next time (today\'s time passed)</b> · ':''}${t.mins} min · ${daysLabel(t.days)}</small></span><button class="mini edit" type="button" data-edit="${t.id}"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 11.5V13h1.5l7-7L10 4.5zM11 3.5l1.5 1.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button><button class="mini rm" type="button" data-rm="${t.id}" aria-label="Remove ${esc(t.title)} from ${DAYL[pday]}">✕</button></div>`).join('') : `<p class="muted" style="margin:0;font-weight:700">Nothing planned for ${DAYL[pday]} yet. Add a Quest below.</p>`;
+  $('planList').innerHTML = list.length ? list.map(t=> t.id===editingId ? editorHTML(t) : `<div class="pitem" data-tid="${t.id}"><span class="qIcon plan">${questIcon(t.title,t.at,t.type)}</span><span><b class="pTitle">${esc(t.title)}</b><br><small class="muted">${t.at?`<b class="pWhen">${fmtAt(t.at)}</b> · `:''}${(t.skip===todayKey() && pday===new Date().getDay())?'<b style="color:#8A3A0C">Starts next time (today\'s time passed)</b> · ':''}${t.mins} min · ${daysLabel(t.days)}</small></span><button class="mini edit" type="button" data-edit="${t.id}"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 11.5V13h1.5l7-7L10 4.5zM11 3.5l1.5 1.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button><button class="mini rm" type="button" data-rm="${t.id}" aria-label="Remove ${esc(t.title)} from ${DAYL[pday]}">✕</button></div>`).join('') : `<p class="muted" style="margin:0;font-weight:700">Nothing planned for ${DAYL[pday]} yet. Add a Quest below.</p>`;
   $('sDays').innerHTML = DAYN.map((d,i)=>`<button type="button" data-fday="${i}" aria-pressed="${formDays.has(i)}" aria-label="${DAYL[i]}">${d.slice(0,2)}</button>`).join('');
   refreshAddTimes();
   $('kidNameIn').value=S.kid; $('petNameIn').value=S.pet;
@@ -3380,13 +3472,36 @@ $('planList').addEventListener('click', e=>{
   if(e.target.closest('[data-ecancel]')){ editingId=null; renderSettings(); return; }
   const sv=e.target.closest('[data-esave]'); if(sv){ const t=S.tasks.find(x=>x.id===sv.dataset.esave); if(!t) return; const title=$('eTitle').value.trim(); if(!title){ toast('Give the Quest a name.'); return; }
     const oldAt=t.at;
-    Object.assign(t,{title, at:$('eAt').value||'', mins:Number($('eMins').value), grow:$('eGrow').checked, days:[...editDays].sort(), steps:$('eSteps').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6)});
+    Object.assign(t,{title, type:$('eType').value, at:$('eAt').value||'', mins:Number($('eMins').value), grow:$('eGrow').checked, days:[...editDays].sort(), steps:$('eSteps').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6)});
     const sk = t.at!==oldAt && !(S.late&&S.late[t.id]) ? skipIfPassed(t) : false;
     editingId=null; save(); renderSettings(); toast(sk?"Quest updated. Its time already passed today, so it won't count as late.":'Quest updated'); return; }
   if(rm){ const t=S.tasks.find(x=>x.id===rm.dataset.rm); if(!t) return; if(S.active&&S.active.id===t.id){ toast('That Quest is running right now.'); return; }
     if(t.days.length>1){ t.days=t.days.filter(d=>d!==pday); toast(`Removed from ${DAYL[pday]}`); } else { S.tasks=S.tasks.filter(x=>x.id!==t.id); toast('Quest removed'); }
     save(); renderSettings(); }
 });
+
+let calMonth=null, calSel=null;
+function calOpen(){ const n=new Date(); calMonth=calMonth||new Date(n.getFullYear(),n.getMonth(),1); if(!calSel) calSel=todayKey(); let ov=$('calOv'); if(!ov){ ov=document.createElement('div'); ov.id='calOv'; ov.className='calOv'; document.body.appendChild(ov); ov.addEventListener('click',calClick); } calDraw(); ov.hidden=false; }
+function calDayList(key){ const [y,m,d]=key.split('-').map(Number), dt=new Date(y,m-1,d), wd=dt.getDay(), L=(S.log||{})[key], isT=key===todayKey();
+  const list=S.tasks.filter(t=>t.days.includes(wd)&&t.skip!==key).sort(byTime);
+  const doneIds=new Set(isT?Object.keys(S.done||{}).filter(k=>S.done[k]):(L?L.done.map(x=>x.id):[]));
+  const head=dt.toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
+  const rows=list.length?list.map(t=>`<div class="calRow ${doneIds.has(t.id)?'ok':''}"><span class="calIc">${questIcon(t.title,t.at,t.type)}</span><span class="calTx"><b>${esc(t.title)}</b><small>${t.at?fmtAt(t.at)+' · ':''}${minsFor(t)} min</small></span>${doneIds.has(t.id)?'<span class="calTick">✓</span>':''}</div>`).join(''):'<div class="calNone">No Quests this day</div>';
+  return `<div class="calList"><h4>${head}</h4>${rows}</div>`; }
+function calDraw(){ const ov=$('calOv'), y=calMonth.getFullYear(), m=calMonth.getMonth(), first=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate(), tk=todayKey();
+  const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let cells=''; for(let i=0;i<first;i++) cells+='<span class="calC empty"></span>';
+  for(let d=1;d<=dim;d++){ const dt=new Date(y,m,d), key=todayKey(dt), wd=dt.getDay(), planned=S.tasks.filter(t=>t.days.includes(wd)&&t.skip!==key).length, L=(S.log||{})[key], done=L?L.done.filter(x=>!x.bonus).length:0, past=key<tk, isT=key===tk;
+    const dot=done>0?'<i class="calDot ok"></i>':(!past&&planned>0)?'<i class="calDot pl"></i>':'';
+    cells+=`<button type="button" class="calC ${isT?'today':''} ${past?'past':''} ${key===calSel?'sel':''}" data-cal="${key}"><b>${d}</b>${dot}</button>`; }
+  const keep=ov.querySelector('.calBox'), st=keep?keep.scrollTop:0;
+  ov.innerHTML=`<div class="calBox" role="dialog" aria-label="Calendar"><div class="calHead"><button type="button" class="calNav" data-calnav="-1" aria-label="Previous month">‹</button><h3>${MN[m]} ${y}</h3><button type="button" class="calNav" data-calnav="1" aria-label="Next month">›</button></div><div class="calDow">${['S','M','T','W','T','F','S'].map(x=>`<span>${x}</span>`).join('')}</div><div class="calGrid">${cells}</div>${calDayList(calSel)}<button type="button" class="btn calClose" data-calclose="1">Close</button></div>`;
+  const nb=ov.querySelector('.calBox'); if(nb) nb.scrollTop=st; }
+function calClick(e){ const nv=e.target.closest('[data-calnav]'), c=e.target.closest('[data-cal]');
+  if(nv){ calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+Number(nv.dataset.calnav),1); calDraw(); return; }
+  if(c){ calSel=c.dataset.cal; calDraw(); return; }
+  if(e.target.closest('[data-calclose]')||e.target===$('calOv')) $('calOv').hidden=true; }
+document.addEventListener('click',e=>{ const b=e.target.closest('#calOpen'); if(!b) return; e.preventDefault(); e.stopPropagation(); calOpen(); },true);
 function resetForm(){ $('planForm').reset(); $('sGrow').checked=true; $('sMins').value='10'; delete $('sAt').dataset.touched; formDays=new Set([pday]); }
 function atNote(){ const n=$('sAtNote'); if(n) n.hidden=true; }
 $('sAt').addEventListener('change', ()=>{ $('sAt').dataset.touched='1'; atNote(); });
@@ -3394,7 +3509,7 @@ $('addPanel').addEventListener('toggle', ()=>{ if($('addPanel').open) refreshAdd
 $('sDays').addEventListener('click', ()=>setTimeout(atNote,0));
 $('planForm').addEventListener('submit', e=>{
   e.preventDefault(); const title=$('sTitle').value.trim(); if(!title) return;
-  const data={title, mins:Number($('sMins').value), at:$('sAt').value||'', grow:$('sGrow').checked, days:[...formDays].sort(), steps:$('sSteps').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6)};
+  const data={title, type:$('sType').value, mins:Number($('sMins').value), at:$('sAt').value||'', grow:$('sGrow').checked, days:[...formDays].sort(), steps:$('sSteps').value.split(',').map(x=>x.trim()).filter(Boolean).slice(0,6)};
   const nt=Object.assign({id:uid()},data); const sk=skipIfPassed(nt); S.tasks.push(nt); toast(sk?"Quest added for today. Its time already passed, so it won't count as late.":'Quest added');
   resetForm(); $('addPanel').open=false; $('listPanel').open=true; save(); renderSettings();
 });
