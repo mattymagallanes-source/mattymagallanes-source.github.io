@@ -1178,12 +1178,13 @@ details>summary:has(.calBtn) .chev{margin-left:auto}
 .chestWrap.rev .cAnim{bottom:0!important}
 /* items: badge-style 4-up layout */
 #itemGrid .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-#itemGrid .item{padding:8px 2px 6px!important;gap:2px!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;align-items:center;text-align:center}
-#itemGrid .item.worn{background:transparent!important;outline:0}
-#itemGrid .item.worn .ipill.on{color:#F28A30!important}
+#itemGrid .item{padding:12px 2px 6px!important;gap:2px!important;border:0!important;border-radius:14px!important;background:transparent!important;box-shadow:none!important;align-items:center;text-align:center}
+#itemGrid .item.worn{background:#FFE9CF!important;outline:3px solid #F28A30;outline-offset:-3px;box-shadow:0 0 0 4px rgba(242,138,48,.18)!important}
+#itemGrid .item.worn .ipill.on{color:#D4722A!important}
+#itemGrid .item.worn .nm{color:#B8560F}
 #itemGrid .item.locked{opacity:1}
 #itemGrid .item::after{display:none!important}
-#itemGrid .item .rarTop{display:none!important}
+#itemGrid .item .rarTop{display:block!important;font:800 8.5px var(--body,inherit)!important;padding:2px 7px;margin:0 0 4px}
 #itemGrid .item .art{background:transparent!important;aspect-ratio:1;height:auto;width:100%;padding:2px}
 #itemGrid .item .art::before,#itemGrid .item .art::after{display:none!important}
 #itemGrid .item .art svg,#itemGrid .item .art img{width:100%;height:100%}
@@ -1192,6 +1193,17 @@ details>summary:has(.calBtn) .chev{margin-left:auto}
 #itemGrid .item .ipill{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font:800 9.5px var(--body,inherit)!important;color:#B0623A;min-height:0}
 #itemGrid .item .ipill.own,#itemGrid .item .ipill.on{color:#3B8A4F!important}
 #itemGrid .item .wearing{font-size:8px;padding:1px 5px}
+.streakBody{margin:-4px 0 6px;font:700 15px/1.35 var(--body);color:var(--tealInk,#2F6F66)}
+#streakDots[hidden]{display:none!important}
+nav.tabsbar button:not([aria-current="page"]) svg,nav.tabsbar button:not([aria-current="page"]) img{filter:grayscale(1);opacity:.7;transition:filter .2s,opacity .2s}
+.skipBar{position:absolute!important;right:10px;top:10px;left:auto;z-index:5;display:flex;flex-direction:column;gap:6px}
+.skipBar .skipBtn{width:44px;height:44px;padding:0;justify-content:center;border-radius:12px}
+.skipBar .skipBtn{position:static!important}
+.wkCmp .wkTop{display:flex;align-items:baseline;gap:10px;margin:2px 0 10px}
+.wkCmp .wkTop b{font-family:var(--display);font-size:34px;color:var(--ink)}
+.wkRow{display:grid;grid-template-columns:72px 1fr 44px;align-items:center;gap:8px;margin:6px 0;font:800 12px var(--body);color:var(--muted)}
+.wkRow em{font-style:normal;text-align:right;color:var(--ink)}
+.wkBar{height:12px;border-radius:999px;background:#F0E7D6;overflow:hidden}.wkBar i{display:block;height:100%;border-radius:999px}
 </style>
 
 
@@ -1250,8 +1262,9 @@ details>summary:has(.calBtn) .chev{margin-left:auto}
     <section class="view" id="v-quests" hidden aria-label="Quests">
       <h2>Today's Quests <small id="qCount"></small></h2>
       <div class="quests" id="questList"></div>
-      <h2>Streak <small id="streakTxt"></small></h2>
-      <div class="streak" id="streakDots"></div>
+      <h2>Streak</h2>
+      <p id="streakTxt" class="streakBody"></p>
+      <div class="streak" id="streakDots" hidden></div>
     </section>
 
     <!-- SETTINGS -->
@@ -1477,6 +1490,11 @@ const CAT = [
   ["celestial-canopy-bed", "Celestial Canopy Bed", "room", "legendary", "celestial-canopy-bed", "#D9A66A"],
   ["seasons-tree", "Seasons Tree", "room", "legendary", "seasons-tree", "#D9A66A"],
   ["storybook-tv", "Cozy Wooden TV", "room", "super", "storybook-tv", "#D9A66A"],
+  ["side-table", "Little Side Table", "room", "common", "side-table", "#D9A66A"],
+  ["tea-table", "Round Tea Table", "room", "uncommon", "tea-table", "#D9A66A"],
+  ["craft-table", "Craft Table", "room", "rare", "craft-table", "#D9A66A"],
+  ["picnic-table", "Picnic Table", "room", "super", "picnic-table", "#D9A66A"],
+  ["starlight-table", "Starlight Table", "room", "epic", "starlight-table", "#D9A66A"],
   ["floor-sofa", "Apricot Floor Sofa", "room", "common", "floor-sofa", "#D9A66A"],
   ["sage-loveseat", "Sage Loveseat", "room", "uncommon", "sage-loveseat", "#D9A66A"],
   ["wooden-futon", "Wooden Futon", "room", "rare", "wooden-futon", "#D9A66A"],
@@ -1555,14 +1573,14 @@ let S = DEFAULT();
 const LS = 'pocketPalFocus.v1';
 const VB={"bunny-1":[249,138,750,865],"bunny-2":[289,37,720,949],"bunny-3":[280,39,722,947],"bunny-4":[295,41,703,963],"bunny-5":[297,52,695,949],"bunny-6":[290,27,700,973],"bunny-7":[243,51,757,951],"bunny-8":[265,57,734,949],"bunny-9":[219,23,778,952],"bunny-10":[155,14,844,956],"red-panda-1":[210,83,786,920],"red-panda-2":[232,63,772,952],"red-panda-3":[250,85,746,944],"red-panda-4":[234,56,754,955],"red-panda-5":[224,41,826,955],"red-panda-6":[241,36,818,956],"red-panda-7":[222,34,823,964],"red-panda-8":[250,41,815,943],"red-panda-9":[204,34,828,965],"red-panda-10":[211,26,842,963],"raccoon-1":[204,130,805,911],"raccoon-2":[202,102,757,913],"raccoon-3":[189,79,782,935],"raccoon-4":[191,71,757,928],"raccoon-5":[177,39,782,950],"raccoon-6":[228,56,772,943],"raccoon-7":[189,31,782,959],"raccoon-8":[200,39,774,959],"raccoon-9":[219,38,824,963],"raccoon-10":[207,65,846,951]};
 ['bunny','red-panda','raccoon'].forEach(q=>{ VB[q+'-0']=[290,370,710,900]; });
-const PL={"starrug":{"slot":"rug","layer":"floor-rug","x":0.49,"y":0.965,"canvas_left":0.2146,"canvas_top":0.5307,"canvas_width":0.5552,"canvas_height":0.5552},"bookshelf":{"slot":"storage","layer":"floor-back","x":0.85,"y":0.785,"canvas_left":0.6473,"canvas_top":0.2241,"canvas_width":0.4054,"canvas_height":0.6654},"garden":{"slot":"window-sill","layer":"wall","x":0.29,"y":0.57,"canvas_left":0.0703,"canvas_top":0.2191,"canvas_width":0.4393,"canvas_height":0.4393},"leafbed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.865,"canvas_left":0.0423,"canvas_top":0.5173,"canvas_width":0.4159,"canvas_height":0.4159},"nook":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.815,"canvas_left":0.0487,"canvas_top":0.4491,"canvas_width":0.4243,"canvas_height":0.4243},"cloudlamp":{"slot":"lighting","layer":"floor-back","x":0.57,"y":0.8,"canvas_left":0.3933,"canvas_top":0.26,"canvas_width":0.357,"canvas_height":0.586},"pocket-cushion":{"slot":"floor-accessory","layer":"floor-front","x":0.23,"y":0.9,"canvas_left":0.1329,"canvas_top":0.7311,"canvas_width":0.1959,"canvas_height":0.1959},"food-bowl":{"slot":"feeding","layer":"floor-front","x":0.16,"y":0.91,"canvas_left":0.0901,"canvas_top":0.803,"canvas_width":0.1405,"canvas_height":0.1405},"small-plant":{"slot":"plant","layer":"floor-back","x":0.94,"y":0.79,"canvas_left":0.858,"canvas_top":0.6473,"canvas_width":0.1649,"canvas_height":0.1649},"welcome-mat":{"slot":"mat","layer":"floor-rug","x":0.19,"y":0.945,"canvas_left":0.0474,"canvas_top":0.7046,"canvas_width":0.289,"canvas_height":0.289},"patchwork-blanket":{"slot":"floor-accessory","layer":"floor-front","x":0.23,"y":0.91,"canvas_left":0.127,"canvas_top":0.7338,"canvas_width":0.2093,"canvas_height":0.2093},"toy-basket":{"slot":"toy-storage","layer":"floor-front","x":0.74,"y":0.91,"canvas_left":0.629,"canvas_top":0.7194,"canvas_width":0.2277,"canvas_height":0.2277},"hanging-fern":{"slot":"wall-plant","layer":"wall","x":0.89,"y":0.38,"canvas_left":0.7505,"canvas_top":0.1171,"canvas_width":0.2796,"canvas_height":0.2796},"mushroom-stool":{"slot":"stool","layer":"floor-front","x":0.76,"y":0.895,"canvas_left":0.6227,"canvas_top":0.6699,"canvas_width":0.2768,"canvas_height":0.2768},"moon-bed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.87,"canvas_left":-0.0012,"canvas_top":0.4525,"canvas_width":0.5047,"canvas_height":0.5047},"tree-bookshelf":{"slot":"storage","layer":"floor-back","x":0.85,"y":0.785,"canvas_left":0.6576,"canvas_top":0.278,"canvas_width":0.3931,"canvas_height":0.5389},"firefly-lantern":{"slot":"floor-lamp","layer":"floor-front","x":0.87,"y":0.89,"canvas_left":0.8179,"canvas_top":0.7394,"canvas_width":0.1048,"canvas_height":0.1719},"cloud-bed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.87,"canvas_left":0.0429,"canvas_top":0.5129,"canvas_width":0.4155,"canvas_height":0.4155},"mini-treehouse":{"slot":"playhouse","layer":"floor-back","x":0.82,"y":0.79,"canvas_left":0.6527,"canvas_top":0.475,"canvas_width":0.3363,"canvas_height":0.3363},"enchanted-tree-bed":{"slot":"bed","layer":"floor-back","x":0.23,"y":0.86,"canvas_left":0.0355,"canvas_top":0.4944,"canvas_width":0.3916,"canvas_height":0.3916},"floating-bookshelf":{"slot":"wall-storage","layer":"wall","x":0.77,"y":0.39,"canvas_left":0.523,"canvas_top":-0.021,"canvas_width":0.5053,"canvas_height":0.5053},"glowing-mushroom-garden":{"slot":"floor-plant","layer":"floor-front","x":0.87,"y":0.89,"canvas_left":0.7244,"canvas_top":0.6679,"canvas_width":0.2912,"canvas_height":0.2912},"celestial-canopy-bed":{"slot":"bed","layer":"floor-back","x":0.23,"y":0.86,"canvas_left":0.0264,"canvas_top":0.4825,"canvas_width":0.4077,"canvas_height":0.4077},"seasons-tree":{"slot":"plant","layer":"floor-back","x":0.87,"y":0.785,"canvas_left":0.7266,"canvas_top":0.4135,"canvas_width":0.2899,"canvas_height":0.3974},"storybook-tv":{"slot":"media","layer":"floor-back","x":0.765,"y":0.79,"canvas_left":0.5427,"canvas_top":0.391,"canvas_width":0.4446,"canvas_height":0.4446},"floor-sofa":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.85,"canvas_left":0.038,"canvas_top":0.5122,"canvas_width":0.4452,"canvas_height":0.4452},"sage-loveseat":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.84,"canvas_left":0.0699,"canvas_top":0.4954,"canvas_width":0.3807,"canvas_height":0.3807},"wooden-futon":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.84,"canvas_left":0.0434,"canvas_top":0.4688,"canvas_width":0.4329,"canvas_height":0.4329},"cloud-sofa":{"slot":"seating","layer":"floor-back","x":0.27,"y":0.84,"canvas_left":0.0642,"canvas_top":0.4877,"canvas_width":0.4123,"canvas_height":0.4123},"corner-sectional":{"slot":"seating","layer":"floor-back","x":0.28,"y":0.9,"canvas_left":0.0109,"canvas_top":0.4489,"canvas_width":0.5389,"canvas_height":0.5389},"crescent-chaise":{"slot":"seating","layer":"floor-back","x":0.27,"y":0.85,"canvas_left":0.0545,"canvas_top":0.4774,"canvas_width":0.4391,"canvas_height":0.4391}};
+const PL={"side-table":{"slot":"table","layer":"floor-front","x":0.62,"y":0.84,"canvas_left":0.47,"canvas_top":0.55,"canvas_width":0.24,"canvas_height":0.24},"tea-table":{"slot":"table","layer":"floor-front","x":0.62,"y":0.84,"canvas_left":0.47,"canvas_top":0.55,"canvas_width":0.24,"canvas_height":0.24},"craft-table":{"slot":"table","layer":"floor-front","x":0.62,"y":0.84,"canvas_left":0.47,"canvas_top":0.55,"canvas_width":0.24,"canvas_height":0.24},"picnic-table":{"slot":"table","layer":"floor-front","x":0.62,"y":0.84,"canvas_left":0.47,"canvas_top":0.55,"canvas_width":0.24,"canvas_height":0.24},"starlight-table":{"slot":"table","layer":"floor-front","x":0.62,"y":0.84,"canvas_left":0.47,"canvas_top":0.55,"canvas_width":0.24,"canvas_height":0.24},"starrug":{"slot":"rug","layer":"floor-rug","x":0.49,"y":0.965,"canvas_left":0.2146,"canvas_top":0.5307,"canvas_width":0.5552,"canvas_height":0.5552},"bookshelf":{"slot":"storage","layer":"floor-back","x":0.85,"y":0.785,"canvas_left":0.6473,"canvas_top":0.2241,"canvas_width":0.4054,"canvas_height":0.6654},"garden":{"slot":"window-sill","layer":"wall","x":0.29,"y":0.57,"canvas_left":0.0703,"canvas_top":0.2191,"canvas_width":0.4393,"canvas_height":0.4393},"leafbed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.865,"canvas_left":0.0423,"canvas_top":0.5173,"canvas_width":0.4159,"canvas_height":0.4159},"nook":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.815,"canvas_left":0.0487,"canvas_top":0.4491,"canvas_width":0.4243,"canvas_height":0.4243},"cloudlamp":{"slot":"lighting","layer":"floor-back","x":0.57,"y":0.8,"canvas_left":0.3933,"canvas_top":0.26,"canvas_width":0.357,"canvas_height":0.586},"pocket-cushion":{"slot":"floor-accessory","layer":"floor-front","x":0.23,"y":0.9,"canvas_left":0.1329,"canvas_top":0.7311,"canvas_width":0.1959,"canvas_height":0.1959},"food-bowl":{"slot":"feeding","layer":"floor-front","x":0.16,"y":0.91,"canvas_left":0.0901,"canvas_top":0.803,"canvas_width":0.1405,"canvas_height":0.1405},"small-plant":{"slot":"plant","layer":"floor-back","x":0.94,"y":0.79,"canvas_left":0.858,"canvas_top":0.6473,"canvas_width":0.1649,"canvas_height":0.1649},"welcome-mat":{"slot":"mat","layer":"floor-rug","x":0.19,"y":0.945,"canvas_left":0.0474,"canvas_top":0.7046,"canvas_width":0.289,"canvas_height":0.289},"patchwork-blanket":{"slot":"floor-accessory","layer":"floor-front","x":0.23,"y":0.91,"canvas_left":0.127,"canvas_top":0.7338,"canvas_width":0.2093,"canvas_height":0.2093},"toy-basket":{"slot":"toy-storage","layer":"floor-front","x":0.74,"y":0.91,"canvas_left":0.629,"canvas_top":0.7194,"canvas_width":0.2277,"canvas_height":0.2277},"hanging-fern":{"slot":"wall-plant","layer":"wall","x":0.89,"y":0.38,"canvas_left":0.7505,"canvas_top":0.1171,"canvas_width":0.2796,"canvas_height":0.2796},"mushroom-stool":{"slot":"stool","layer":"floor-front","x":0.76,"y":0.895,"canvas_left":0.6227,"canvas_top":0.6699,"canvas_width":0.2768,"canvas_height":0.2768},"moon-bed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.87,"canvas_left":-0.0012,"canvas_top":0.4525,"canvas_width":0.5047,"canvas_height":0.5047},"tree-bookshelf":{"slot":"storage","layer":"floor-back","x":0.85,"y":0.785,"canvas_left":0.6576,"canvas_top":0.278,"canvas_width":0.3931,"canvas_height":0.5389},"firefly-lantern":{"slot":"floor-lamp","layer":"floor-front","x":0.87,"y":0.89,"canvas_left":0.8179,"canvas_top":0.7394,"canvas_width":0.1048,"canvas_height":0.1719},"cloud-bed":{"slot":"bed","layer":"floor-back","x":0.25,"y":0.87,"canvas_left":0.0429,"canvas_top":0.5129,"canvas_width":0.4155,"canvas_height":0.4155},"mini-treehouse":{"slot":"playhouse","layer":"floor-back","x":0.82,"y":0.79,"canvas_left":0.6527,"canvas_top":0.475,"canvas_width":0.3363,"canvas_height":0.3363},"enchanted-tree-bed":{"slot":"bed","layer":"floor-back","x":0.23,"y":0.86,"canvas_left":0.0355,"canvas_top":0.4944,"canvas_width":0.3916,"canvas_height":0.3916},"floating-bookshelf":{"slot":"wall-storage","layer":"wall","x":0.77,"y":0.39,"canvas_left":0.523,"canvas_top":-0.021,"canvas_width":0.5053,"canvas_height":0.5053},"glowing-mushroom-garden":{"slot":"floor-plant","layer":"floor-front","x":0.87,"y":0.89,"canvas_left":0.7244,"canvas_top":0.6679,"canvas_width":0.2912,"canvas_height":0.2912},"celestial-canopy-bed":{"slot":"bed","layer":"floor-back","x":0.23,"y":0.86,"canvas_left":0.0264,"canvas_top":0.4825,"canvas_width":0.4077,"canvas_height":0.4077},"seasons-tree":{"slot":"plant","layer":"floor-back","x":0.87,"y":0.785,"canvas_left":0.7266,"canvas_top":0.4135,"canvas_width":0.2899,"canvas_height":0.3974},"storybook-tv":{"slot":"media","layer":"floor-back","x":0.765,"y":0.79,"canvas_left":0.5427,"canvas_top":0.391,"canvas_width":0.4446,"canvas_height":0.4446},"floor-sofa":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.85,"canvas_left":0.038,"canvas_top":0.5122,"canvas_width":0.4452,"canvas_height":0.4452},"sage-loveseat":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.84,"canvas_left":0.0699,"canvas_top":0.4954,"canvas_width":0.3807,"canvas_height":0.3807},"wooden-futon":{"slot":"seating","layer":"floor-back","x":0.26,"y":0.84,"canvas_left":0.0434,"canvas_top":0.4688,"canvas_width":0.4329,"canvas_height":0.4329},"cloud-sofa":{"slot":"seating","layer":"floor-back","x":0.27,"y":0.84,"canvas_left":0.0642,"canvas_top":0.4877,"canvas_width":0.4123,"canvas_height":0.4123},"corner-sectional":{"slot":"seating","layer":"floor-back","x":0.28,"y":0.9,"canvas_left":0.0109,"canvas_top":0.4489,"canvas_width":0.5389,"canvas_height":0.5389},"crescent-chaise":{"slot":"seating","layer":"floor-back","x":0.27,"y":0.85,"canvas_left":0.0545,"canvas_top":0.4774,"canvas_width":0.4391,"canvas_height":0.4391}};
 /* Furnishing types: one item per type, each type has its own spot. Rugs go under, plants/cushions in front, so those may overlap on purpose. */
-const RTYPES=[['rug','Rugs'],['bed','Beds'],['sofa','Sofas'],['shelf','Shelves & big pieces'],['plant','Plants'],['light','Lamps'],['window','Window'],['wall','Wall decor'],['cozy','Cushions & blankets'],['bowl','Food bowl'],['play','Toys & stools']];
-const RTYPE_OF={starrug:'rug','welcome-mat':'rug',leafbed:'bed','moon-bed':'bed','cloud-bed':'bed','enchanted-tree-bed':'bed','celestial-canopy-bed':'bed',nook:'sofa','floor-sofa':'sofa','sage-loveseat':'sofa','wooden-futon':'sofa','cloud-sofa':'sofa','corner-sectional':'sofa','crescent-chaise':'sofa',bookshelf:'shelf','tree-bookshelf':'shelf','storybook-tv':'shelf','mini-treehouse':'shelf','small-plant':'plant','seasons-tree':'plant','glowing-mushroom-garden':'plant',cloudlamp:'light','firefly-lantern':'light',garden:'window','floating-bookshelf':'wall','hanging-fern':'wall','pocket-cushion':'cozy','patchwork-blanket':'cozy','food-bowl':'bowl','toy-basket':'play','mushroom-stool':'play'};
+const RTYPES=[['rug','Rugs'],['bed','Beds'],['sofa','Sofas'],['table','Tables'],['shelf','Shelves & big pieces'],['plant','Plants'],['light','Lamps'],['window','Window'],['wall','Wall decor'],['cozy','Cushions & blankets'],['bowl','Food bowl'],['play','Toys & stools']];
+const RTYPE_OF={'side-table':'table','tea-table':'table','craft-table':'table','picnic-table':'table','starlight-table':'table',starrug:'rug','welcome-mat':'rug',leafbed:'bed','moon-bed':'bed','cloud-bed':'bed','enchanted-tree-bed':'bed','celestial-canopy-bed':'bed',nook:'sofa','floor-sofa':'sofa','sage-loveseat':'sofa','wooden-futon':'sofa','cloud-sofa':'sofa','corner-sectional':'sofa','crescent-chaise':'sofa',bookshelf:'shelf','tree-bookshelf':'shelf','storybook-tv':'shelf','mini-treehouse':'shelf','small-plant':'plant','seasons-tree':'plant','glowing-mushroom-garden':'plant',cloudlamp:'light','firefly-lantern':'light',garden:'window','floating-bookshelf':'wall','hanging-fern':'wall','pocket-cushion':'cozy','patchwork-blanket':'cozy','food-bowl':'bowl','toy-basket':'play','mushroom-stool':'play'};
 Object.keys(PL).forEach(id=>{ const o=PL[id]; o.old=o.slot; o.slot=RTYPE_OF[id]||o.slot; });
 /* perspective room: the wall/floor line sits at 40% of the height; the farther a piece stands from the viewer, the smaller it is */
 const HZ=.405;
-const BOT={"starrug":[.785],"welcome-mat":[.83],"bookshelf":[.841],"garden":[.799],"leafbed":[.836],"nook":[.867],"cloudlamp":[.921],"pocket-cushion":[.861],"food-bowl":[.762],"small-plant":[.867],"patchwork-blanket":[.842],"toy-basket":[.838],"hanging-fern":[.939],"mushroom-stool":[.812],"moon-bed":[.828],"tree-bookshelf":[.947],"firefly-lantern":[.877],"cloud-bed":[.857],"mini-treehouse":[.936],"enchanted-tree-bed":[.934],"floating-bookshelf":[.822],"glowing-mushroom-garden":[.764],"celestial-canopy-bed":[.932],"seasons-tree":[.943],"storybook-tv":[.896],"floor-sofa":[.758],"sage-loveseat":[.904],"wooden-futon":[.857],"cloud-sofa":[.854],"corner-sectional":[.836],"crescent-chaise":[.848]};
+const BOT={"side-table":[0.971],"tea-table":[0.973],"craft-table":[0.973],"picnic-table":[0.973],"starlight-table":[0.973],"starrug":[.785],"welcome-mat":[.83],"bookshelf":[.841],"garden":[.799],"leafbed":[.836],"nook":[.867],"cloudlamp":[.921],"pocket-cushion":[.861],"food-bowl":[.762],"small-plant":[.867],"patchwork-blanket":[.842],"toy-basket":[.838],"hanging-fern":[.939],"mushroom-stool":[.812],"moon-bed":[.828],"tree-bookshelf":[.947],"firefly-lantern":[.877],"cloud-bed":[.857],"mini-treehouse":[.936],"enchanted-tree-bed":[.934],"floating-bookshelf":[.822],"glowing-mushroom-garden":[.764],"celestial-canopy-bed":[.932],"seasons-tree":[.943],"storybook-tv":[.896],"floor-sofa":[.758],"sage-loveseat":[.904],"wooden-futon":[.857],"cloud-sofa":[.854],"corner-sectional":[.836],"crescent-chaise":[.848]};
 const depthScale=y=>Math.max(.78,Math.min(1.05,.78+.27*(y-HZ)/(.92-HZ)));
 function putAt(id,X,Yb,s){ const o=PL[id]; if(!o||!BOT[id]) return; s=s||depthScale(Yb); const w=o.canvas_width*s, h=o.canvas_height*s; o.canvas_left=X-w/2; o.canvas_top=Yb-BOT[id][0]*h; o.canvas_width=w; o.canvas_height=h; o.x=X; o.y=Yb; }
 ['leafbed','moon-bed','cloud-bed','enchanted-tree-bed','celestial-canopy-bed'].forEach(id=>putAt(id,.27,.74));
@@ -1576,7 +1594,7 @@ putAt('floating-bookshelf',.60,.27,.64); putAt('hanging-fern',.62,.22,.64);
 putAt('small-plant',.92,.72,1.3); putAt('seasons-tree',.91,.62); putAt('glowing-mushroom-garden',.88,.80);
 putAt('cloudlamp',.66,.50); putAt('firefly-lantern',.93,.82,1.5);
 putAt('pocket-cushion',.13,.85); putAt('patchwork-blanket',.13,.85); putAt('food-bowl',.30,.88);
-putAt('toy-basket',.85,.86); putAt('mushroom-stool',.85,.86);
+putAt('toy-basket',.85,.86); putAt('side-table',.79,.71); putAt('tea-table',.79,.71); putAt('craft-table',.79,.71); putAt('picnic-table',.79,.71); putAt('starlight-table',.79,.71); putAt('mushroom-stool',.85,.86);
 /* painted window: shrunk 20% and raised with the wall; its sill planter follows */
 { const g=PL.garden, cx=.285, cy=.3375; if(g){ g.canvas_left=cx+(g.canvas_left-cx)*.8; g.canvas_top=cy+(g.canvas_top-cy)*.8-.1135; g.canvas_width*=.8; g.canvas_height*=.8; } }
 { const g=PL.garden, cx=.2846, cy=.2263; if(g){ g.canvas_left=cx+(g.canvas_left-cx)*.5; g.canvas_top=cy+(g.canvas_top-cy)*.5; g.canvas_width*=.5; g.canvas_height*=.5; } } /* window 50% smaller again */
@@ -2330,8 +2348,12 @@ const DROP_SVG=`<svg class="dr" viewBox="0 0 24 30" width="20" height="25" aria-
 function paintWater(pop){ const el=$('bWater'); if(!el) return; const w=clamp(S.water||0,0,WATER_MAX), pd=clamp(S.waterPend||0,0,WATER_MAX-w);
   el.innerHTML=Array.from({length:WATER_MAX},(_,i)=>DROP_SVG.replace('class="dr"',`class="dr${i<w?' on':i<w+pd?' pend':''}${pop&&i===w-1?' pop':''}"`)).join(''); el.setAttribute('aria-label',`Water: ${w} of ${WATER_MAX}${pd?`, ${pd} waiting for a grown-up`:''}`);
   const ab=$('waterApv'); if(ab){ ab.hidden=!pd; ab.textContent=`Grown-up check · ${pd} ${pd===1?'drop':'drops'}`; } }
+const WATER_XP=5;
 function approveWater(ok){ const pd=S.waterPend||0; S.waterPend=0;
-  if(ok){ S.water=Math.min(WATER_MAX,(S.water||0)+pd); if(S.water>=WATER_MAX && S.waterBonus!==todayKey()){ S.waterBonus=todayKey(); S.coins+=10; setTimeout(()=>toast('All 8 drops! +10 coins'),400); } toast(pd===1?'Drop added!':`${pd} drops added!`); }
+  if(ok){ const w0=S.water||0; S.water=Math.min(WATER_MAX,w0+pd); const added=S.water-w0, xp=added*WATER_XP, bs=stageOf(S.level); const notes=added?gainXP(xp):[]; if(stageOf(S.level)!==bs) setTimeout(()=>evolveScene(bs, stageOf(S.level)), 1200);
+    let msg=(pd===1?'Drop added!':`${pd} drops added!`)+(xp?` +${xp} XP`:'')+(notes.length?' · '+notes.join(' · '):'');
+    if(S.water>=WATER_MAX && S.waterBonus!==todayKey()){ S.waterBonus=todayKey(); S.keys++; msg+=' · All 8 drops! +1 key'; }
+    toast(msg); }
   else toast('Okay, try again after a real drink.');
   save(); paintWater(true); renderAll(); }
 function paintPreview(){
@@ -2703,7 +2725,8 @@ const BADGES=[
  {id:'lvl7',n:'Big Buddy',d:'Reach LVL 7',c:'#C08A4A',g:'',t:s=>(s.level||1),goal:7},
  {id:'lvl10',n:'Pocket Legend',d:'Reach LVL 10',c:'#F2B807',g:'M7 18V9l3 3 3-5 3 5 3-3v9z',t:s=>(s.level||1),goal:10}
 ];
-function paintBadges(){ const g=$('badgeGrid'); if(!g) return; let got=0;
+function awardBadgeKeys(){ S.bk=S.bk||{}; const fresh=BADGES.filter(b=>b.t(S)>=b.goal && !S.bk[b.id]); if(!fresh.length) return; fresh.forEach(b=>{ S.bk[b.id]=1; S.keys++; }); save(); setTimeout(()=>toast(fresh.length===1?`Badge: ${fresh[0].n}! +1 key`:`${fresh.length} badges earned! +${fresh.length} keys`),500); }
+function paintBadges(){ awardBadgeKeys(); const g=$('badgeGrid'); if(!g) return; let got=0;
   g.innerHTML=BADGES.map(b=>{ const v=b.t(S), ok=v>=b.goal; if(ok) got++; return `<div class="badge ${ok?'on':'off'}" title="${b.d}"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#5A4636" stroke-width="1.800" stroke-linejoin="round" stroke-linecap="round">${(BICON[b.id]||(()=>''))(b.c)}</svg><span class="bn">${b.n}</span><span class="bd">${b.d}</span>${ok?'<span class="bok">Earned!</span>':'<span class="bp">'+Math.min(v,b.goal)+'/'+b.goal+'</span>'}</div>`; }).join('');
   const ct=$('badgeCt'); if(ct) ct.textContent=got+' of '+BADGES.length; }
 function renderPet(){
@@ -2804,7 +2827,7 @@ function questRow(t, isNext){
   const icon = `<span class="qIcon ${done?'done':isNext?'next':'later'}">${questIcon(t.title,t.at,t.type)}</span>`;
   const when = t.at ? fmtAt(t.at)+' · ' : '';
   const lateTag = (!done && S.late && S.late[t.id]) ? 'Running late · ' : '';
-  const sub = done ? `${when}done` : isNext ? lateTag+when+reward : `${lateTag}${when}${t.at?'Opens at its start time, or after the Quest above':'Unlocks after the Quest above'} · ${m} min`;
+  const sub = done ? `${when}done` : isNext ? lateTag+when+reward : `${lateTag}${when}${m} min`;
   const btn = (!done && isNext) ? `<button class="btn" type="button" data-start="${t.id}">Start</button>` : done ? `<span class="doneTag">Completed!</span>` : '';
   const tail = btn || (done ? '' : `<span class="qRing" aria-hidden="true"></span>`);
   const kd=qKind(t), kimg=`<img class="qKind" src="icons/care-${kd==='walk'?'walk':'snack'}.png" alt="" title="${kd==='walk'?'Fills Walk':'Fills Food'}" width="42" height="42" decoding="async">`;
@@ -3160,11 +3183,12 @@ function sfxChew(){ [.47,.94,1.4,1.85].forEach((t,i)=>sfxAt(t,()=>{ sfxNoise(.11
 function sfxSteps(){ [.3,.85,1.4,1.95,2.5,3.05].forEach((t,i)=>sfxAt(t,()=>{ sfxNoise(.12,260+(i%2)*60,120,.55); sfxTone(95+(i%2)*14,0,.1,.22,'sine'); sfxNoise(.05,2200,1200,.07); })); }
 function sfxGulp(){ [.2,.62,1.04,1.46,1.9].forEach((t,i)=>sfxAt(t,()=>{ const c=sfxCtx(), o=c.createOscillator(), g=c.createGain(); o.type='sine'; o.frequency.setValueAtTime(320-i*10,c.currentTime); o.frequency.exponentialRampToValueAtTime(90,c.currentTime+.2); g.gain.setValueAtTime(.0001,c.currentTime); g.gain.exponentialRampToValueAtTime(.34,c.currentTime+.03); g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.24); o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+.26); sfxNoise(.2,900,300,.16); })); sfxAt(0,()=>sfxNoise(.25,2500,900,.12)); sfxAt(2.25,()=>sfxNoise(.3,3000,1200,.14)); }
 function careSfx(id){ if(id==='snack') sfxChew(); else if(id==='walk') sfxSteps(); else sfxGulp(); }
-function feed(id){
+function feed(id,ok){
   const s=SNACKS.find(x=>x.id===id); if(!s || careBusy) return;
   const wish=todaysWish(), isWish=wish.id===id && !wish.done;
   if(meterFull(id) && !isWish){ $('petSay').textContent="I'm all topped up!"; toast(fullMsg(id)); return; }
   if(S.coins<s.cost) return;
+  if(id==='water' && !ok){ modal(`<div style="text-align:center"><div style="font-size:44px;line-height:1">💧</div><h3 style="margin:6px 0 6px">Finish a glass of real water!</h3><p class="muted" style="margin:0 0 14px">Drink a whole glass of real water. A grown-up will check your drop.</p><button class="btn" type="button" id="wDrink" style="width:100%">I finished it!</button><button class="btn ghost" type="button" data-close style="width:100%;margin-top:8px">Not now</button></div>`); const b=$('wDrink'); if(b) b.onclick=()=>{ closeModal(); feed('water',true); }; return; }
   S.coins-=s.cost; if(id==='snack') S.happy=clamp(S.happy+s.energy,0,100); else if(id==='walk') S.energy=clamp(S.energy+s.energy,0,100); else S.waterPend=Math.min(WATER_MAX-(S.water||0),(S.waterPend||0)+1); S.hints=S.hints||{}; S.hints.snack=1; if(id==='walk') S.hints.walk=1; if(id==='water') S.hints.water=1;
   if(id==='water') setTimeout(()=>toast('Show a grown-up to check your drop!'),2600);
   if(isWish){ wish.done=true; const bs=stageOf(S.level); const notes=gainXP(WISH_XP); if(stageOf(S.level)!==bs) setTimeout(()=>evolveScene(bs, stageOf(S.level)), 1200); setTimeout(()=>toast(`Wish granted! +${WISH_XP} XP${notes.length?' · '+notes.join(' · '):''}`), 400); }
@@ -3337,7 +3361,16 @@ function renderProgress(){
   const delta=(a,b,pct)=>{ if(b==null||a==null||!b) return '<em class="d flat">new</em>'; const diff=pct?a-b:Math.round((a-b)/b*100); if(diff===0) return '<em class="d flat">same</em>'; return `<em class="d ${diff<0?'down':''}">${diff>0?'▲':'▼'} ${Math.abs(diff)}${pct?' pts':'%'}</em>`; };
   // best streak from history
   let best=0, run=0; Object.keys(S.history||{}).sort().forEach((k,i,arr)=>{ run = (i>0 && dayOffset(arr[i-1],1)===k) ? run+1 : 1; best=Math.max(best,run); }); best=Math.max(best,S.streak||0);
-  const tiles=`<div class="ptiles">
+  const w1=progDays(7).map(progDay), w0=progDays(14).slice(0,7).map(progDay);
+  const cDone=sum(w1,d=>d.q.length), cPlan=sum(w1,d=>d.planned), pDone=sum(w0,d=>d.q.length), pPlan=sum(w0,d=>d.planned);
+  const cRate=cPlan?Math.min(100,Math.round(cDone/cPlan*100)):null, pRate=pPlan?Math.min(100,Math.round(pDone/pPlan*100)):null;
+  const cDiff=(cRate!=null&&pRate!=null)?cRate-pRate:null;
+  const wkCard=`<div class="pbox wkCmp"><h3>Completion rate <small>this week vs last week</small></h3>
+    <div class="wkTop"><b>${cRate==null?'–':cRate+'%'}</b>${cDiff==null?'<em class="d flat">no last week yet</em>':cDiff===0?'<em class="d flat">same as last week</em>':`<em class="d ${cDiff<0?'down':''}">${cDiff>0?'▲':'▼'} ${Math.abs(cDiff)} pts</em>`}</div>
+    <div class="wkRow"><span>This week</span><div class="wkBar"><i style="width:${cRate||0}%;background:var(--green)"></i></div><em>${cDone}/${cPlan}</em></div>
+    <div class="wkRow"><span>Last week</span><div class="wkBar"><i style="width:${pRate||0}%;background:#C9BFA8"></i></div><em>${pDone}/${pPlan}</em></div>
+  </div>`;
+  const tiles=wkCard+`<div class="ptiles">
     <div class="ptile"><span>Focus minutes</span><b>${mins}</b>${delta(mins,minsP)}<i style="width:${Math.min(100,Math.round(mins/Math.max(1,progRange*40)*100))}%;background:#2F62D0"></i></div>
     <div class="ptile"><span>Quests done</span><b>${doneN}<small>/${plannedN}</small></b>${delta(doneN,doneP)}<i style="width:${plannedN?Math.round(doneN/plannedN*100):0}%;background:var(--green)"></i></div>
     <div class="ptile"><span>On time</span><b>${rate==null?'–':rate+'%'}</b>${delta(rate,rateP,true)}<i style="width:${rate||0}%;background:var(--orange)"></i></div>
@@ -3388,7 +3421,7 @@ function renderProgress(){
     } else if(w.missWk===w.miss&&w.miss>1) tip2=`Weekends are the problem for ${T}. A later start on Sat/Sun, or fewer weekend Quests, may help.`;
     else tip2= long ? `${T} gets skipped. A shorter timer or a different time of day may help.` : `${T} gets skipped. A reminder at a set time, or doing it together for a few days, may help.`;
   }
-  const chart3=(worst.length||solid)?`<div class="pbox"><h3>Needs attention</h3><div class="patt">${worst.map(rowOf).join('')}${solid?`<div><span class="ic" style="background:#3BB273"></span><div><b>${esc(solid.title)}</b><small>On time ${solid.on} of ${solid.total} · rock solid</small></div></div>`:''}</div>${tip2?`<div class="ptip">${tip2}</div>`:''}</div>`:'';
+  const chart3=(worst.length)?`<div class="pbox"><h3>Needs attention</h3><div class="patt">${worst.map(rowOf).join('')}</div>${tip2?`<div class="ptip">${tip2}</div>`:''}</div>`:'';
   // --- Best focus time (on-time rate by planned hour) ---
   const byH={}; days.forEach(d=>d.q.forEach(q=>{ const h=q.at?parseInt(q.at.slice(0,2),10):q.hour; const o=byH[h]=byH[h]||{on:0,n:0}; o.n++; if(!q.late) o.on++; }));
   const hours=Object.keys(byH).map(Number).sort((a,b)=>a-b).filter(h=>byH[h].n>=1).slice(0,7);
@@ -3399,9 +3432,9 @@ function renderProgress(){
     const bestH=hours.slice().sort((a,b)=>byH[b].on/byH[b].n-byH[a].on/byH[a].n)[0];
     chart4=`<div class="pbox"><h3>Best focus time <small>on-time rate by hour</small></h3><svg viewBox="0 0 ${W} 84" width="100%" style="display:block">${hb}</svg><div class="ptip">${esc(S.kid)} does best around ${bestH%12||12}${bestH<12?'am':'pm'}. Planning the harder Quests there may help.</div></div>`;
   }
-  const foot=`<div class="pfoot"><div><b>${sum(days,d=>d.bonus)}</b><span>Side Quests</span></div><div><b>LVL ${S.level}</b><span>${STAGES[stageOf(S.level)].n.charAt(0)+STAGES[stageOf(S.level)].n.slice(1).toLowerCase()}</span></div><div><b>${S.chests||0}</b><span>Chests opened</span></div></div>`;
+  const foot='';
   const noHist=days.filter(d=>!d.hasData).length;
-  body.innerHTML = tiles+chart1+chart2+chart3+chart4+foot+(noHist>=3?`<p class="muted" style="margin:10px 0 0;font-size:12px;font-weight:700">Days before the report was added show as empty.</p>`:'');
+  body.innerHTML = tiles+chart1+chart2+chart3+chart4+foot;
 }
 function stampProgress(){ S.progressAt=Date.now(); const d=new Date(S.progressAt); $('progStamp').textContent='Updated '+d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' · '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); }
 function renderSettings(){
@@ -3589,8 +3622,11 @@ $('chestStage').addEventListener('click', e=>{
   if(e.target.id==='openAll') openAll();
   if(e.target.id==='haulDone'){ renderChest(); }
 });
-let chestAuto=false, chestLog=[];
-function openAll(){ if(chestBusy||S.keys<1) return; chestAuto=true; chestLog=[]; openChest(); }
+let chestAuto=false, chestLog=[], chestSkipAll=false, chestTimers=[];
+function skipBar(id){ return `<div class="skipBar"><button type="button" class="skipBtn" id="${id}" aria-label="Skip">${ICO_PLAY}</button>${chestAuto&&S.keys>0?`<button type="button" class="skipBtn" id="skipAll" aria-label="Skip all">${ICO_FF}</button>`:''}</div>`; }
+const ICO_PLAY='<svg width="18" height="18" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 2v10l8-5z" fill="currentColor"/></svg>', ICO_FF='<svg width="18" height="18" viewBox="0 0 14 14" aria-hidden="true"><path d="M.5 2.5v9l6-4.5zM7 2.5v9l6-4.5z" fill="currentColor"/></svg>';
+function wireSkipAll(clear){ const b=$('skipAll'); if(b) b.onclick=()=>{ clear&&clear(); chestSkipAll=true; chestBusy=false; openChest(); }; }
+function openAll(){ if(chestBusy||S.keys<1) return; chestAuto=true; chestSkipAll=false; chestLog=[]; openChest(); }
 function openChest(){
   if(chestBusy || S.keys<1) return;
   chestBusy=true; S.keys--;
@@ -3603,11 +3639,12 @@ function openChest(){
   S.chests++; S.lastChest={id:it.id,at:Date.now()}; save();
   if(chestAuto) chestLog.push({it,rar,dupe});
   renderHeader(); renderNav();
+  if(chestAuto && chestSkipAll){ chestBusy=false; if(S.keys>0){ openChest(); return; } chestAuto=false; chestSkipAll=false; renderChest(); showHaul(); return; }
   const st=$('chestStage');
-  st.innerHTML = `<div class="chestWrap">${chestArt(false)}</div><div style="font-weight:800;color:var(--nightMuted)">Opening...</div><button type="button" class="skipBtn" id="skipOpen">Skip <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 2.5v9l6-4.5zM9 2.5h2.5v9H9z" fill="currentColor"/></svg></button>`;
+  st.innerHTML = `<div class="chestWrap">${chestArt(false)}</div><div style="font-weight:800;color:var(--nightMuted)">Opening...</div>${skipBar("skipOpen")}`;
   const svg=$('chestSvg'); if(svg) svg.classList.add('shake'); sfxRumble();
   let revealed=false; const openT=setTimeout(doReveal, matchMedia('(prefers-reduced-motion: reduce)').matches?200:1500);
-  $('skipOpen').onclick=()=>{ clearTimeout(openT); doReveal(); };
+  $('skipOpen').onclick=()=>{ clearTimeout(openT); doReveal(); }; wireSkipAll(()=>clearTimeout(openT));
   function doReveal(){ if(revealed) return; revealed=true;
     const r=R[rar];
     st.innerHTML = `<div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%">
@@ -3616,7 +3653,7 @@ function openChest(){
       <span class="prize">${esc(it.name)}</span><span class="slotChip">${SLOTL[it.slot]||esc(it.slot)} · ${r.name}</span>
       <span style="font-size:14px;font-weight:700;color:var(--nightMuted)">${dupe?`You already had this one, so it turned into +${r.dupe} coins.`:`New ${it.slot==='room'?'room':it.slot} for ${esc(S.pet)}!`}</span>
       ${(!dupe && it.slot!=='room' && !canDress())?`<span style="font-size:13px;font-weight:800;color:var(--nightMuted)">Saved for when ${esc(S.pet)} wakes up.</span>`:''}${chestAuto&&S.keys>0?`<span style="font-size:13px;font-weight:800;color:var(--nightMuted)">Next chest coming... (${S.keys} left)</span>`:`<div class="row" style="width:100%">${(dupe||(it.slot!=='room'&&!canDress()))?'':`<button class="btn" type="button" id="equipWin" style="flex:1">${it.slot==='room'?'Move in':'Put it on'}</button>`}<button class="btn ghost" type="button" id="againChest" style="flex:1">${S.keys>0?'Open next':chestAuto?'See everything':'Done'}</button></div>`}</div>`;
-    if(chestAuto&&S.keys>0){ st.insertAdjacentHTML('beforeend','<button type="button" class="skipBtn" id="skipNext">Skip <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 2.5v9l6-4.5zM9 2.5h2.5v9H9z" fill="currentColor"/></svg></button>'); const nt=setTimeout(()=>{ chestBusy=false; openChest(); }, 6500); const sk=$('skipNext'); if(sk) sk.onclick=()=>{ clearTimeout(nt); chestBusy=false; openChest(); }; }
+    if(chestAuto&&S.keys>0){ st.insertAdjacentHTML('beforeend',skipBar('skipNext')); const nt=setTimeout(()=>{ chestBusy=false; openChest(); }, 6500); const sk=$('skipNext'); if(sk) sk.onclick=()=>{ clearTimeout(nt); chestBusy=false; openChest(); }; wireSkipAll(()=>clearTimeout(nt)); }
     const big = ['super','epic','legendary'].includes(rar);
     const rm=matchMedia('(prefers-reduced-motion: reduce)').matches; setTimeout(()=>confetti(big?[r.glow,'#fff',r.color,'#F2B807']:[r.glow,r.color]), rm?200:2250); setTimeout(()=>sfxOpen(big), rm?0:1900); if(!rm){ [0,350,700,1050,1400].forEach((t,i)=>setTimeout(()=>{ try{ sfxTone(330+i*110,0,.35,.1,'sine'); }catch(e){} },300+t)); }
     renderChest();
