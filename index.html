@@ -2074,7 +2074,7 @@ function evolveScene(from, to, done){
     <button type="button" class="evoSkip">Skip</button>
     <p class="evoTop" aria-live="polite">${from===0?`Oh! ${name} is waking up...`:`Huh? ${name} is glowing...`}</p>
     <div class="evoStage"><div class="evoOrbs" hidden>${orbs}</div><div class="evoA">${petSVG({stage:from,name:S.pet})}</div><div class="evoB">${petSVG({stage:to,name:S.pet})}</div><div class="evoSpark">${sparks}</div></div>
-    <div class="evoEnd"><h2>${from===0?`${name} woke up!`:`${name} grew into ${/^[AEIOU]/.test(toN)?'an':'a'} ${toN}!`}</h2><span class="evoChip">LVL ${to+1} · ${STAGES[to].n}</span><p>${next?`LVL ${to+1} reached! Next up: ${cap(next.n)} at LVL ${next.min}`:'MAX LVL! Keep going to earn Legend stars.'}</p><button type="button" class="btn evoOk">${from===0?'Hi, '+name+'!':'Awesome!'}</button></div>
+    <div class="evoEnd"><h2>${from===0?`${name} woke up!`:`${name} grew into ${/^[AEIOU]/.test(toN)?'an':'a'} ${toN}!`}</h2><span class="evoChip">LVL ${to+1} · ${STAGES[to].n}</span><button type="button" class="btn evoOk">${from===0?'Hi, '+name+'!':'Awesome!'}</button></div>
     <div class="evoFlash"></div>`;
   document.body.appendChild(ov); document.body.style.overflow='hidden';
   const timers=[]; const T=(f,ms)=>timers.push(setTimeout(f,ms));
