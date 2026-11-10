@@ -1088,6 +1088,52 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
 .chestScene .chestWrap .chestImgWrap{width:320px;height:240px;margin-left:-160px}
 .chestScene .chestImg,.chestImgWrap .chestImg{width:320px!important;max-width:none}
 .chestStage{overflow:visible!important}
+.badgeSec{margin-top:14px;padding-top:12px;border-top:1.5px solid rgba(120,90,50,.16)}
+.badgeHead{margin:0 0 8px;font:700 17px var(--display,inherit);color:var(--ink);display:flex;align-items:baseline;gap:8px}
+.badgeHead small{font:700 12px var(--body,inherit);color:#8A7A63}
+.badgeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.badge{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;padding:8px 2px 6px;border-radius:14px;background:#FAF0DC}
+.badge svg{width:44px;height:44px}.badge.off svg *{stroke-dasharray:3 2.6;stroke-width:1.7}
+.badge.off svg *:not([stroke="none"]){stroke:#A89B85!important}
+.badge.off svg *[fill]:not([fill="none"]){fill:#FAF0DC!important}
+.badge .bn{font:800 10.5px/1.15 var(--body,inherit);color:var(--ink)}
+.badge .bd{font:700 9.5px var(--body,inherit);color:#8A7A63}
+.badge.off{opacity:.78}.badge .bd{line-height:1.2}.badge .bok{font:800 9.5px var(--body,inherit);color:#3B8A4F}.badge .bp{font:800 9.5px var(--body,inherit);color:#B0623A}
+
+.petCtrls .cRow:has(.cPrice:not([hidden])){background:#FFFDF8;border-radius:999px;box-shadow:0 3px 10px rgba(120,80,40,.18);padding-right:14px;gap:2px}
+.petCtrls .cRow:has(.cPrice:not([hidden])) .cbtn{box-shadow:none!important;background:transparent!important}
+.petCtrls .cRow:has(.cPrice:not([hidden])) .cPrice{font-size:17px}
+.evoEnd h2,.evo .evoEnd h2{color:#fff!important;text-shadow:0 2px 6px rgba(0,0,0,.45)}
+.evoEnd p{color:#E8EDF8!important}
+.chestWrap.rev .spk{position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4px;border-radius:50%;opacity:0;z-index:5;box-shadow:0 0 8px 2px currentColor;animation:spkPop var(--d) 2.9s ease-out infinite}
+@keyframes spkPop{0%{opacity:0;transform:translate(0,0) scale(.3)}25%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.2)}}
+.item .flavSm{font-size:10.5px;font-style:italic;font-weight:700;line-height:1.2;color:#8A7A63;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.reveal .flav{font-size:14px;font-style:italic;font-weight:700;color:#6B5A44;margin-top:-4px}
+/* image detail: rarity-tinted backdrop, ground shadow, corner gems */
+.item .art{position:relative;border-radius:14px;background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--rc) 22%,#fff) 0%,color-mix(in srgb,var(--rc) 8%,transparent) 62%,transparent 100%)}
+.item .art::before{content:'';position:absolute;left:22%;right:22%;bottom:5%;height:8%;border-radius:50%;background:rgba(90,60,30,.18);filter:blur(2px)}
+.item .art img,.item .art svg{position:relative;z-index:1}
+.item.r-epic .art::after,.item.r-legendary .art::after,.item.r-super .art::after{content:'\2726';position:absolute;top:4px;right:6px;font-size:11px;color:var(--rc);opacity:.85;z-index:2}
+.item.r-legendary .art::after{content:'\2726 \2726'}
+.item.locked .art::before,.item.locked .art::after{display:none}
+.chestWrap.rev::before{content:'';position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-165px 0 0 -150px;border-radius:50%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--pg,#F2B807) 28%,transparent) 0 8deg,transparent 8deg 24deg);-webkit-mask:radial-gradient(circle,#000 20%,transparent 68%);mask:radial-gradient(circle,#000 20%,transparent 68%);opacity:0;animation:raysIn 1s 2.1s ease-out forwards,raysSpin 22s linear infinite;pointer-events:none}
+@keyframes raysIn{to{opacity:.9}}
+@keyframes raysSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.chestWrap.rev::before{animation:none;opacity:.6}}
+/* chest detail: floor pad, ground shadow, aura, gold glints */
+.chestScene .chestWrap::before,.chestWrap.rev::after{content:'';position:absolute;left:50%;bottom:-6px;width:250px;height:34px;margin-left:-125px;border-radius:50%;background:radial-gradient(ellipse,rgba(120,85,45,.30) 0%,rgba(120,85,45,.14) 55%,transparent 72%);pointer-events:none}
+.chestWrap.rev::after{bottom:0;z-index:0}
+.chestScene .chestWrap::after{content:'';position:absolute;left:50%;top:44%;width:230px;height:230px;margin:-115px 0 0 -115px;border-radius:50%;background:radial-gradient(circle,rgba(242,184,7,.28) 0%,rgba(242,184,7,.10) 45%,transparent 70%);animation:auraPulse 3s ease-in-out infinite;pointer-events:none;z-index:0}
+@keyframes auraPulse{0%,100%{transform:scale(.92);opacity:.7}50%{transform:scale(1.06);opacity:1}}
+.chestScene .chestImgWrap,.chestScene .chestWrap svg{z-index:1}
+.chestScene .chestImgWrap::after{content:'\2726';position:absolute;top:18%;left:68%;font-size:16px;color:#F2B807;text-shadow:0 0 8px #F2B807;animation:glint 2.6s ease-in-out infinite}
+@keyframes glint{0%,60%,100%{opacity:0;transform:scale(.4) rotate(0)}75%{opacity:1;transform:scale(1.1) rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){.chestScene .chestWrap::after,.chestScene .chestImgWrap::after{animation:none}}
+.reveal .slotChip{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#7A6A55;background:#F3E7D2;border-radius:999px;padding:3px 10px}
+.item.r-rare:not(.locked)::after,.item.r-super:not(.locked)::after,.item.r-epic:not(.locked)::after,.item.r-legendary:not(.locked)::after{content:'';position:absolute;inset:0;border-radius:15px;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;animation:shineSweep 4.5s ease-in-out infinite}
+.item.r-legendary:not(.locked){box-shadow:0 0 12px color-mix(in srgb,var(--rc) 55%,transparent)!important}
+@keyframes shineSweep{0%,60%{background-position:150% 0}100%{background-position:-50% 0}}
+@media (prefers-reduced-motion:reduce){.spk,.item::after{animation:none!important;display:none}}
 #v-chest:has(.chestWrap.rev) .coinRow{display:none!important}
 .chestWrap.rev{margin-top:30px!important}
 .chestWrap.rev .cAnim{bottom:0!important}
@@ -1137,6 +1183,7 @@ svg.roomFront{position:absolute;inset:0;width:100%;height:100%;pointer-events:no
           <button class="waterApv" id="waterApv" type="button" hidden>Grown-up check</button>
           <div class="bar barHelp"><button type="button" class="helpBtn" data-info="all" aria-label="What do these meters mean?">?</button></div>
         </div>
+        <section class="badgeSec" aria-label="Badges"><h3 class="badgeHead">Badges <small id="badgeCt"></small></h3><div class="badgeGrid" id="badgeGrid"></div></section>
         <div class="path icons" id="pathRow" role="list" aria-label="Growth stages" hidden></div>
       </div>
       <div id="adoptBox"></div>
@@ -1311,6 +1358,10 @@ const RAR = [
   {k:'legendary', name:'Legendary',  color:'#F2B807', glow:'#F2B807', tint:'#FDF3D2', w:1,  dupe:60}
 ];
 const R = Object.fromEntries(RAR.map(r=>[r.k,r]));
+const FLAV={common:['A handy find','Simple and sweet','Comfy everyday style'],uncommon:['Nice! Not many have this','A cozy little treasure','Looks great on any day'],rare:['A real standout piece','Sparkles in the sunlight','Hard to find, easy to love'],super:['Wow, super special!','Shimmers with magic','Only the luckiest find this'],epic:['Epic style unlocked!','Glows with pure magic','A treasure fit for a hero'],legendary:['LEGENDARY! Once in a blue moon','Glows like a tiny sun','The rarest treasure of all']};
+const SLOTL={hat:'Hat',outfit:'Outfit',room:'Room item',bed:'Bed',toy:'Toy'};
+function flavor(it){ const a=FLAV[it.rar]||FLAV.common; let h=0; for(const c of it.id) h=(h*31+c.charCodeAt(0))>>>0; return a[h%a.length]; }
+function sparkles(r){ const n={common:4,uncommon:6,rare:8,super:10,epic:13,legendary:18}[r.k]||4; let o=''; for(let i=0;i<n;i++){ const ang=i/n*6.283+(i%2)*.3, rad=70+(i%3)*18; o+=`<i class="spk" style="--x:${Math.round(Math.cos(ang)*rad)}px;--y:${Math.round(Math.sin(ang)*rad*.8)}px;--d:${(2.2+i*.09).toFixed(2)}s;background:${r.glow}"></i>`; } return o; }
 const CAT = [
   ["leafcap", "Leaf Cap", "hat", "common", "leafcap", "#D9A66A"],
   ["rainhat", "Rain Hat", "hat", "common", "rainhat", "#D9A66A"],
@@ -1460,6 +1511,7 @@ const depthScale=y=>Math.max(.78,Math.min(1.05,.78+.27*(y-HZ)/(.92-HZ)));
 function putAt(id,X,Yb,s){ const o=PL[id]; if(!o||!BOT[id]) return; s=s||depthScale(Yb); const w=o.canvas_width*s, h=o.canvas_height*s; o.canvas_left=X-w/2; o.canvas_top=Yb-BOT[id][0]*h; o.canvas_width=w; o.canvas_height=h; o.x=X; o.y=Yb; }
 ['leafbed','moon-bed','cloud-bed','enchanted-tree-bed','celestial-canopy-bed'].forEach(id=>putAt(id,.27,.74));
 ['nook','floor-sofa','sage-loveseat','wooden-futon','cloud-sofa','corner-sectional','crescent-chaise'].forEach(id=>putAt(id,.34,HZ+.012));
+putAt('corner-sectional',.34,HZ+.034);
 ['bookshelf','tree-bookshelf','storybook-tv','mini-treehouse'].forEach(id=>putAt(id,.80,HZ+.012));
 /* rugs lie flat on the floor: squashed vertically (foreshortening) and set by their far edge on the floor */
 function putRug(id,X,Yb,sq){ const o=PL[id]; if(!o) return; const sc=depthScale(Yb), w=o.canvas_width*sc, h=o.canvas_height*sc*sq; o.canvas_left=X-w/2; o.canvas_top=Yb-BOT[id][0]*h; o.canvas_width=w; o.canvas_height=h; o.x=X; o.y=Yb; }
@@ -2529,6 +2581,75 @@ function hintTarget(){
   const sel = h.startsWith('Tap the orange') ? '#startCta .cta' : h.startsWith('You got a key') ? '#navBtns [data-v="chest"]' : h.includes('Shop tab') ? '#navBtns [data-v="items"]' : h.startsWith('A snack') ? '#petCtrls [data-ctrl="snack"]' : h.startsWith('Could we go for a walk') ? '#petCtrls [data-ctrl="walk"]' : h.startsWith('Want to play') ? '#petCtrls [data-ctrl="play"]' : null;
   const el = sel && document.querySelector(sel); if(el) el.classList.add('hintPulse');
 }
+
+const BICON={
+first:c=>`<path d="M11 5V36" stroke-width="2.4"/><path d="M12 7H32L27 13.500 32 20H12Z" fill="${c}"/>`,
+five:c=>`<path d="M14 23L8 31L14 29Z M26 23L32 31L26 29Z" fill="#FFD36B"/><path d="M20 3C27 9 28 19 26 28H14C12 19 13 9 20 3Z" fill="${c}"/><circle cx="20" cy="15" r="3.200" fill="#fff"/><path d="M16.500 30Q20 38 23.500 30Z" fill="#FFB020"/>`,
+ten:c=>`<rect x="9" y="7" width="22" height="28" rx="4" fill="#FFFDF4"/><rect x="14.500" y="3.500" width="11" height="7" rx="2.500" fill="${c}"/><path d="M14 18L16.500 20.500L21 15M14 27H26" fill="none" stroke="${c}" stroke-width="2.600"/>`,
+twenty5:c=>`<path d="M20 3L24.800 14L36.500 15.200L27.700 23.200L30.200 35L20 29L9.800 35L12.300 23.200L3.500 15.200L15.200 14Z" fill="${c}"/>`,
+fifty:c=>`<path d="M20 3L33 8V20C33 28 27 33 20 37C13 33 7 28 7 20V8Z" fill="${c}"/><path d="M20 12L22.200 17.500L28 18L23.500 21.800L25 27.500L20 24.500L15 27.500L16.500 21.800L12 18L17.800 17.500Z" fill="#fff" stroke="none"/>`,
+hund:c=>`<path d="M20 2L31 31H9Z" fill="${c}"/><ellipse cx="20" cy="32" rx="15" ry="4.500" fill="#4B2A86"/><circle cx="18" cy="15" r="1.800" fill="#FFE08A" stroke="none"/><circle cx="23" cy="23" r="1.500" fill="#FFE08A" stroke="none"/>`,
+streak3:c=>`<path d="M20 3Q22 16 35 20Q22 24 20 37Q18 24 5 20Q18 16 20 3Z" fill="${c}"/><path d="M31 5Q31.500 8.500 35 9Q31.500 9.500 31 13Q30.500 9.500 27 9Q30.500 8.500 31 5Z" fill="#FFD36B"/>`,
+streak7:c=>`<path d="M20 3C22 11 31 14 31 25A11 11 0 0 1 9 25C9 19 13 16 15 11C16 14 18 15 19 14C20 10 18 7 20 3Z" fill="${c}"/><path d="M20 20C22 24 25 25 25 29A5 5 0 0 1 15 29C15 25 19 24 20 20Z" fill="#FFE08A" stroke="none"/>`,
+streak14:c=>`<path d="M20 36C8 28 4 21 4 14A8 8 0 0 1 20 11A8 8 0 0 1 36 14C36 21 32 28 20 36Z" fill="${c}"/><path d="M20 15C21 19 25 20 25 24A5 5 0 0 1 15 24C15 21 18 20 20 15Z" fill="#FFE08A" stroke="none"/>`,
+chest1:c=>`<rect x="7" y="21" width="26" height="14" rx="2.500" fill="${c}"/><path d="M7 21L10 8H30L33 21Z" fill="${c}"/><circle cx="15" cy="18" r="3" fill="#F2B807"/><circle cx="21" cy="17" r="3" fill="#F2B807"/><circle cx="26" cy="18.500" r="2.600" fill="#F2B807"/><rect x="17.500" y="24.500" width="5" height="6" rx="1.200" fill="#F2B807"/>`,
+chest5:c=>`<circle cx="17" cy="17" r="10" fill="#F2B807"/><circle cx="17" cy="17" r="10" fill="none" stroke="${c}" stroke-width="3.400"/><path d="M25 25L34 34" stroke="${c}" stroke-width="4.500"/><path d="M13 13Q15 10.500 18 11" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>`,
+chest20:c=>`<path d="M5 30L7 11L14.500 19L20 6L25.500 19L33 11L35 30Z" fill="${c}"/><rect x="5" y="30" width="30" height="5.500" rx="2" fill="${c}"/><circle cx="20" cy="24" r="2.400" fill="#fff" stroke="none"/><circle cx="12" cy="26" r="1.800" fill="#FFE08A" stroke="none"/><circle cx="28" cy="26" r="1.800" fill="#FFE08A" stroke="none"/>`,
+own5:c=>`<path d="M20 28V16" fill="none" stroke-width="2.400"/><path d="M20 19C12 19 9 12 9 8C17 8 20 12 20 19Z" fill="${c}"/><path d="M20 21C28 21 31 14 31 10C23 10 20 14 20 21Z" fill="${c}"/><path d="M11 28H29L26.500 36H13.500Z" fill="#C08A4A"/>`,
+own15:c=>`<path d="M20 15C20 11 25.500 10 25.500 6.500A5.500 5.500 0 0 0 14.500 7" fill="none" stroke-width="2.600"/><path d="M20 15L36 29H4Z" fill="${c}"/>`,
+own30:c=>`<path d="M20 20L5 10V30Z" fill="${c}"/><path d="M20 20L35 10V30Z" fill="${c}"/><rect x="15.500" y="15" width="9" height="10" rx="2.500" fill="#4B2A86"/>`,
+lvl3:c=>`<path d="M7 33C7 15 17 6 34 6C34 23 25 33 7 33Z" fill="${c}"/><path d="M10 30L26 14" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>`,
+lvl5:c=>`<path d="M24 2L8 22H18L15 38L32 16H22Z" fill="${c}"/>`,
+lvl10:c=>`<path d="M11 5H29V16A9 9 0 0 1 11 16Z" fill="${c}"/><path d="M11 8H5C5 16 8 19 12 19M29 8H35C35 16 32 19 28 19" fill="none" stroke-width="2.400"/><rect x="17.500" y="25" width="5" height="6" fill="${c}"/><rect x="11" y="31" width="18" height="5.500" rx="2" fill="${c}"/>`
+};
+
+BICON.hatch=c=>`<path d="M20 3C28 3 34 15 34 24A14 14 0 0 1 6 24C6 15 12 3 20 3Z" fill="${c}"/><path d="M8 22L14 17L20 22L26 17L32 22" fill="none" stroke="#fff" stroke-width="2.400"/>`;
+BICON.lvl7=c=>`<ellipse cx="20" cy="27" rx="9" ry="7.500" fill="${c}"/><circle cx="8.500" cy="18" r="3.800" fill="${c}"/><circle cx="15" cy="10.500" r="3.800" fill="${c}"/><circle cx="25" cy="10.500" r="3.800" fill="${c}"/><circle cx="31.500" cy="18" r="3.800" fill="${c}"/>`;
+BICON.hat1=c=>`<ellipse cx="20" cy="31" rx="15" ry="4.500" fill="${c}"/><path d="M11 31V9Q20 5 29 9V31" fill="${c}"/><path d="M11 25Q20 28 29 25" fill="none" stroke="#fff" stroke-width="3"/>`;
+BICON.outfit1=c=>`<path d="M14 4L20 8L26 4L36 11L32 18L27 15V35H13V15L8 18L4 11Z" fill="${c}"/>`;
+BICON.room1=c=>`<path d="M3 20L20 5L37 20H32V35H8V20Z" fill="${c}"/><rect x="16.500" y="23" width="7" height="12" rx="1.500" fill="#fff"/>`;
+BICON.epic1=c=>`<path d="M10 6H30L37 16L20 36L3 16Z" fill="${c}"/><path d="M3 16H37M13 16L20 36L27 16M10 6L13 16L20 6L27 16L30 6" fill="none" stroke="#fff" stroke-width="1.400" opacity=".8"/>`;
+BICON.leg1=c=>`<circle cx="20" cy="20" r="8" fill="${c}"/><path d="M20 3V8M20 32V37M3 20H8M32 20H37M8 8L11.500 11.500M28.500 28.500L32 32M32 8L28.500 11.500M11.500 28.500L8 32" fill="none" stroke-width="2.600" stroke="${c}"/>`;
+BICON.streak30=c=>`<path d="M2 35L15 10L22 22L27 15L38 35Z" fill="${c}"/><path d="M15 10L19 17L15 15L11 17Z" fill="#fff" stroke="none"/>`;
+BICON.q250=c=>`<path d="M20 4L36 12L20 20L4 12Z" fill="${c}"/><path d="M10 16V25C10 29 30 29 30 25V16L20 21Z" fill="${c}"/><path d="M36 12V24" fill="none" stroke-width="2.400"/>`;
+BICON.chest50=c=>`<path d="M14 6H26L24 12C33 17 35 34 20 35C5 34 7 17 16 12Z" fill="${c}"/><path d="M15 9.500H25" fill="none" stroke="#fff" stroke-width="2.200"/><circle cx="20" cy="25" r="4.500" fill="#F2B807"/>`;
+BICON.coins=c=>`<path d="M7 28V33A13 5 0 0 0 33 33V28Z" fill="${c}"/><ellipse cx="20" cy="28" rx="13" ry="5" fill="#F2B807"/><path d="M9 18V23A11 4 0 0 0 31 23V18Z" fill="${c}"/><ellipse cx="20" cy="18" rx="11" ry="4" fill="#F2B807"/><ellipse cx="20" cy="9" rx="9" ry="3.400" fill="#F2B807"/>`;
+BICON.all=c=>`<path d="M9 3H31V37L20 29L9 37Z" fill="${c}"/><path d="M20 10L22.200 15.500L28 16L23.500 19.800L25 25.500L20 22.500L15 25.500L16.500 19.800L12 16L17.800 15.500Z" fill="#fff" stroke="none"/>`;
+const BADGES=[
+ {id:'first',n:'Brave Beginner',d:'Finish 1 Quest',c:'#F28C3B',g:'M8 13l3.5 3.5L18 10',t:s=>(s.totalDone||0),goal:1},
+ {id:'five',n:'Pocket Rocket',d:'Finish 5 Quests',c:'#F2A33B',g:'M8 13l3.5 3.5L18 10',t:s=>(s.totalDone||0),goal:5},
+ {id:'ten',n:'Task Tamer',d:'Finish 10 Quests',c:'#3BB273',g:'M13 5l2.4 5 5.6.8-4 3.9.9 5.6L13 17.6 8.1 20.3l.9-5.6-4-3.9 5.6-.8z',t:s=>(s.totalDone||0),goal:10},
+ {id:'twenty5',n:'Shining Star',d:'Finish 25 Quests',c:'#23824A',g:'M13 5l2.4 5 5.6.8-4 3.9.9 5.6L13 17.6 8.1 20.3l.9-5.6-4-3.9 5.6-.8z',t:s=>(s.totalDone||0),goal:25},
+ {id:'fifty',n:'Cape Crusader',d:'Finish 50 Quests',c:'#2F62D0',g:'M13 5l2.4 5 5.6.8-4 3.9.9 5.6L13 17.6 8.1 20.3l.9-5.6-4-3.9 5.6-.8z',t:s=>(s.totalDone||0),goal:50},
+ {id:'hund',n:'Quest Wizard',d:'Finish 100 Quests',c:'#7A3FC8',g:'M13 5l2.4 5 5.6.8-4 3.9.9 5.6L13 17.6 8.1 20.3l.9-5.6-4-3.9 5.6-.8z',t:s=>(s.totalDone||0),goal:100},
+ {id:'q250',n:'Quest Scholar',d:'Finish 250 Quests',c:'#4B2A86',g:'',t:s=>(s.totalDone||0),goal:250},
+ {id:'streak3',n:'Spark Keeper',d:'Finish a Quest every day for 3 days',c:'#E05A9C',g:'M13 5c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 1.5-4 .5 1 1.5 1.5 2 1 0-2-.5-3.5.5-5z',t:s=>(s.streak||0),goal:3},
+ {id:'streak7',n:'Blaze Runner',d:'Finish a Quest every day for 7 days',c:'#C22E7A',g:'M13 5c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 1.5-4 .5 1 1.5 1.5 2 1 0-2-.5-3.5.5-5z',t:s=>(s.streak||0),goal:7},
+ {id:'streak14',n:'Dragon Heart',d:'Finish a Quest every day for 14 days',c:'#E0432A',g:'M13 5c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 1.5-4 .5 1 1.5 1.5 2 1 0-2-.5-3.5.5-5z',t:s=>(s.streak||0),goal:14},
+ {id:'streak30',n:'Unstoppable',d:'Finish a Quest every day for 30 days',c:'#2F62D0',g:'',t:s=>(s.streak||0),goal:30},
+ {id:'chest1',n:'Lid Lifter',d:'Open 1 chest',c:'#D9A66A',g:'M6 12h14v7H6zM7 12a6 5 0 0 1 12 0',t:s=>(s.chests||0),goal:1},
+ {id:'chest5',n:'Gold Sniffer',d:'Open 5 chests',c:'#C08A4A',g:'M6 12h14v7H6zM7 12a6 5 0 0 1 12 0',t:s=>(s.chests||0),goal:5},
+ {id:'chest20',n:'Crown of Loot',d:'Open 20 chests',c:'#8A5A2A',g:'M6 12h14v7H6zM7 12a6 5 0 0 1 12 0',t:s=>(s.chests||0),goal:20},
+ {id:'chest50',n:'Loot Legend',d:'Open 50 chests',c:'#8A5A2A',g:'',t:s=>(s.chests||0),goal:50},
+ {id:'own5',n:'Stash Sprout',d:'Collect 5 items',c:'#5B8BF0',g:'M8 15v-4a5 5 0 0 1 10 0v4M6 16h14',t:s=>Object.keys(s.inv||{}).length,goal:5},
+ {id:'own15',n:'Closet Captain',d:'Collect 15 items',c:'#2F62D0',g:'M8 15v-4a5 5 0 0 1 10 0v4M6 16h14',t:s=>Object.keys(s.inv||{}).length,goal:15},
+ {id:'own30',n:'Fashion Legend',d:'Collect 30 items',c:'#7A3FC8',g:'M8 15v-4a5 5 0 0 1 10 0v4M6 16h14',t:s=>Object.keys(s.inv||{}).length,goal:30},
+ {id:'all',n:'Complete Set',d:'Collect every item',c:'#7A3FC8',g:'',t:s=>Object.keys(s.inv||{}).length,goal:CAT.length},
+ {id:'hat1',n:'Hat Trick',d:'Wear a hat',c:'#5B8BF0',g:'',t:s=>(s.eq&&s.eq.hat?1:0),goal:1},
+ {id:'outfit1',n:'Snazzy Dresser',d:'Wear an outfit',c:'#E05A9C',g:'',t:s=>(s.eq&&s.eq.outfit?1:0),goal:1},
+ {id:'room1',n:'Home Sweet Home',d:'Decorate the room',c:'#3BB273',g:'',t:s=>(s.eq&&s.eq.room?1:0),goal:1},
+ {id:'epic1',n:'Sparkle Finder',d:'Win an Epic item',c:'#C22E7A',g:'',t:s=>CAT.filter(i=>i.rar==='epic'&&s.inv&&s.inv[i.id]).length,goal:1},
+ {id:'leg1',n:'Golden Find',d:'Win a Legendary item',c:'#F2B807',g:'',t:s=>CAT.filter(i=>i.rar==='legendary'&&s.inv&&s.inv[i.id]).length,goal:1},
+ {id:'coins',n:'Piggy Banker',d:'Save 500 coins',c:'#C08A4A',g:'',t:s=>(s.coins||0),goal:500},
+ {id:'hatch',n:'Egg Cracker',d:'Hatch your pet (LVL 2)',c:'#F2B807',g:'',t:s=>(s.level||1),goal:2},
+ {id:'lvl3',n:'Growing Bold',d:'Reach LVL 3',c:'#3BB273',g:'M14 5l-5 8h4l-1 6 5-8h-4z',t:s=>(s.level||1),goal:3},
+ {id:'lvl5',n:'Mighty Mini',d:'Reach LVL 5',c:'#7A3FC8',g:'M14 5l-5 8h4l-1 6 5-8h-4z',t:s=>(s.level||1),goal:5},
+ {id:'lvl7',n:'Big Buddy',d:'Reach LVL 7',c:'#C08A4A',g:'',t:s=>(s.level||1),goal:7},
+ {id:'lvl10',n:'Pocket Legend',d:'Reach LVL 10',c:'#F2B807',g:'M7 18V9l3 3 3-5 3 5 3-3v9z',t:s=>(s.level||1),goal:10}
+];
+function paintBadges(){ const g=$('badgeGrid'); if(!g) return; let got=0;
+  g.innerHTML=BADGES.map(b=>{ const v=b.t(S), ok=v>=b.goal; if(ok) got++; return `<div class="badge ${ok?'on':'off'}" title="${b.d}"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#5A4636" stroke-width="1.800" stroke-linejoin="round" stroke-linecap="round">${(BICON[b.id]||(()=>''))(b.c)}</svg><span class="bn">${b.n}</span><span class="bd">${b.d}</span>${ok?'<span class="bok">Earned!</span>':'<span class="bp">'+Math.min(v,b.goal)+'/'+b.goal+'</span>'}</div>`; }).join('');
+  const ct=$('badgeCt'); if(ct) ct.textContent=got+' of '+BADGES.length; }
 function renderPet(){
   const st=stageOf(S.level);
   $('petName').textContent = S.pet; if($('petName2')) $('petName2').textContent=S.pet; if($('greetTxt')) $('greetTxt').textContent=`${greet()}!`; 
@@ -2543,7 +2664,7 @@ function renderPet(){
   if(!asleep && h>=6 && h<11 && !S.woke[todayKey()] && (S.tucked||{})[todayKey(new Date(Date.now()-86400000))]){ S.woke[todayKey()]=1; save(); const a=$('petArt'); a.classList.add('stretch'); setTimeout(()=>a.classList.remove('stretch'),2100); $('petSay').textContent=`*yaaawn* Morning, ${S.kid}!`; }
   renderPetActs();
   hintTarget();
-  $('bHappy').style.width = S.happy+'%'; $('bEnergy').style.width=S.energy+'%'; paintWater(); paintPreview();
+  $('bHappy').style.width = S.happy+'%'; $('bEnergy').style.width=S.energy+'%'; paintWater(); paintPreview(); paintBadges();
   const nx=needXP(S.level);
   if(xpAnim && $('focus').hidden && view==='pet' && !evoBusy){ const a=xpAnim; xpAnim=null; animateXpBar(a); }
   else if(xpAnim) $('bXp').style.width = Math.min(100, xpAnim.xp/needXP(xpAnim.lvl)*100)+'%';
@@ -2756,8 +2877,7 @@ function renderChest(){
   if(!chestBusy){
     const last = (S.lastChest && BY[S.lastChest.id]) ? BY[S.lastChest.id] : null;
     $('chestStage').innerHTML = `<div class="chestScene"><div class="chestWrap">${chestArt(false)}</div></div>
-      <div style="font-weight:800;color:var(--nightMuted)">${S.keys>0?'Use 1 key to open the chest.':'Finish a Quest to earn a key.'}</div>
-      ${last?`<div style="font-size:13px;font-weight:800;color:var(--nightMuted)">Last prize: ${esc(last.name)} (${R[last.rar].name})</div>`:''}
+      <div style="font-weight:800;color:var(--nightMuted)">${S.keys>0?'Use 1 key to open the chest.':''}</div>
       <div class="row" style="width:100%"><button class="btn" type="button" id="openChest" ${S.keys>0?'':'disabled'} style="flex:1">Open chest</button><button class="btn ghost" type="button" id="openAll" ${S.keys>1?'':'disabled'} style="flex:1">Open all (${S.keys})</button></div>`;
   }
 }
@@ -2943,6 +3063,13 @@ let careBusy=false;
 function fxAdd(html, ms){ const room=$('room'); const d=document.createElement('div'); d.innerHTML=html; const el=d.firstElementChild; room.appendChild(el); setTimeout(()=>el.remove(), ms); return el; }
 // why a care action is off when Energy is at 100
 function fullMsg(id){ return id==='water'?`All 8 drops are full or waiting for a grown-up check.`:id==='walk'?`Walk is already full. Save your coins for later.`:`Food is already full. Save your coins for later.`; }
+
+function sfxCtx(){ audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+function sfxAt(t,fn){ setTimeout(()=>{ try{ sfxCtx(); fn(); }catch(e){} }, t*1000); }
+function sfxChew(){ [.47,.94,1.4,1.85].forEach((t,i)=>sfxAt(t,()=>{ sfxNoise(.11,1800+i*150,700,.34); sfxNoise(.07,3500,1500,.2); sfxTone(150+i*10,0,.08,.18,'triangle'); })); }
+function sfxSteps(){ [.3,.85,1.4,1.95,2.5,3.05].forEach((t,i)=>sfxAt(t,()=>{ sfxNoise(.12,260+(i%2)*60,120,.55); sfxTone(95+(i%2)*14,0,.1,.22,'sine'); sfxNoise(.05,2200,1200,.07); })); }
+function sfxGulp(){ [.2,.62,1.04,1.46,1.9].forEach((t,i)=>sfxAt(t,()=>{ const c=sfxCtx(), o=c.createOscillator(), g=c.createGain(); o.type='sine'; o.frequency.setValueAtTime(320-i*10,c.currentTime); o.frequency.exponentialRampToValueAtTime(90,c.currentTime+.2); g.gain.setValueAtTime(.0001,c.currentTime); g.gain.exponentialRampToValueAtTime(.34,c.currentTime+.03); g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.24); o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+.26); sfxNoise(.2,900,300,.16); })); sfxAt(0,()=>sfxNoise(.25,2500,900,.12)); sfxAt(2.25,()=>sfxNoise(.3,3000,1200,.14)); }
+function careSfx(id){ if(id==='snack') sfxChew(); else if(id==='walk') sfxSteps(); else sfxGulp(); }
 function feed(id){
   const s=SNACKS.find(x=>x.id===id); if(!s || careBusy) return;
   const wish=todaysWish(), isWish=wish.id===id && !wish.done;
@@ -2952,7 +3079,7 @@ function feed(id){
   if(id==='water') setTimeout(()=>toast('Show a grown-up to check your drop!'),2600);
   if(isWish){ wish.done=true; const bs=stageOf(S.level); const notes=gainXP(WISH_XP); if(stageOf(S.level)!==bs) setTimeout(()=>evolveScene(bs, stageOf(S.level)), 1200); setTimeout(()=>toast(`Wish granted! +${WISH_XP} XP${notes.length?' · '+notes.join(' · '):''}`), 400); }
   save();
-  careBusy=true; careFace='happy'; renderAll();
+  careBusy=true; careFace='happy'; renderAll(); careSfx(id);
   const art=$('petArt'), egg=stageOf(S.level)===0;
   let ms=2800, say;
   if(id==='snack'){
@@ -2960,7 +3087,7 @@ function feed(id){
     art.classList.add('eating');
     const pv=art.querySelector('svg.pet'), held=pv?heldApple(pv):null;
     if(held) setTimeout(()=>held.remove(), 2650); else fxAdd(`<div class="fx food">${s.icon.replace('class="ic"','width="44" height="44"')}</div>`, 2700);
-    [0,1,2].forEach(i=>setTimeout(()=>{ const c=fxAdd(`<i class="fx crumb" style="left:calc(50% + ${-14+i*12}px);background:#E2574C;--dx:${-20+i*20}px"></i>`,1100); chime([660+i*80]); }, held?[470,940,1400][i]:650*(i+1)));
+    [0,1,2].forEach(i=>setTimeout(()=>{ const c=fxAdd(`<i class="fx crumb" style="left:calc(50% + ${-14+i*12}px);background:#E2574C;--dx:${-20+i*20}px"></i>`,1100); }, held?[470,940,1400][i]:650*(i+1)));
   } else if(id==='walk'){
     say=egg?'Zzz... a cozy ride.':['That walk was fun!','I love walks with you!','Fresh air feels great!'][Math.floor(Math.random()*3)];
     ms=3800; art.classList.add('walking');
@@ -3369,9 +3496,9 @@ function openChest(){
   function doReveal(){ if(revealed) return; revealed=true;
     const r=R[rar];
     st.innerHTML = `<div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%">
-      <div class="chestWrap rev">${chestAnimArt(r.glow)}<div class="prizeCard" style="--pg:${r.glow}">${itemArt(it,true)}</div></div>
+      <div class="chestWrap rev" style="--pg:${r.glow}">${chestAnimArt(r.glow)}<div class="prizeCard" style="--pg:${r.glow}">${itemArt(it,true)}</div>${sparkles(r)}</div>
       <span class="tag ${r.k}" style="background:${r.color};font-size:12px">${r.name.toUpperCase()}</span>
-      <span class="prize">${esc(it.name)}</span>
+      <span class="prize">${esc(it.name)}</span><span class="slotChip">${SLOTL[it.slot]||esc(it.slot)} · ${r.name}</span>
       <span style="font-size:14px;font-weight:700;color:var(--nightMuted)">${dupe?`You already had this one, so it turned into +${r.dupe} coins.`:`New ${it.slot==='room'?'room':it.slot} for ${esc(S.pet)}!`}</span>
       ${(!dupe && it.slot!=='room' && !canDress())?`<span style="font-size:13px;font-weight:800;color:var(--nightMuted)">Saved for when ${esc(S.pet)} wakes up.</span>`:''}${chestAuto&&S.keys>0?`<span style="font-size:13px;font-weight:800;color:var(--nightMuted)">Next chest coming... (${S.keys} left)</span>`:`<div class="row" style="width:100%">${(dupe||(it.slot!=='room'&&!canDress()))?'':`<button class="btn" type="button" id="equipWin" style="flex:1">${it.slot==='room'?'Move in':'Put it on'}</button>`}<button class="btn ghost" type="button" id="againChest" style="flex:1">${S.keys>0?'Open next':chestAuto?'See everything':'Done'}</button></div>`}</div>`;
     if(chestAuto&&S.keys>0){ st.insertAdjacentHTML('beforeend','<button type="button" class="skipBtn" id="skipNext">Skip <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 2.5v9l6-4.5zM9 2.5h2.5v9H9z" fill="currentColor"/></svg></button>'); const nt=setTimeout(()=>{ chestBusy=false; openChest(); }, 6500); const sk=$('skipNext'); if(sk) sk.onclick=()=>{ clearTimeout(nt); chestBusy=false; openChest(); }; }
