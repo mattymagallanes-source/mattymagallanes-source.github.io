@@ -3,6 +3,9 @@
       "target": {
         "namespace": "android_app",
         "package_name": "io.github.mattymagallanes_source.twa",
-        "sha256_cert_fingerprints": ["9F:FD:B8:21:6E:07:60:2F:DE:BE:A2:A3:E0:A8:0D:05:D8:74:A6:C4:66:B4:8E:4E:FC:46:95:79:8B:09:5D:BC"]
+        "sha256_cert_fingerprints": [
+          "9F:FD:B8:21:6E:07:60:2F:DE:BE:A2:A3:E0:A8:0D:05:D8:74:A6:C4:66:B4:8E:4E:FC:46:95:79:8B:09:5D:BC",
+          "80:FD:C0:48:9B:CF:52:B6:8D:12:B0:60:4E:49:55:F6:8F:6E:3C:F1:90:58:9D:54:2C:02:FE:C9:61:18:36:4E"
+        ]
       }
     }]
