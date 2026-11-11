@@ -7,7 +7,7 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#E6F2FF",
+  "background_color": "#E0F3F0",
   "theme_color": "#FF7A2F",
   "categories": ["education", "kids", "productivity"],
   "icons": [
